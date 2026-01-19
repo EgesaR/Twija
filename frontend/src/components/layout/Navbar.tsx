@@ -4,19 +4,19 @@ import { Link } from 'react-router';
 import { getImageUrl } from '@/utils/images';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import ScrollTrigger from 'gsap';
+//import ScrollTrigger from 'gsap';
 
 //gsap.registerPlugin(ScrollTrigger);
 const Navbar = () => {
   useGSAP(() => {
     const navTween = gsap.timeline({
-      scrollTrigger: {
-        trigger: 'nav',
-        start: '10% top',
-        end: 'bottom top',
-        toggleActions: 'play reverse play reverse',
-        scrub: true,
-      },
+      // scrollTrigger: {
+      //   trigger: 'nav',
+      //   start: '10% top',
+      //   end: 'bottom top',
+      //   toggleActions: 'play reverse play reverse',
+      //   scrub: true,
+      // },
     });
   });
   return (
