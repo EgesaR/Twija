@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Kigali Walking Tours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('kigali7.jpg'); /* Dynamic placeholder, replace with a real image */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .section-bg-overlay {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .hamburger-menu {
+            display: none;
+        }
+        .nav-menu {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                background-color: #1a202c;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                width: 100%;
+                z-index: 10;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 1rem 1.5rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu a:last-child {
+                border-bottom: none;
+            }
+        }
+         .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            text-align: center;
+        }
+        .message-box button {
+            margin-top: 1rem;
+            background-color: #10B981; /* Emerald-500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .message-box button:hover {
+            background-color: #059669; /* Emerald-600 */
+        }
+        /* WhatsApp floating button style */
+        .whatsapp-float-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px; /* Fully rounded */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            z-index: 50;
+            transition: transform 0.3s ease-in-out;
+        }
+        .whatsapp-float-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+     <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo with link and improved alt text -->
+            <a href="index.html" class="flex items-center" aria-label="Go to Home Page">
+                <img src="nm.PNG" alt="Twija Africa Safari Logo for Kigali Tours" class="h-10 mr-3 rounded-md">
+                <div class="text-2xl font-bold">Kigali City Tours</div>
+            </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6 nav-menu" aria-label="Main Navigation">
+                <a href="index.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Home</a>
+                <a href="tours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Tours</a>
+                <a href="booking.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Book Now</a>
+                <a href="kigalitours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">kigalitours</a>
+                <a href="contact.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Contact</a>
+                  <a href="gallery.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Gallery</a>
+            </nav>
+            <!-- Mobile Hamburger Menu -->
+            <div class="md:hidden hamburger-menu cursor-pointer text-2xl" id="hamburger-icon" role="button" aria-expanded="false" aria-controls="mobile-nav-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <!-- Mobile Navigation Menu (hidden by default) -->
+        <nav id="mobile-nav-menu" class="nav-menu md:hidden">
+            <a href="index.html" class="block hover:bg-gray-700">Home</a>
+            <a href="tours.html" class="block hover:bg-gray-700">Tours</a>
+            <a href="booking.html" class="block hover:bg-gray-700">Book Now</a>
+            <a href="kigalitours.html" class="block hover:bg-gray-700">kigalitours</a>
+            <a href="contact.html" class="block hover:bg-gray-700">Contact</a>
+                        <a href="gallery.html" class="block hover:bg-gray-700">Gallery</a>
+
+        </nav>
+    </header>
+    <!-- Contact Section -->
+    <section class="container mx-auto py-16 px-4 section-bg-overlay rounded-lg shadow-xl my-8">
+        <h1 class="text-5xl font-extrabold text-center text-gray-800 mb-12">Get in Touch</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            <!-- Contact Information -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-6">Contact Information</h2>
+                <div class="space-y-6 text-lg text-gray-700">
+                    <p class="flex items-center"><i class="fas fa-map-marker-alt text-emerald-500 mr-4 text-xl"></i>Kigali, Rwanda (Specific address available upon booking)</p>
+                    <p class="flex items-center"><i class="fas fa-phone-alt text-emerald-500 mr-4 text-xl"></i>+256777559835</p>
+                    <p class="flex items-center"><i class="fas fa-envelope text-emerald-500 mr-4 text-xl"></i>twijaafricasafari@gmail.com</p>
+                    <p class="flex items-center"><i class="fab fa-whatsapp text-emerald-500 mr-4 text-xl"></i><a href="https://wa.me/250788123456" target="_blank" class="text-gray-700 hover:text-emerald-500 transition-colors duration-300">+256777559835(WhatsApp)</a></p>
+                    <p class="flex items-center"><i class="fas fa-clock text-emerald-500 mr-4 text-xl"></i>Monday - sunday: 24 hours (EAT)</p>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Follow Us</h3>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors duration-300"><i class="fab fa-facebook-f text-3xl"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-blue-400 transition-colors duration-300"><i class="fab fa-twitter text-3xl"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-pink-500 transition-colors duration-300"><i class="fab fa-instagram text-3xl"></i></a>
+                        <a href="https://wa.me/250788123456" target="_blank" class="text-gray-600 hover:text-green-500 transition-colors duration-300"><i class="fab fa-whatsapp text-3xl"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-semibold text-gray-900 mb-6">Send Us a Message</h2>
+                <!-- Formspree Integration: Updated action and method for server-side handling -->
+                <form id="contact-form" action="https://formspree.io/f/xovlvawk" method="POST" class="space-y-6">
+                    <div>
+                        <label for="contact-name" class="block text-gray-700 text-lg font-semibold mb-2">Your Name:</label>
+                        <input type="text" id="contact-name" name="Your Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="contact-email" class="block text-gray-700 text-lg font-semibold mb-2">Your Email:</label>
+                        <input type="email" id="contact-email" name="Your Email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="your@example.com" required>
+                    </div>
+                    <div>
+                        <label for="contact-subject" class="block text-gray-700 text-lg font-semibold mb-2">Subject:</label>
+                        <input type="text" id="contact-subject" name="Subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Tour Inquiry, Partnership, etc." required>
+                    </div>
+                    <div>
+                        <label for="contact-message" class="block text-gray-700 text-lg font-semibold mb-2">Message:</label>
+                        <textarea id="contact-message" name="Message" rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-full text-xl transition-all duration-300 shadow-md transform hover:scale-105">
+                        Send Message
+                    </button>
+                    <div id="contact-form-message" class="mt-4 text-center text-lg hidden"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Message Box -->
+    <div id="message-box" class="message-box">
+        <p id="message-text" class="text-xl font-semibold mb-4"></p>
+        <button id="close-message-box">OK</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Company Info / Copyright -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Kigali Walking Tours</h3>
+                <p class="text-gray-400">&copy; <span id="current-year"></span> Kigali Walking Tours. All rights reserved.</p>
+                <p class="text-gray-400 mt-2">Connecting you to the heart of Rwanda.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="tours.html" class="text-gray-400 hover:text-white transition-colors duration-300">Tours</a></li>
+                    <li><a href="booking.html" class="text-gray-400 hover:text-white transition-colors duration-300">Book Now</a></li>
+                    <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info & Social Media -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-phone-alt mr-3"></i>+256777559835</p>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-envelope mr-3"></i>twijaafricasafari@gmail.com</p>
+                <a href="https://wa.me/256777559835" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center justify-center md:justify-start mb-4"><i class="fab fa-whatsapp mr-3"></i>WhatsApp Us</a>
+                <div class="flex justify-center md:justify-start space-x-6 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/256777559835" target="_blank" class="whatsapp-float-btn" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // JavaScript for mobile navigation and contact form
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            const contactForm = document.getElementById('contact-form');
+            const formMessage = document.getElementById('contact-form-message');
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+            const closeMessageBoxButton = document.getElementById('close-message-box');
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Toggle mobile navigation
+            hamburgerIcon.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('active');
+            });
+
+            // Handle contact form submission
+            contactForm.addEventListener('submit', (event) => {
+                // Basic validation
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const subject = document.getElementById('contact-subject').value;
+                const message = document.getElementById('contact-message').value;
+
+                if (!name || !email || !subject || !message) {
+                    event.preventDefault(); // Stop Formspree submission if validation fails
+                    showMessageBox('Please fill in all required fields.', 'red');
+                    return;
+                }
+
+                // Email format validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    event.preventDefault(); // Stop Formspree submission if validation fails
+                    showMessageBox('Please enter a valid email address.', 'red');
+                    return;
+                }
+
+                // Formspree will handle the success/error messages after submission,
+                // so we don't need a client-side success message here, just let the form submit.
+                // Formspree often redirects or shows its own success message.
+            });
+
+            // Function to show custom message box
+            function showMessageBox(message, type) {
+                messageText.textContent = message;
+                messageText.style.color = (type === 'red' ? '#dc2626' : '#047857'); // Tailwind red-600 or emerald-700
+                messageBox.style.display = 'block';
+            }
+
+            // Close message box
+            closeMessageBoxButton.addEventListener('click', () => {
+                messageBox.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

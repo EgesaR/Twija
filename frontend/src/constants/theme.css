@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-yellow: #e7d393;
+  --color-white-100: #efefef;
+
+  --font-sans: 'InterVariable', system-ui, sans-serif;
+  --font-modern-negra: 'Modern Negra', serif;
+  --font-serif: 'DM Serif Text', serif;
+}

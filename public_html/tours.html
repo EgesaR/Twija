@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Tours - Kigali Walking Tours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles for the body background and section overlay */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('5.jpg'); /* Dynamic placeholder, replace with a real image */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f0f4f8; /* Fallback background color */
+            color: #333; /* Default text color */
+        }
+        .section-bg-overlay {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white overlay for sections */
+        }
+
+        /* Styles for mobile navigation (hamburger menu) */
+        .hamburger-menu {
+            display: none; /* Hidden by default on larger screens */
+        }
+        .nav-menu {
+            display: flex; /* Default display for desktop navigation */
+        }
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: block; /* Show hamburger icon on small screens */
+            }
+            .nav-menu {
+                display: none; /* Hide regular nav menu on small screens */
+                flex-direction: column; /* Stack menu items vertically */
+                background-color: #1a202c; /* Dark background for mobile menu */
+                position: absolute;
+                top: 64px; /* Position below header */
+                left: 0;
+                width: 100%;
+                z-index: 10;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu.active {
+                display: flex; /* Show mobile nav menu when active */
+            }
+            .nav-menu a {
+                padding: 1rem 1.5rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator for mobile menu items */
+            }
+            .nav-menu a:last-child {
+                border-bottom: none; /* No border for the last item */
+            }
+        }
+
+        /* Styles for tour highlight icons */
+        .tour-highlight-icon {
+            color: #10B981; /* Emerald-500 color for icons */
+            margin-right: 0.5rem;
+        }
+
+        /* WhatsApp floating button styles */
+        .whatsapp-float-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px; /* Fully rounded (circle) */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            z-index: 50;
+            transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+        }
+        .whatsapp-float-btn:hover {
+            transform: scale(1.1); /* Enlarge on hover */
+        }
+    </style>
+</head>
+<body>
+  <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo with link and improved alt text -->
+            <a href="index.html" class="flex items-center" aria-label="Go to Home Page">
+                <img src="nm.PNG" alt="Twija Africa Safari Logo for Kigali Tours" class="h-10 mr-3 rounded-md">
+                <div class="text-2xl font-bold">Kigali City Tours</div>
+            </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6 nav-menu" aria-label="Main Navigation">
+                <a href="index.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Home</a>
+                <a href="tours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Tours</a>
+                <a href="booking.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Book Now</a>
+                <a href="kigalitours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">kigalitours</a>
+                <a href="contact.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Contact</a>
+                  <a href="gallery.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Gallery</a>
+            </nav>
+            <!-- Mobile Hamburger Menu -->
+            <div class="md:hidden hamburger-menu cursor-pointer text-2xl" id="hamburger-icon" role="button" aria-expanded="false" aria-controls="mobile-nav-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <!-- Mobile Navigation Menu (hidden by default) -->
+        <nav id="mobile-nav-menu" class="nav-menu md:hidden">
+            <a href="index.html" class="block hover:bg-gray-700">Home</a>
+            <a href="tours.html" class="block hover:bg-gray-700">Tours</a>
+            <a href="booking.html" class="block hover:bg-gray-700">Book Now</a>
+            <a href="kigalitours.html" class="block hover:bg-gray-700">kigalitours</a>
+            <a href="contact.html" class="block hover:bg-gray-700">Contact</a>
+                        <a href="gallery.html" class="block hover:bg-gray-700">Gallery</a>
+
+        </nav>
+    </header>
+    <!-- Tours Listing Section -->
+    <section class="container mx-auto py-16 px-4 section-bg-overlay rounded-lg shadow-xl my-8">
+        <h1 class="text-5xl font-extrabold text-center text-gray-800 mb-12">Our Fun Walking Tours for Families in Kigali!</h1>
+        <p class="text-center text-lg text-gray-700 max-w-3xl mx-auto mb-10">
+            Discover Kigali with your family! Our easy walking tours are designed for all ages, especially children, to explore the city's exciting places, learn new things, and have lots of fun together.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            
+            <!-- Tour Card: Kigali Easy Walking Tour -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <img src="kigali2.jpg" alt="Kigali Easy Walking Tour" class="w-full h-56 object-cover cursor-pointer" onclick="toggleDetails('details-kigali-easy-walking-tour')">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Kigali Easy Walking Tour</h3>
+                    <p class="text-gray-700 mb-2 text-lg">
+                        A gentle stroll exploring Kigali's history and culture.
+                    </p>
+                    <p class="text-gray-800 font-semibold mb-4">Starting Point: Kandt Museum</p>
+                    
+                    <ul class="text-gray-600 mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-clock tour-highlight-icon"></i>Duration: 2 Hours (Estimated)</li>
+                        <li class="flex items-center"><i class="fas fa-list-ol tour-highlight-icon"></i>Your Adventure Steps:
+                            <ol class="list-decimal list-inside ml-6">
+                                <li>Begin at Kandt Museum (learn about Rwanda's natural history)</li>
+                                <li>Explore Downtown Kigali (city life)</li>
+                                <li>Stroll through Kigali Car Free Zone (pedestrian friendly)</li>
+                                <li>Discover Kigali Biryogo Car Free Zone (local vibes)</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold text-emerald-600">$25.00</span>
+                    </div>
+
+                    <div id="details-kigali-easy-walking-tour" class="hidden mt-4 pt-4 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">More About This Tour:</h4>
+                        <p class="text-gray-700 mb-3">
+                            This tour offers a gentle introduction to Kigali, focusing on key historical and cultural sites at a relaxed pace suitable for all ages.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-3 space-y-1">
+                            <li><strong>What's Included:</strong> Friendly guide, entry to Kandt Museum.</li>
+                            <li><strong>What to Bring:</strong> Comfortable shoes, water, hat.</li>
+                            <li><strong>Good to Know:</strong> Focuses on history and nature. Perfect for families.</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-end items-center mt-4">
+                        <a href="booking.html?tour=Kigali Easy Walking Tour" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full font-semibold shadow-md transition-all duration-300">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour Card: 1 Day Luxury Akagera National Park Safari -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <img src="b.jpg" alt="1 Day Luxury Akagera National Park Safari" class="w-full h-56 object-cover cursor-pointer" onclick="toggleDetails('details-akagera-national-park-luxury')">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">1 Day Luxury Akagera National Park Safari</h3>
+                    <p class="text-gray-700 mb-2 text-lg">
+                        Experience a luxurious full-day safari adventure in Akagera National Park, spotting amazing wildlife.
+                    </p>
+                    <p class="text-gray-800 font-semibold mb-4">Starting Point: Pickup from your hotel</p>
+                    
+                    <ul class="text-gray-600 mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-clock tour-highlight-icon"></i>Duration: 1 Day</li>
+                        <li class="flex items-center"><i class="fas fa-route tour-highlight-icon"></i>Your Journey Steps:
+                            <ol class="list-decimal list-inside ml-6">
+                                <li>Hotel pickup in luxury vehicle</li>
+                                <li>Game drive through Akagera National Park (spotting lions, elephants, giraffes!)</li>
+                                <li>Lunch inside the park</li>
+                                <li>Return to hotel</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold text-emerald-600">$450.00</span>
+                    </div>
+
+                    <div id="details-akagera-national-park-luxury" class="hidden mt-4 pt-4 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">More About This Tour:</h4>
+                        <p class="text-gray-700 mb-3">
+                            Embark on an unforgettable 1-day luxury safari to Akagera National Park. Our comfortable vehicles and experienced guides ensure you have the best chance to see Rwanda's incredible wildlife in style.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-3 space-y-1">
+                            <li><strong>What's Included:</strong> Luxury vehicle with driver/guide, park entry fees, bottled water, lunch.</li>
+                            <li><strong>What to Bring:</strong> Binoculars, camera, hat, sunscreen.</li>
+                            <li><strong>Good to Know:</strong> This is a car-based tour, not walking. Early start recommended for best wildlife viewing.</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-end items-center mt-4">
+                        <a href="booking.html?tour=1 Day Luxury Akagera National Park Safari" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full font-semibold shadow-md transition-all duration-300">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour Card: Downtown & Car-Free Zone Walk -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <img src="2.jpg" alt="Downtown & Car-Free Zone Walk" class="w-full h-56 object-cover cursor-pointer" onclick="toggleDetails('details-downtown-car-free-zone-walk')">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Downtown & Car-Free Zone Walk</h3>
+                    <p class="text-gray-700 mb-2 text-lg">
+                        A quick and lively walk through Kigali's bustling downtown and the pedestrian-friendly car-free zone.
+                    </p>
+                    <p class="text-gray-800 font-semibold mb-4">Starting Point: Downtown Kigali (specific meeting point provided upon booking)</p>
+                    
+                    <ul class="text-gray-600 mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-clock tour-highlight-icon"></i>Duration: 2 Hours 30 Minutes</li>
+                        <li class="flex items-center"><i class="fas fa-list-ol tour-highlight-icon"></i>Your Journey Steps:
+                            <ol class="list-decimal list-inside ml-6">
+                                <li>Explore vibrant Downtown Kigali</li>
+                                <li>Stroll through the lively Kigali Car Free Zone</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold text-emerald-600">$20.00</span>
+                    </div>
+
+                    <div id="details-downtown-car-free-zone-walk" class="hidden mt-4 pt-4 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">More About This Tour:</h4>
+                        <p class="text-gray-700 mb-3">
+                            This short and energetic tour takes you right into the heart of Kigali's modern urban life. Discover local businesses, street art, and the unique atmosphere of the car-free zone.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-3 space-y-1">
+                            <li><strong>What's Included:</strong> Local guide.</li>
+                            <li><strong>What to Bring:</strong> Comfortable walking shoes, small water bottle.</li>
+                            <li><strong>Good to Know:</strong> Easy walk, great for quick exploration and photo opportunities.</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-end items-center mt-4">
+                        <a href="booking.html?tour=Downtown & Car-Free Zone Walk" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full font-semibold shadow-md transition-all duration-300">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour Card: Kigali Long Tour Adventure -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <img src="4.jpg" alt="Kigali Long Tour Adventure" class="w-full h-56 object-cover cursor-pointer" onclick="toggleDetails('details-kigali-long-tour')">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Kigali Long Tour Adventure</h3>
+                    <p class="text-gray-700 mb-2 text-lg">
+                        A comprehensive journey through Kigali's key historical, cultural, and modern landmarks.
+                    </p>
+                    <p class="text-gray-800 font-semibold mb-4">Starting Point: Kigali Genocide Memorial</p>
+                    
+                    <ul class="text-gray-600 mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-clock tour-highlight-icon"></i>Duration: 4 Hours</li>
+                        <li class="flex items-center"><i class="fas fa-route tour-highlight-icon"></i>Your Journey Steps:
+                            <ol class="list-decimal list-inside ml-6">
+                                <li>Start at Kigali Genocide Memorial (respectful visit)</li>
+                                <li>Explore Kandt Museum Kigali (history and nature)</li>
+                                <li>Walk through Downtown Kigali (city life)</li>
+                                <li>Stroll the Kigali Car Free Zone (pedestrian friendly)</li>
+                                <li>Discover Biryogo Car Free Zone (local vibes)</li>
+                                <li>Experience Imbuga City Walk (modern urban space)</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold text-emerald-600">$30.00</span>
+                    </div>
+
+                    <div id="details-kigali-long-tour" class="hidden mt-4 pt-4 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">More About This Tour:</h4>
+                        <p class="text-gray-700 mb-3">
+                            This extensive 4-hour tour offers a deep dive into Kigali's diverse facets, from its poignant history to its vibrant modern developments and local community areas. Perfect for families wanting to see it all.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-3 space-y-1">
+                            <li><strong>What's Included:</strong> Expert guide, entry fees to memorial and museum, light refreshments.</li>
+                            <li><strong>What to Bring:</strong> Comfortable walking shoes, camera, water, sun protection.</li>
+                            <li><strong>Good to Know:</strong> Involves significant walking. Pace is adjusted for families.</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-end items-center mt-4">
+                        <a href="booking.html?tour=Kigali Long Tour Adventure" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full font-semibold shadow-md transition-all duration-300">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour Card: Kigali Discovered Walk -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <img src="3.jpg" alt="Kigali Discovered Walk" class="w-full h-56 object-cover cursor-pointer" onclick="toggleDetails('details-kigali-discovered-walk')">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Kigali Discovered Walk</h3>
+                    <p class="text-gray-700 mb-2 text-lg">
+                        Uncover hidden gems and significant cultural sites on this enlightening walk.
+                    </p>
+                    <p class="text-gray-800 font-semibold mb-4">Starting Point: Kigali Convention Center</p>
+                    
+                    <ul class="text-gray-600 mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-clock tour-highlight-icon"></i>Duration: 4 Hours 30 Minutes</li>
+                        <li class="flex items-center"><i class="fas fa-list-ol tour-highlight-icon"></i>Your Journey Steps:
+                            <ol class="list-decimal list-inside ml-6">
+                                <li>Meet at Kigali Convention Center (modern landmark)</li>
+                                <li>Visit Belgian Peacekeeper Memorial (historical reflection)</li>
+                                <li>Explore Inema Art Center (vibrant local art)</li>
+                                <li>Discover Nyamirambo Women's Center (community impact)</li>
+                                <li>Wander through Kigali City Market (local life and crafts)</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold text-emerald-600">$40.00</span>
+                    </div>
+
+                    <div id="details-kigali-discovered-walk" class="hidden mt-4 pt-4 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">More About This Tour:</h4>
+                        <p class="text-gray-700 mb-3">
+                            This immersive 4.5-hour walking tour takes you beyond the usual sights to discover the heart and soul of Kigali. Learn about art, community, and history from a local perspective.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-3 space-y-1">
+                            <li><strong>What's Included:</strong> Knowledgeable local guide, entry to Inema Art Center, contribution to Nyamirambo Women's Center.</li>
+                            <li><strong>What to Bring:</strong> Comfortable walking shoes, camera, curiosity!</li>
+                            <li><strong>Good to Know:</strong> Offers insights into local initiatives and contemporary Rwandan culture.</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-end items-center mt-4">
+                        <a href="booking.html?tour=Kigali Discovered Walk" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full font-semibold shadow-md transition-all duration-300">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour Card: Kigali Motorbike Tour -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <img src="6.jpg" alt="Kigali Motorbike Tour" class="w-full h-56 object-cover cursor-pointer" onclick="toggleDetails('details-kigali-motorbike-tour')">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Kigali Motorbike Tour</h3>
+                    <p class="text-gray-700 mb-2 text-lg">
+                        Experience Kigali like a local! A thrilling motorbike tour to key city attractions.
+                    </p>
+                    <p class="text-gray-800 font-semibold mb-4">Starting Point: Pickup from your hotel</p>
+                    
+                    <ul class="text-gray-600 mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-clock tour-highlight-icon"></i>Duration: 6 Hours</li>
+                        <li class="flex items-center"><i class="fas fa-motorcycle tour-highlight-icon"></i>Your Journey Steps:
+                            <ol class="list-decimal list-inside ml-6">
+                                <li>Hotel pickup by experienced moto-taxi driver/guide</li>
+                                <li>Ride through Downtown Kigali (city pulse)</li>
+                                <li>Visit Kigali Convention Center (iconic architecture)</li>
+                                <li>Explore Inema Art Center (artistic hub)</li>
+                                <li>Discover Kimironko Market (bustling local market)</li>
+                                <li>Visit Nyamirambo Women's Center (community insight)</li>
+                                <li>See Belgian Peacekeeper Memorial (historical site)</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold text-emerald-600">$65.00</span>
+                    </div>
+
+                    <div id="details-kigali-motorbike-tour" class="hidden mt-4 pt-4 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">More About This Tour:</h4>
+                        <p class="text-gray-700 mb-3">
+                            For the adventurous family (suitable for older children who can ride safely on a motorbike with a guardian), this 6-hour tour offers an exhilarating way to navigate Kigali's vibrant streets and visit multiple landmarks efficiently. Safety helmets are provided.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-3 space-y-1">
+                            <li><strong>What's Included:</strong> Moto-taxi and experienced driver/guide per person, helmets, entry fees to specified sites.</li>
+                            <li><strong>What to Bring:</strong> Closed-toe shoes, light jacket, camera.</li>
+                            <li><strong>Good to Know:</strong> This tour is for those comfortable with motorbike transport. Safety is our top priority.</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-end items-center mt-4">
+                        <a href="booking.html?tour=Kigali Motorbike Tour" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full font-semibold shadow-md transition-all duration-300">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour Card: Kigali Car Tour -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <img src="kigali1.jpg" alt="Kigali Car Tour" class="w-full h-56 object-cover cursor-pointer" onclick="toggleDetails('details-kigali-car-tour')">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-3">Kigali Car Tour</h3>
+                    <p class="text-gray-700 mb-2 text-lg">
+                        A comfortable full-day car tour exploring Kigali's significant landmarks and a coffee farm.
+                    </p>
+                    <p class="text-gray-800 font-semibold mb-4">Starting Point: Pickup from your hotel</p>
+                    
+                    <ul class="text-gray-600 mb-4 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-clock tour-highlight-icon"></i>Duration: 1 Day</li>
+                        <li class="flex items-center"><i class="fas fa-car tour-highlight-icon"></i>Your Journey Steps:
+                            <ol class="list-decimal list-inside ml-6">
+                                <li>Hotel pickup in private vehicle</li>
+                                <li>Visit Kigali Genocide Memorial (historical reflection)</li>
+                                <li>Explore Kigali Convention Center (modern landmark)</li>
+                                <li>Drive through Downtown Kigali (city overview)</li>
+                                <li>Visit Belgian Peacekeeper Memorial (historical site)</li>
+                                <li>Enjoy a Coffee Farm Tour (learn about coffee, taste samples!)</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-bold text-emerald-600">$250.00</span>
+                    </div>
+
+                    <div id="details-kigali-car-tour" class="hidden mt-4 pt-4 border-t border-gray-200">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">More About This Tour:</h4>
+                        <p class="text-gray-700 mb-3">
+                            Enjoy the comfort and convenience of a private car tour for a full day of exploration in Kigali. This tour covers a wide range of attractions, including a fascinating visit to a local coffee farm, perfect for families seeking a relaxed yet comprehensive experience.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-3 space-y-1">
+                            <li><strong>What's Included:</strong> Private vehicle with driver/guide, fuel, entry fees to memorial and coffee farm, coffee tasting.</li>
+                            <li><strong>What to Bring:</strong> Camera, comfortable attire.</li>
+                            <li><strong>Good to Know:</strong> Flexible itinerary, can be customized to your family's interests. Lunch not included but stops can be made.</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-end items-center mt-4">
+                        <a href="booking.html?tour=Kigali Car Tour" class="bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-full font-semibold shadow-md transition-all duration-300">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tour Guide Information Section -->
+        <div class="mt-16 bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-8">Meet Our Super Friendly Local Guides!</h2>
+            <p class="text-center text-lg text-gray-700 max-w-3xl mx-auto mb-8">
+                Our tours are led by awesome local guides who know all about Kigali's history, culture, and fun spots! They love sharing stories and making sure your family has an amazing time. They speak English and Kinyarwanda, and some also speak French.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <div class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <img src="1.jpg" alt="Tour Guide John" class="rounded-full w-24 h-24 object-cover mr-6">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-900">John M. - Storyteller & History Helper</h4>
+                        <p class="text-gray-700">John knows many cool stories about Rwanda and loves showing families around. He's great at making history fun!</p>
+                    </div>
+                </div>
+                <div class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <img src="7.jpg" alt="Tour Guide Sarah" class="rounded-full w-24 h-24 object-cover mr-6">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-900">Sarah K. - Art & Food Explorer</h4>
+                        <p class="text-gray-700">Sarah loves art and delicious food! Join her to see colorful art and taste the best local snacks in Kigali.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Company Info / Copyright -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Kigali Walking Tours</h3>
+                <p class="text-gray-400">&copy; <span id="current-year"></span> Kigali Walking Tours. All rights reserved.</p>
+                <p class="text-gray-400 mt-2">Connecting you to the heart of Rwanda.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="tours.html" class="text-gray-400 hover:text-white transition-colors duration-300">Tours</a></li>
+                    <li><a href="booking.html" class="text-gray-400 hover:text-white transition-colors duration-300">Book Now</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info & Social Media -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-phone-alt mr-3"></i>+256777559835</p>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-envelope mr-3"></i>twijaafricasafari@gmail.com</p>
+                <a href="https://wa.me/+256777559835" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center justify-center md:justify-start mb-4"><i class="fab fa-whatsapp mr-3"></i>WhatsApp Us</a>
+                <div class="flex justify-center md:justify-start space-x-6 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/256777559835" target="_blank" class="whatsapp-float-btn" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // JavaScript for mobile navigation and current year in footer
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+
+            // Set current year in footer dynamically
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Toggle mobile navigation visibility when hamburger icon is clicked
+            hamburgerIcon.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('active');
+            });
+        });
+
+        /**
+         * Toggles the visibility of a tour's detailed information section.
+         * This function is now called when the tour image is clicked.
+         * @param {string} detailsId - The ID of the div containing the hidden tour details.
+         */
+        function toggleDetails(detailsId) {
+            const detailsElement = document.getElementById(detailsId);
+            // Toggle the 'hidden' Tailwind class to show/hide the element
+            detailsElement.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

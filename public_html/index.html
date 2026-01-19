@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="nmLBFhaJfUBwUecOE5v0E7i2yCNTSCrheTHBn6RcKUM" />
+    <!-- SEO Meta Tags - Added for improved search engine ranking and visibility -->
+    <title>Kigali City Tours & Walking Expeditions | Twija Africa Safari</title>
+    <meta name="description" content="Discover the heart of Rwanda with our curated Kigali walking tours. Explore historical landmarks, vibrant local markets, and cultural gems with expert local guides from Twija Africa Safari. Book your unforgettable adventure today!">
+    <meta name="keywords" content="Kigali tours, Kigali walking tours, Rwanda tours, Kigali city tour, things to do in Kigali, Kigali tourist attractions, book tours in Kigali, Kigali local guide, private Kigali tours, Kigali Genocide Memorial, Kigali markets, Rwanda cultural tours, Twija Africa Safari">
+    <meta name="author" content="Twija Africa Safari">
+    <meta name="robots" content="index, follow">
+    <!-- IMPORTANT: Replace the canonical URL below with your actual website URL -->
+    <link rel="canonical" href="https://www.twijakigalitours.com/index.html">
+
+    <!-- Open Graph (for social media sharing) -->
+    <meta property="og:title" content="Kigali City Tours & Walking Expeditions">
+    <meta property="og:description" content="Explore the best of Rwanda's capital with expert-led walking tours from Twija Africa Safari. From historical landmarks to vibrant local culture, your Kigali adventure starts here.">
+    <!-- IMPORTANT: Update this image URL to a high-quality, relevant image on your site -->
+    <meta property="og:image" content="https://www.twijakigalitours.com/images/hero-image-kigali.jpg">
+    <meta property="og:url" content="https://www.twijakigalitours.com/index.html">
+    <meta property="og:type" content="website">
+
+    <!-- Preconnect to Google Fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+
+        /* Custom styles to override or extend Tailwind if necessary */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('2.jpg'); /* Dynamic placeholder, replace with a real image */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .section-bg-overlay {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .hero-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+        .animate-slide-in-up { animation: slideInUp 1s ease-out forwards; }
+        .animate-slide-in-left { animation: slideInLeft 1s ease-out forwards; }
+
+        .hamburger-menu {
+            display: none;
+        }
+        .nav-menu {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                background-color: #1a202c;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                width: 100%;
+                z-index: 10;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 1rem 1.5rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu a:last-child {
+                border-bottom: none;
+            }
+        }
+        /* WhatsApp floating button style */
+        .whatsapp-float-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px; /* Fully rounded */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            z-index: 50;
+            transition: transform 0.3s ease-in-out;
+        }
+        .whatsapp-float-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo with link and improved alt text -->
+            <a href="index.html" class="flex items-center" aria-label="Go to Home Page">
+                <img src="nm.PNG" alt="Twija Africa Safari Logo for Kigali Tours" class="h-10 mr-3 rounded-md">
+                <div class="text-2xl font-bold">Kigali City Tours</div>
+            </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6 nav-menu" aria-label="Main Navigation">
+                <a href="index.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Home</a>
+                <a href="tours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Tours</a>
+                <a href="booking.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Book Now</a>
+                <a href="kigalitours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">kigalitours</a>
+                <a href="contact.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Contact</a>
+                  <a href="gallery.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Gallery</a>
+            </nav>
+            <!-- Mobile Hamburger Menu -->
+            <div class="md:hidden hamburger-menu cursor-pointer text-2xl" id="hamburger-icon" role="button" aria-expanded="false" aria-controls="mobile-nav-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <!-- Mobile Navigation Menu (hidden by default) -->
+        <nav id="mobile-nav-menu" class="nav-menu md:hidden">
+            <a href="index.html" class="block hover:bg-gray-700">Home</a>
+            <a href="tours.html" class="block hover:bg-gray-700">Tours</a>
+            <a href="booking.html" class="block hover:bg-gray-700">Book Now</a>
+            <a href="kigalitours.html" class="block hover:bg-gray-700">kigalitours</a>
+            <a href="contact.html" class="block hover:bg-gray-700">Contact</a>
+                        <a href="gallery.html" class="block hover:bg-gray-700">Gallery</a>
+
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="relative z-10 p-6 max-w-5xl mx-auto">
+            <div class="flex flex-col items-start text-left ml-8 md:ml-0 md:items-center md:text-center mt-20 md:mt-0">
+                <p class="text-xl md:text-2xl font-light mb-4 animate-slide-in-left" style="animation-delay: 0.6s;">
+                    Individual journeys through
+                </p>
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-shadow-lg mb-6 animate-slide-in-left" style="animation-delay: 0.8s;">
+                    Kigali's Vibrant Heart
+                </h1>
+                <p class="text-2xl md:text-3xl font-semibold mb-12 animate-slide-in-left" style="animation-delay: 1s;">
+                    Curated Expeditions to Hidden Gems & Iconic Landmarks
+                </p>
+                <a href="tours.html" class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-10 rounded-full shadow-lg transition duration-300 transform hover:scale-105 animate-slide-in-up" style="animation-delay: 1.2s;">
+                    Discover Your Adventure
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- FreeTour.com Badge + Clickable Button (Kigali Tours) -->
+    <a href="https://www.freetour.com/kigali"
+        target="_blank"
+        style="display: inline-block; text-decoration: none; border: 2px solid #00AEEF; border-radius: 10px; padding: 12px 24px; background-color: #ffffff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/FreeTour.com_logo.png"
+            alt="FreeTour.com - Kigali Tours"
+            style="height: 26px; vertical-align: middle; margin-right: 12px;">
+
+      <span style="font-size: 16px; color: #00AEEF; font-weight: bold; vertical-align: middle;">
+        Join Free Tours in Kigali
+      </span>
+    </a>
+
+    <!-- About Section - Enhanced -->
+    <section class="container mx-auto py-16 px-4 section-bg-overlay rounded-lg shadow-xl my-8">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">Unveiling Kigali's Charms with Twija Africa Safari</h2>
+        <p class="text-center text-lg text-gray-700 max-w-3xl mx-auto mb-10">
+            **Twija Africa Safari** offers an unparalleled journey through the heart of Rwanda's captivating capital.
+            Our expert local guides lead you on immersive experiences, revealing the city's rich history, vibrant culture, and breathtaking landscapes, one step at a time.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <div class="text-5xl text-emerald-500 mb-6 text-center"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Personalized Journeys</h3>
+                <p class="text-gray-700 text-lg text-center">
+                    Whether you're a history buff, a food enthusiast, or an art lover, our tours are crafted to match your interests. Enjoy intimate small groups or exclusive private experiences.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <div class="text-5xl text-emerald-500 mb-6 text-center"><i class="fas fa-lightbulb"></i></div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Insightful Local Guides</h3>
+                <p class="text-gray-700 text-lg text-center">
+                    Our passionate guides are local experts, eager to share their knowledge and personal stories, providing a truly authentic perspective of Kigali.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+                <div class="text-5xl text-emerald-500 mb-6 text-center"><i class="fas fa-leaf"></i></div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4 text-center">Sustainable Tourism</h3>
+                <p class="text-gray-700 text-lg text-center">
+                    We are committed to responsible tourism that benefits local communities and preserves Kigali's natural beauty and cultural heritage.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Featured Tours Section -->
+    <section class="bg-gray-100 py-16 px-4 section-bg-overlay rounded-lg shadow-xl my-8">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">Our Popular Walking Tours</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tour Card 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <!-- Improved alt text for SEO and accessibility -->
+                    <img src="6.jpg" alt="Kigali City Highlights Tour, including Genocide Memorial and local markets" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">Kigali City Highlights</h3>
+                        <p class="text-gray-700 mb-4">
+                            Explore the Genocide Memorial, Caplaki Craft Village, and local markets.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-emerald-600">$45.00/person</span>
+                            <a href="booking.html?tour=Kigali City Highlights Tour" class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-full text-sm font-semibold">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tour Card 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <img src="kigali6.jpg" alt="Kigali Art & Culture Tour, visiting local art galleries and cultural centers" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">Art & Culture Immersion</h3>
+                        <p class="text-gray-700 mb-4">
+                            Visit local art galleries, cultural centers, and traditional dance performances.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-emerald-600">$55.00/person</span>
+                            <a href="booking.html?tour=Kigali Art & Culture Immersion" class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-full text-sm font-semibold">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tour Card 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <img src="3.jpg" alt="Kigali Local Flavors Food Tour, tasting authentic Rwandan cuisine" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">Kigali Local Flavors</h3>
+                        <p class="text-gray-700 mb-4">
+                            Taste authentic Rwandan cuisine and explore bustling food markets.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-emerald-600">$50.00/person</span>
+                            <a href="booking.html?tour=Kigali Local Flavors Food Tour" class="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-full text-sm font-semibold">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="tours.html" class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                    View All Tours
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- GetYourGuide Badge + Clickable Button (Kigali Walking Tours) -->
+    <a href="https://www.getyourguide.com/kigali-l32466/walking-tours-tc3/"
+        target="_blank"
+        style="display: inline-block; text-decoration: none; border: 2px solid #FF5B00; border-radius: 10px; padding: 12px 24px; background-color: #ffffff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+
+      <img src="https://cdn.getyourguide.com/tf/assets/static/logos/gyg-logo.svg"
+            alt="GetYourGuide - Kigali Walking Tours"
+            style="height: 26px; vertical-align: middle; margin-right: 12px;">
+
+      <span style="font-size: 16px; color: #FF5B00; font-weight: bold; vertical-align: middle;">
+        Book Kigali Walking Tours on GetYourGuide
+      </span>
+    </a>
+
+    <!-- Call to Action Section -->
+    <section class="bg-emerald-700 text-white py-16 px-4 section-bg-overlay rounded-lg shadow-xl my-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4 text-gray-800">Ready to Explore Kigali?</h2>
+            <p class="text-xl mb-8 text-gray-700">Book your unforgettable walking tour today!</p>
+            <a href="booking.html" class="inline-block bg-white text-emerald-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition duration-300 transform hover:scale-105">
+                Book Your Adventure
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4" role="contentinfo">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Company Info / Copyright -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Kigali Walking Tours</h3>
+                <p class="text-gray-400">&copy; <span id="current-year"></span> Twija Africa Safari. All rights reserved.</p>
+                <p class="text-gray-400 mt-2">Connecting you to the heart of Rwanda.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="tours.html" class="text-gray-400 hover:text-white transition-colors duration-300">Tours</a></li>
+                    <li><a href="booking.html" class="text-gray-400 hover:text-white transition-colors duration-300">Book Now</a></li>
+                    <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info & Social Media -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-phone-alt mr-3"></i>+256777559835</p>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-envelope mr-3"></i>twijaafricasafari@gmail.com</p>
+                <a href="https://wa.me/256777559835" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center justify-center md:justify-start mb-4"><i class="fab fa-whatsapp mr-3"></i>WhatsApp Us</a>
+                <div class="flex justify-center md:justify-start space-x-6 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="Contact"></i>made by twijaafricasafari@gmail.com +256777559835 </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/256777559835" target="_blank" class="whatsapp-float-btn" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // JavaScript for mobile navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Toggle mobile navigation
+            hamburgerIcon.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

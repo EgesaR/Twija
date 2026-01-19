@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Attractions in Kigali</title>
+    <!-- Tailwind CSS CDN for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for the hamburger menu icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Custom styles for the body background and section overlay */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('5.jpg'); /* Dynamic placeholder, replace with a real image */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f0f4f8; /* Fallback background color */
+            color: #333; /* Default text color */
+        }
+        .section-bg-overlay {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white overlay for sections */
+        }
+        /* Styles for mobile navigation (hamburger menu) */
+        .nav-menu {
+            display: flex; /* Default display for desktop navigation */
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none; /* Hide regular nav menu on small screens */
+                flex-direction: column; /* Stack menu items vertically */
+                background-color: #1a202c; /* Dark background for mobile menu */
+                position: absolute;
+                top: 64px; /* Position below header */
+                left: 0;
+                width: 100%;
+                z-index: 10;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            #mobile-nav-menu.active {
+                display: flex; /* Show mobile nav menu when active */
+            }
+            .nav-menu a {
+                padding: 1rem 1.5rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator for mobile menu items */
+            }
+            .nav-menu a:last-child {
+                border-bottom: none; /* No border for the last item */
+            }
+        }
+        /* Styles for tour highlight icons */
+        .tour-highlight-icon {
+            color: #10B981; /* Emerald-500 color for icons */
+            margin-right: 0.5rem;
+        }
+        /* WhatsApp floating button styles */
+        .whatsapp-float-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px; /* Fully rounded (circle) */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            z-index: 50;
+            transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+        }
+        .whatsapp-float-btn:hover {
+            transform: scale(1.1); /* Enlarge on hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+ <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo with link and improved alt text -->
+            <a href="index.html" class="flex items-center" aria-label="Go to Home Page">
+                <img src="nm.PNG" alt="Twija Africa Safari Logo for Kigali Tours" class="h-10 mr-3 rounded-md">
+                <div class="text-2xl font-bold">Kigali City Tours</div>
+            </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6 nav-menu" aria-label="Main Navigation">
+                <a href="index.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Home</a>
+                <a href="tours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Tours</a>
+                <a href="booking.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Book Now</a>
+                <a href="kigalitours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">kigalitours</a>
+                <a href="contact.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Contact</a>
+                  <a href="gallery.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Gallery</a>
+            </nav>
+            <!-- Mobile Hamburger Menu -->
+            <div class="md:hidden hamburger-menu cursor-pointer text-2xl" id="hamburger-icon" role="button" aria-expanded="false" aria-controls="mobile-nav-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <!-- Mobile Navigation Menu (hidden by default) -->
+        <nav id="mobile-nav-menu" class="nav-menu md:hidden">
+            <a href="index.html" class="block hover:bg-gray-700">Home</a>
+            <a href="tours.html" class="block hover:bg-gray-700">Tours</a>
+            <a href="booking.html" class="block hover:bg-gray-700">Book Now</a>
+            <a href="kigalitours.html" class="block hover:bg-gray-700">kigalitours</a>
+            <a href="contact.html" class="block hover:bg-gray-700">Contact</a>
+                        <a href="gallery.html" class="block hover:bg-gray-700">Gallery</a>
+
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="space-y-16">
+
+            <!-- Historical and Memorial Sites Section -->
+            <section id="historical" class="section-bg-overlay p-8 md:p-12 rounded-2xl shadow-xl transition-transform transform hover:scale-[1.01] duration-300">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center border-b-2 border-emerald-500 pb-4">Historical and Memorial Sites</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Kigali Genocide Memorial Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Kigali Genocide Memorial</h3>
+                        <p class="text-gray-700 text-sm mb-4">A powerful place of remembrance and learning, dedicated to the victims of the 1994 Genocide against the Tutsi.</p>
+                        <a href="https://kgm.rw/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Campaign Against Genocide Museum Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Campaign Against Genocide Museum</h3>
+                        <p class="text-gray-700 text-sm mb-4">Located in the Parliament building, it tells the story of the RPF's campaign to stop the genocide.</p>
+                        <a href="https://visitrwanda.com/interests/rwanda-art-museum/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Kandt House Museum Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Kandt House Museum</h3>
+                        <p class="text-gray-700 text-sm mb-4">Explore Rwanda's colonial history and natural history at the former residence of explorer Richard Kandt.</p>
+                        <a href="https://momaa.org/directory/kandt-house-museum-in-kigali/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Nyamata and Ntarama Memorials Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Nyamata and Ntarama Memorials</h3>
+                        <p class="text-gray-700 text-sm mb-4">Located just outside of Kigali, these sites are preserved churches that tell a powerful story of the genocide.</p>
+                        <a href="https://whc.unesco.org/en/list/1586/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Arts, Culture, and Local Life Section -->
+            <section id="arts" class="section-bg-overlay p-8 md:p-12 rounded-2xl shadow-xl transition-transform transform hover:scale-[1.01] duration-300">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center border-b-2 border-emerald-500 pb-4">Arts, Culture, and Local Life</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Inema Arts Center Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Inema Arts Center</h3>
+                        <p class="text-gray-700 text-sm mb-4">A hub for contemporary African art, featuring works from Rwandan artists and hosting workshops.</p>
+                        <a href="http://www.inemaartcenter.com/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Niyo Arts Gallery Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Niyo Arts Gallery</h3>
+                        <p class="text-gray-700 text-sm mb-4">A community-focused gallery showcasing local artists and providing a space for creativity and expression.</p>
+                        <a href="https://niyoartscenter.com/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Rwanda Art Museum Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Rwanda Art Museum</h3>
+                        <p class="text-gray-700 text-sm mb-4">Experience contemporary Rwandan art and a collection of artifacts, located in a former presidential palace.</p>
+                        <a href="https://visitrwanda.com/interests/rwanda-art-museum/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Kimironko Market Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Kimironko Market</h3>
+                        <p class="text-gray-700 text-sm mb-4">The largest and busiest market in Kigali, perfect for experiencing daily life and buying fresh produce or fabrics.</p>
+                        <a href="https://www.safarisrwandasafari.com/information/touring-kimironko-market-in-kigali-rwanda-2024/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Nyamirambo Women's Center Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Nyamirambo Women's Center</h3>
+                        <p class="text-gray-700 text-sm mb-4">An NGO empowering women through education and skills training, offering tours and a craft shop.</p>
+                        <a href="http://nwc-kigali.org/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Caplaki Crafts Village Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Caplaki Crafts Village</h3>
+                        <p class="text-gray-700 text-sm mb-4">A great place to find authentic Rwandan handmade crafts, souvenirs, and traditional art.</p>
+                        <a href="https://www.visitrwandagorilla.com/caplaki-crafts-village/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nature and Outdoor Activities Section -->
+            <section id="nature" class="section-bg-overlay p-8 md:p-12 rounded-2xl shadow-xl transition-transform transform hover:scale-[1.01] duration-300">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center border-b-2 border-emerald-500 pb-4">Nature and Outdoor Activities</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Mount Kigali (Fazenda Sengha) Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Mount Kigali (Fazenda Sengha)</h3>
+                        <p class="text-gray-700 text-sm mb-4">Enjoy a variety of adventure activities like ziplining, horse riding, and quad biking with panoramic city views.</p>
+                        <a href="http://sengha.com/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Nyandungu Urban Wetland Eco-Tourism Park Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Nyandungu Urban Wetland Eco-Tourism Park</h3>
+                        <p class="text-gray-700 text-sm mb-4">A serene urban wetland offering walking and cycling trails, birdwatching, and a peaceful escape from the city.</p>
+                        <a href="https://en.wikipedia.org/wiki/Nyandungu_Urban_Wetland_Eco-Tourism_Park" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Umusambi Village Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Umusambi Village</h3>
+                        <p class="text-gray-700 text-sm mb-4">A restored wetland sanctuary and home to over 50 rescued Grey Crowned Cranes and other wildlife.</p>
+                        <a href="https://www.umusambivillage.org/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modern Landmarks Section -->
+            <section id="landmarks" class="section-bg-overlay p-8 md:p-12 rounded-2xl shadow-xl transition-transform transform hover:scale-[1.01] duration-300">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center border-b-2 border-emerald-500 pb-4">Modern Landmarks</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <!-- Kigali Convention Centre Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Kigali Convention Centre</h3>
+                        <p class="text-gray-700 text-sm mb-4">An iconic dome-shaped building and a key landmark of Kigali's modern skyline, hosting major events and conferences.</p>
+                        <a href="https://www.kcc.rw/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                    <!-- Hotel des Mille Collines Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Hotel des Mille Collines</h3>
+                        <p class="text-gray-700 text-sm mb-4">Famously known as the "Hotel Rwanda," this historic hotel played a significant role in saving lives during the 1994 genocide.</p>
+                        <a href="https://millecollines.rw/" target="_blank" class="inline-block bg-emerald-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-emerald-600 transition-colors text-xs">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:flex md:justify-between md:items-start md:text-left space-y-8 md:space-y-0">
+            <!-- Company Info -->
+            <div class="flex-1 space-y-4">
+                <h4 class="text-2xl font-bold text-white">Twija Africa Safari</h4>
+                <p class="text-sm max-w-sm mx-auto md:mx-0">Connecting you to the heart of Rwanda. We're dedicated to providing unforgettable tours and experiences.</p>
+                <div class="flex justify-center md:justify-start space-x-4">
+                    <!-- Social Media Links (using SVG for icons) -->
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.35c0 .732.593 1.325 1.325 1.325h11.411v-9.294h-3.111v-3.593h3.111v-2.66c0-3.09 1.89-4.767 4.63-4.767 1.324 0 2.464.098 2.793.142v3.235h-1.928c-1.516 0-1.808.722-1.808 1.777v2.333h3.587l-.468 3.593h-3.119v9.294h6.075c.731 0 1.325-.593 1.325-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.34-1.61.57-2.49.67.88-.53 1.55-1.37 1.87-2.36-.83.49-1.74.85-2.72 1.05-1.07-1.14-2.64-1.86-4.38-1.86-3.32 0-6.03 2.71-6.03 6.03 0 .47.05.93.15 1.37-5.01-.25-9.45-2.65-12.42-6.23-.52.9-.82 1.95-.82 3.06 0 2.09 1.06 3.93 2.68 5.01-.98-.03-1.9-.3-2.7-.75v.08c0 2.94 2.09 5.39 4.88 5.95-.51.14-1.05.22-1.61.22-.39 0-.76-.04-1.12-.11.77 2.42 3.01 4.17 5.67 4.21-2.07 1.62-4.68 2.59-7.53 2.59-.49 0-.97-.03-1.44-.08 2.68 1.72 5.86 2.72 9.29 2.72 11.16 0 17.27-9.25 17.27-17.27 0-.26-.01-.52-.02-.78.96-.69 1.79-1.54 2.46-2.52z"></path></svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c2.71 0 3.04.01 4.12.06 1.08.06 1.76.22 2.43.49.69.27 1.25.68 1.83 1.26.58.58.99 1.14 1.26 1.83.27.67.43 1.35.49 2.43.05 1.08.06 1.41.06 4.12s-.01 3.04-.06 4.12c-.06 1.08-.22 1.76-.49 2.43-.27.69-.68 1.25-1.26 1.83-.58.58-.99 1.14-1.83 1.26-.67.27-1.35.43-2.43.49-1.08.05-1.41.06-4.12.06s-3.04-.01-4.12-.06c-1.08-.06-1.76-.22-2.43-.49-.69-.27-1.25-.68-1.83-1.26-.58-.58-.99-1.14-1.26-1.83-.27-.67-.43-1.35-.49-2.43-.05-1.08-.06-1.41-.06-4.12s.01-3.04.06-4.12c.06-1.08.22-1.76.49-2.43.27-.69.68-1.25 1.26-1.83.58-.58 1.14-.99 1.83-1.26.67-.27 1.35-.43 2.43-.49 1.08-.05 1.41-.06 4.12-.06zm0 2.22c-3.1 0-5.78 2.51-5.78 5.78s2.68 5.78 5.78 5.78 5.78-2.51 5.78-5.78-2.68-5.78-5.78-5.78zM12 16.48c-2.48 0-4.48-2-4.48-4.48s2-4.48 4.48-4.48 4.48 2 4.48 4.48-2 4.48-4.48 4.48zm5.73-8.87c.64 0 1.16-.52 1.16-1.16s-.52-1.16-1.16-1.16-1.16.52-1.16 1.16.52 1.16 1.16 1.16z"></path></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="flex-1 text-center md:text-left">
+                <h5 class="text-white font-semibold mb-3">Quick Links</h5>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tours</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Book Now</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section (Optional, can be added if needed) -->
+            <div class="flex-1 text-center md:text-left">
+                <h5 class="text-white font-semibold mb-3">Get in Touch</h5>
+                <ul class="space-y-2 text-gray-400">
+                    <li>Kigali, Rwanda</li>
+                    <li>Email: info@twijafrica.com</li>
+                    <li>Phone: +250 788 123 456</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+            <p class="text-sm">&copy; 2025 Twija Africa Safari. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/?text=Hello! I'm interested in tours of Kigali." class="whatsapp-float-btn" target="_blank" aria-label="Chat on WhatsApp">
+        <svg fill="currentColor" viewBox="0 0 24 24" class="w-8 h-8">
+            <path d="M12.04 2.89C6.94 2.89 2.89 6.94 2.89 12.04C2.89 13.79 3.39 15.42 4.31 16.81L3.08 21.01L7.42 19.85C8.75 20.45 10.34 20.76 12.04 20.76C17.14 20.76 21.19 16.71 21.19 11.61C21.19 6.51 17.14 2.46 12.04 2.46L12.04 2.89Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M16.9 14.86C16.63 15.34 16.2 15.4 15.69 15.22C15.17 15.04 14.07 14.52 12.78 13.97C11.49 13.42 10.42 12.87 9.87 12.33C9.32 11.78 9.27 11.08 9.53 10.74C9.8 10.4 10.15 10.05 10.41 9.77C10.67 9.48 10.83 9.38 10.99 9.1C11.15 8.82 11.23 8.35 11.05 7.91C10.87 7.47 10.18 6.4 9.58 6.1C8.98 5.8 8.44 5.92 7.91 6.09C7.38 6.26 6.89 6.6 6.51 7.1C6.13 7.61 5.48 8.65 5.48 10.51C5.48 12.37 6.64 14.23 7.73 15.09C8.82 15.95 10.68 16.48 12.54 16.64C14.4 16.8 16.09 16.14 16.99 15.49C17.89 14.84 18.23 14.05 18.23 13.15C18.23 12.25 17.7 11.51 17.29 11.23C16.88 10.95 16.32 10.78 16.05 10.95C15.78 11.12 15.15 11.39 14.88 11.66C14.61 11.93 14.34 12.21 14.07 12.48" fill="white"></path>
+        </svg>
+    </a>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('hamburger-icon');
+            const mobileMenu = document.getElementById('mobile-nav-menu');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+            });
+            // Hide menu when a link is clicked
+            document.querySelectorAll('#mobile-nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

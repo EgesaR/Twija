@@ -1,0 +1,156 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-yellow: #e7d393; /* keep your custom color */
+  --color-white-100: #efefef;
+
+  --font-sans:
+    'InterVariable', system-ui, sans-serif; /* main UI font – variable! */
+  --font-modern-negra: 'Modern Negra', serif; /* keep your display serif */
+  --font-serif: 'DM Serif Text', serif; /* keep your classic serif */
+}
+
+html,
+body {
+  width: 100%;
+  background-color: black;
+  color: white;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
+
+.card {
+  @apply bg-neutral-900 text-white rounded-4xl! border-0;
+}
+
+.badge {
+  @apply py-1 px-4.5 bg-black/30;
+}
+
+.icon-btn {
+  @apply size-10 rounded-full hover:cursor-pointer;
+}
+
+.btn {
+  @apply hover:cursor-pointer;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18)
+}
+
+@layer components {
+  .home {
+    @apply w-full h-screen overflow-hidden text-white font-sans;
+  }
+  nav {
+    @apply fixed z-50 w-full;
+
+    div {
+      @apply flex md:flex-row flex-col md:justify-between items-center gap-5 py-5 lg:px-0 px-5 container mx-auto;
+    }
+
+    p {
+      @apply text-3xl font-semibold -mb-2;
+    }
+
+    a {
+      @apply cursor-pointer text-nowrap md:text-base text-sm;
+    }
+
+    ul {
+      @apply flex-center lg:gap-12 gap-7;
+    }
+  }
+
+  .hero {
+    @apply relative z-10 min-h-dvh w-full;
+    .hero-content {
+      @apply absolute inset-0 flex flex-col items-center justify-center bg-linear-to-b from-black/20 via-black/30 to-black/50;
+      h3 {
+        @apply text-3xl font-light text-center mt-20;
+      }
+
+      h1 {
+        @apply text-[6vw] text-center;
+      }
+      p {
+        @apply text-[2.5vw] text-center;
+      }
+      .btn-container {
+        @apply flex items-center justify-center mt-12;
+
+        button {
+          @apply w-72 py-7! rounded-full! text-xl! hover:cursor-pointer;
+        }
+      }
+    }
+  }
+
+  .services,
+  .tours,
+  .explore,
+  .feedback {
+    @apply min-h-screen py-28 2xl:px-0 px-5 flex flex-col items-center justify-center bg-black;
+
+    .content {
+      @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
+      h2 {
+        @apply text-5xl md:text-6xl max-w-lg;
+      }
+      .sub-content {
+        @apply md:col-span-6 space-y-2 flex flex-col justify-between;
+
+        p {
+          @apply text-xl;
+        }
+      }
+    }
+
+    /*.service-cards {
+      @apply grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 w-full max-w-6xl px-5;
+
+      .card {
+        @apply bg-white/10 p-6 rounded-lg hover:bg-white/20 transition;
+
+        h3 {
+          @apply text-2xl mb-4;
+        }
+
+        p {
+          @apply text-base;
+        }
+      }
+    }*/
+  }
+
+  .footer {
+    @apply w-full flex flex-col items-center justify-center gap-4 min-h-[70vh] pt-28 pb-10 2xl:px-0 px-5 bg-black;
+
+    .content {
+      @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
+      h2 {
+        @apply text-5xl md:text-6xl max-w-lg;
+      }
+      .sub-content {
+        @apply md:col-span-6 space-y-2 flex flex-col justify-between;
+
+        p {
+          @apply text-xl;
+        }
+      }
+    }
+
+    .card {
+      @apply h-120 py-10 px-12;
+    }
+  }
+}

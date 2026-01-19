@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Tour - Kigali Walking Tours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('b.jpg'); /* Dynamic placeholder, replace with a real image */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .section-bg-overlay {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .hamburger-menu {
+            display: none;
+        }
+        .nav-menu {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                background-color: #1a202c;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                width: 100%;
+                z-index: 10;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 1rem 1.5rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu a:last-child {
+                border-bottom: none;
+            }
+        }
+        /* WhatsApp floating button style */
+        .whatsapp-float-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px; /* Fully rounded */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            z-index: 50;
+            transition: transform 0.3s ease-in-out;
+        }
+        .whatsapp-float-btn:hover {
+            transform: scale(1.1);
+        }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            text-align: center;
+        }
+        .message-box button {
+            margin-top: 1rem;
+            background-color: #10B981; /* Emerald-500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .message-box button:hover {
+            background-color: #059669; /* Emerald-600 */
+        }
+    </style>
+</head>
+<body>
+  <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo with link and improved alt text -->
+            <a href="index.html" class="flex items-center" aria-label="Go to Home Page">
+                <img src="nm.PNG" alt="Twija Africa Safari Logo for Kigali Tours" class="h-10 mr-3 rounded-md">
+                <div class="text-2xl font-bold">Kigali City Tours</div>
+            </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6 nav-menu" aria-label="Main Navigation">
+                <a href="index.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Home</a>
+                <a href="tours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Tours</a>
+                <a href="booking.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Book Now</a>
+                <a href="kigalitours.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">kigalitours</a>
+                <a href="contact.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Contact</a>
+                  <a href="gallery.html" class="hover:text-emerald-400 transition-colors duration-300 rounded-md p-2">Gallery</a>
+            </nav>
+            <!-- Mobile Hamburger Menu -->
+            <div class="md:hidden hamburger-menu cursor-pointer text-2xl" id="hamburger-icon" role="button" aria-expanded="false" aria-controls="mobile-nav-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <!-- Mobile Navigation Menu (hidden by default) -->
+        <nav id="mobile-nav-menu" class="nav-menu md:hidden">
+            <a href="index.html" class="block hover:bg-gray-700">Home</a>
+            <a href="tours.html" class="block hover:bg-gray-700">Tours</a>
+            <a href="booking.html" class="block hover:bg-gray-700">Book Now</a>
+            <a href="kigalitours.html" class="block hover:bg-gray-700">kigalitours</a>
+            <a href="contact.html" class="block hover:bg-gray-700">Contact</a>
+                        <a href="gallery.html" class="block hover:bg-gray-700">Gallery</a>
+
+        </nav>
+    </header>
+
+    <!-- Booking Form Section -->
+    <section class="container mx-auto py-16 px-4 section-bg-overlay rounded-lg shadow-xl my-8">
+        <h1 class="text-5xl font-extrabold text-center text-gray-800 mb-12">Book Your Kigali Walking Tour</h1>
+
+        <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <!-- Formspree Integration: Updated action and method for server-side handling -->
+            <form id="booking-form" action="https://formspree.io/f/xovlvawk" method="POST" class="space-y-6">
+                <div>
+                    <label for="full-name" class="block text-gray-700 text-lg font-semibold mb-2">Full Name:</label>
+                    <input type="text" id="full-name" name="Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 text-lg font-semibold mb-2">Email Address:</label>
+                    <input type="email" id="email" name="Email Address" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="john.doe@example.com" required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-700 text-lg font-semibold mb-2">Phone Number:</label>
+                    <input type="tel" id="phone" name="Phone Number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="+250 788 XXX XXX">
+                </div>
+                <div>
+                    <label for="tour-select" class="block text-gray-700 text-lg font-semibold mb-2">Select Tour:</label>
+                    <select id="tour-select" name="Selected Tour" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white" required>
+                        <option value="">-- Please select a tour --</option>
+                        <option value="Kigali City Highlights Tour">Kigali City Highlights Tour ($45.00)</option>
+                        <option value="Kigali Art & Culture Immersion">Kigali Art & Culture Immersion ($55.00)</option>
+                        <option value="Kigali Local Flavors Food Tour">Kigali Local Flavors Food Tour ($50.00)</option>
+                        <option value="Nyamirambo Community Walk">Nyamirambo Community Walk ($35.00)</option>
+                        <option value="Green Kigali Eco-Walk">Green Kigali Eco-Walk ($40.00)</option>
+                        <option value="Kigali by Night Experience">Kigali by Night Experience ($60.00)</option>
+                        <option value="Kigali Innovation & Tech Hub Walk">Kigali Innovation & Tech Hub Walk ($50.00)</option>
+                        <option value="Kigali Coffee & Craft Journey">Kigali Coffee & Craft Journey ($65.00)</option>
+                        <option value="Kigali Architectural Heritage Walk">Kigali Architectural Heritage Walk ($70.00)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="tour-date" class="block text-gray-700 text-lg font-semibold mb-2">Preferred Tour Date:</label>
+                    <input type="date" id="tour-date" name="Preferred Tour Date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" min="" required>
+                </div>
+                <div>
+                    <label for="num-participants" class="block text-gray-700 text-lg font-semibold mb-2">Number of Participants:</label>
+                    <input type="number" id="num-participants" name="Number of Participants" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" min="1" value="1" required>
+                </div>
+                <div>
+                    <label for="special-requests" class="block text-gray-700 text-lg font-semibold mb-2">Special Requests (Optional):</label>
+                    <textarea id="special-requests" name="Special Requests" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="e.g., dietary restrictions, accessibility needs"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-full text-xl transition-all duration-300 shadow-md transform hover:scale-105">
+                    Confirm Booking
+                </button>
+                <div id="form-message" class="mt-4 text-center text-lg hidden"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Message Box (will now be primarily for error messages or custom success messages if Formspree is bypassed) -->
+    <div id="message-box" class="message-box">
+        <p id="message-text" class="text-xl font-semibold mb-4"></p>
+        <button id="close-message-box">OK</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Company Info / Copyright -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Kigali Walking Tours</h3>
+                <p class="text-gray-400">&copy; <span id="current-year"></span> Kigali Walking Tours. All rights reserved.</p>
+                <p class="text-gray-400 mt-2">Connecting you to the heart of Rwanda.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="tours.html" class="text-gray-400 hover:text-white transition-colors duration-300">Tours</a></li>
+                    <li><a href="booking.html" class="text-gray-400 hover:text-white transition-colors duration-300">Book Now</a></li>
+                    <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info & Social Media -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-phone-alt mr-3"></i>+256777559835</p>
+                <p class="text-gray-400 flex items-center justify-center md:justify-start mb-2"><i class="fas fa-envelope mr-3">twijaafricasafari@gmail.com</i>ki/p>
+                <a href="https://wa.me/256777559835" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center justify-center md:justify-start mb-4"><i class="fab fa-whatsapp mr-3"></i>WhatsApp Us</a>
+                <div class="flex justify-center md:justify-start space-x-6 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/256777559835" target="_blank" class="whatsapp-float-btn" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // JavaScript for mobile navigation and booking form
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            const bookingForm = document.getElementById('booking-form');
+            const formMessage = document.getElementById('form-message');
+            const tourDateInput = document.getElementById('tour-date');
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+            const closeMessageBoxButton = document.getElementById('close-message-box');
+            const tourSelect = document.getElementById('tour-select');
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Set minimum date for tour booking to today
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const day = String(today.getDate()).padStart(2, '0');
+            tourDateInput.min = `${year}-${month}-${day}`;
+
+            // Toggle mobile navigation
+            hamburgerIcon.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('active');
+            });
+
+            // Pre-select tour if passed in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedTour = urlParams.get('tour');
+            if (selectedTour) {
+                // Find option by value
+                tourSelect.value = selectedTour;
+            }
+
+            // Handle booking form submission (Formspree handles the actual submission)
+            bookingForm.addEventListener('submit', (event) => {
+                // Basic client-side validation before sending to Formspree
+                const fullName = document.getElementById('full-name').value;
+                const email = document.getElementById('email').value;
+                const selectedTourValue = tourSelect.value;
+                const tourDate = tourDateInput.value;
+                const numParticipants = document.getElementById('num-participants').value;
+
+                if (!fullName || !email || !selectedTourValue || !tourDate || !numParticipants) {
+                    event.preventDefault(); // Stop Formspree submission if validation fails
+                    showMessageBox('Please fill in all required fields.', 'red');
+                    return;
+                }
+
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    event.preventDefault(); // Stop Formspree submission if validation fails
+                    showMessageBox('Please enter a valid email address.', 'red');
+                    return;
+                }
+
+                if (parseInt(numParticipants) <= 0) {
+                    event.preventDefault(); // Stop Formspree submission if validation fails
+                    showMessageBox('Number of participants must be at least 1.', 'red');
+                    return;
+                }
+
+                // Formspree will handle the success/error messages after submission,
+                // so we don't need a client-side success message here, just let the form submit.
+                // Formspree often redirects or shows its own success message.
+            });
+
+            // Function to show custom message box (useful for client-side validation errors)
+            function showMessageBox(message, type) {
+                messageText.textContent = message;
+                messageText.style.color = (type === 'red' ? '#dc2626' : '#047857'); // Tailwind red-600 or emerald-700
+                messageBox.style.display = 'block';
+            }
+
+            // Close message box
+            closeMessageBoxButton.addEventListener('click', () => {
+                messageBox.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

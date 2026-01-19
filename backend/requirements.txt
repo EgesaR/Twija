@@ -1,0 +1,49 @@
+# FastAPI web framework
+fastapi==0.128.0
+uvicorn==0.40.0
+starlette==0.50.0
+
+# Database and ORM
+SQLAlchemy==2.0.45
+pydantic==2.12.5
+pydantic_core==2.41.5
+typing_extensions==4.15.0
+python-dateutil==2.9.0.post0
+tzdata==2025.3
+tzlocal==5.3.1
+
+# Celery task queue
+celery==5.6.2
+billiard==4.2.4
+kombu==5.6.2
+amqp==5.3.1
+redis==6.4.0
+
+# Security
+bcrypt==5.0.0
+cryptography==46.0.3
+passlib==1.7.4
+python-jose==3.5.0
+rsa==4.9.1
+ecdsa==0.19.1
+
+# Async support
+aiofiles==25.1.0
+anyio==4.12.1
+async-timeout==5.0.1
+h11==0.16.0
+
+# Rate limiting
+fastapi-limiter==0.1.6
+limits==5.6.0
+slowapi==0.1.9
+
+# Optional utilities
+certifi==2026.1.4
+idna==3.11
+urllib3==2.6.3
+packaging==25.0
+wrapt==2.0.1
+
+psycopg2-binary 
+redis
