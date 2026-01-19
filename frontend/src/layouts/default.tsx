@@ -3,7 +3,8 @@ import Footer from '@/components/layout/Footer';
 // import WhatsAppButton from "@/components/WhatsappButton";
 // import React from "react";
 // import { Outlet } from "react-router";
-import {gsap} from "gsap"
+import { gsap } from "gsap"
+import { useGSAP } from '@gsap/react';
 const DefaultLayout = () => {
   return (
     <div className='w-full flex flex-col min-h-screen'>
