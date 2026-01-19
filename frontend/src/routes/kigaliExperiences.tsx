@@ -3,8 +3,23 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import type { Tour } from '@/types/tour';
 
-// ---------- Data ----------
-const historyExperiences = [
+/* =======================
+   Types
+======================= */
+
+type Experience = {
+  title: string;
+  description: string;
+  imageUrl: string;
+  tourName: string;
+  tourLink: string;
+};
+
+/* =======================
+   Data
+======================= */
+
+const historyExperiences: Experience[] = [
   {
     title: 'Kigali Genocide Memorial',
     description:
@@ -31,7 +46,7 @@ const historyExperiences = [
   },
 ];
 
-const artsExperiences = [
+const artsExperiences: Experience[] = [
   {
     title: 'Inema Arts Center',
     description:
@@ -58,7 +73,7 @@ const artsExperiences = [
   },
 ];
 
-const natureExperiences = [
+const natureExperiences: Experience[] = [
   {
     title: 'Mount Kigali (Fazenda Sengha)',
     description:
@@ -85,7 +100,7 @@ const natureExperiences = [
   },
 ];
 
-const modernExperiences = [
+const modernExperiences: Experience[] = [
   {
     title: 'Kigali Convention Centre',
     description:
@@ -97,22 +112,26 @@ const modernExperiences = [
   {
     title: 'Hotel des Mille Collines',
     description:
-      'Famously known as the "Hotel Rwanda," historic hotel that saved lives during the 1994 genocide.',
+      'Famously known as the “Hotel Rwanda,” historic hotel that saved lives during the 1994 genocide.',
     imageUrl: '/images/hotel-mille-collines.jpg',
     tourName: 'Modern Kigali Highlights',
     tourLink: '/tours/modern-kigali',
   },
 ];
 
-// ---------- Components ----------
+/* =======================
+   Components
+======================= */
 
-const ExperienceCard = ({
+type ExperienceCardProps = Experience;
+
+const ExperienceCard: React.FC<ExperienceCardProps> = ({
   title,
   description,
   imageUrl,
   tourName,
   tourLink,
-}: { title: string; description: string; imageUrl: string; tourName: string; tourLink: string }) => (
+}) => (
   <div className='border rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col'>
     <img src={imageUrl} alt={title} className='h-48 w-full object-cover' />
     <div className='p-4 flex flex-col flex-1'>
@@ -125,7 +144,11 @@ const ExperienceCard = ({
   </div>
 );
 
-const ExperienceGrid = ({ experiences }: { experiences: any[] }) => (
+type ExperienceGridProps = {
+  experiences: Experience[];
+};
+
+const ExperienceGrid: React.FC<ExperienceGridProps> = ({ experiences }) => (
   <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6'>
     {experiences.map((exp) => (
       <ExperienceCard key={exp.title} {...exp} />
@@ -133,7 +156,11 @@ const ExperienceGrid = ({ experiences }: { experiences: any[] }) => (
   </div>
 );
 
-const SuggestedTours = ({ tours }: { tours: Tour[] }) => (
+type SuggestedToursProps = {
+  tours: Tour[];
+};
+
+const SuggestedTours: React.FC<SuggestedToursProps> = ({ tours }) => (
   <div className='mt-12'>
     <h2 className='text-2xl font-bold mb-4'>Suggested Tours</h2>
     <div className='flex flex-col sm:flex-row gap-4'>
@@ -153,12 +180,14 @@ const SuggestedTours = ({ tours }: { tours: Tour[] }) => (
   </div>
 );
 
-// ---------- Page ----------
+/* =======================
+   Page
+======================= */
 
-const KigaliExperiencesPage = () => {
+const KigaliExperiencesPage: React.FC = () => {
   return (
     <div className='container mx-auto px-4 py-12'>
-      {/* Page Header */}
+      {/* Header */}
       <div className='text-center mb-12'>
         <h1 className='text-4xl font-bold mb-2'>Kigali Experiences</h1>
         <p className='text-gray-600 text-lg'>
@@ -167,8 +196,7 @@ const KigaliExperiencesPage = () => {
         </p>
       </div>
 
-      {/* Tabs */}
-      <Tabs defaultValue='history' className='w-full'>
+      <Tabs defaultValue='history'>
         <TabsList className='grid grid-cols-4'>
           <TabsTrigger value='history'>History & Memorials</TabsTrigger>
           <TabsTrigger value='arts'>Arts & Culture</TabsTrigger>

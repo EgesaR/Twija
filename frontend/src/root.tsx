@@ -11,7 +11,8 @@ import type { Route } from "./+types/root";
 import "@/styles/app.css";
 import "@/styles/components.css"
 import gsap from "gsap";
-import { ScrollTrigger, SplitText } from "gsap/all";
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import SplitText from 'gsap/SplitText';
 
 export const links: Route.LinksFunction= () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
