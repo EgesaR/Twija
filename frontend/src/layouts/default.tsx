@@ -1,4 +1,4 @@
-// import Footer from "@/components/layout/Footer";
+import Footer from '@/components/layout/Footer';
 // import Navbar from "@/components/layout/Navbar";
 // import WhatsAppButton from "@/components/WhatsappButton";
 // import React from "react";
@@ -6,14 +6,14 @@
 
 const DefaultLayout = () => {
   return (
-    <div className="w-full flex flex-col min-h-screen">
+    <div className='w-full flex flex-col min-h-screen'>
       nav
-  {/* <Navbar />
+      {/* <Navbar />
   <div className="flex-1">
     <Outlet />
     <WhatsAppButton />
-  </div>
-  <Footer /> */}
+  </div>*/}
+      <Footer />
     </div>
   );
 };
