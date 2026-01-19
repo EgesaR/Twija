@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { getImageUrl } from '@/utils/images';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-//import ScrollTrigger from 'gsap';
+//import ScrollTrigger from 'gsap'; 
 
 gsap.registerPlugin(useGSAP); 
 const Navbar = () => {
