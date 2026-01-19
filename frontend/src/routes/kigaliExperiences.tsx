@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import type { Tour } from '@/types/tour';
+import { useClientGSAP } from '@/hooks/useClientGSAP'; // Add this import
 
 /* =======================
    Types
@@ -132,7 +133,9 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
   tourName,
   tourLink,
 }) => (
-  <div className='border rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col'>
+  <div className='border rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col animate-card'>
+    {' '}
+    {/* Added animate-card class */}
     <img src={imageUrl} alt={title} className='h-48 w-full object-cover' />
     <div className='p-4 flex flex-col flex-1'>
       <h3 className='text-lg font-semibold mb-2'>{title}</h3>
@@ -149,7 +152,9 @@ type ExperienceGridProps = {
 };
 
 const ExperienceGrid: React.FC<ExperienceGridProps> = ({ experiences }) => (
-  <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6'>
+  <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 animate-grid'>
+    {' '}
+    {/* Added animate-grid class */}
     {experiences.map((exp) => (
       <ExperienceCard key={exp.title} {...exp} />
     ))}
@@ -161,7 +166,9 @@ type SuggestedToursProps = {
 };
 
 const SuggestedTours: React.FC<SuggestedToursProps> = ({ tours }) => (
-  <div className='mt-12'>
+  <div className='mt-12 animate-suggested'>
+    {' '}
+    {/* Added animate-suggested class */}
     <h2 className='text-2xl font-bold mb-4'>Suggested Tours</h2>
     <div className='flex flex-col sm:flex-row gap-4'>
       {tours.map((tour) => (
@@ -185,10 +192,51 @@ const SuggestedTours: React.FC<SuggestedToursProps> = ({ tours }) => (
 ======================= */
 
 const KigaliExperiencesPage: React.FC = () => {
+  // Add GSAP animations here (SSR-safe)
+  useClientGSAP((gsap) => {
+    // Header fade-in
+    gsap.from('.page-header', {
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+    });
+
+    // Stagger experience cards on scroll
+    gsap.from('.animate-card', {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: '.animate-grid',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: true,
+      },
+    });
+
+    // Suggested tours slide-in on scroll
+    gsap.from('.animate-suggested > div > div', {
+      x: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.3,
+      scrollTrigger: {
+        trigger: '.animate-suggested',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: true,
+      },
+    });
+  });
+
   return (
     <div className='container mx-auto px-4 py-12'>
       {/* Header */}
-      <div className='text-center mb-12'>
+      <div className='text-center mb-12 page-header'>
+        {' '}
+        {/* Added page-header class */}
         <h1 className='text-4xl font-bold mb-2'>Kigali Experiences</h1>
         <p className='text-gray-600 text-lg'>
           Discover the best of Kigali’s history, culture, nature, and modern

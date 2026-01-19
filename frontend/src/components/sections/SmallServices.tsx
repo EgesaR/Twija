@@ -9,9 +9,6 @@ import { iconMap } from '@/constants/iconMap';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const SmallServices = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

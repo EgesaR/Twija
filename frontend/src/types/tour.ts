@@ -14,6 +14,7 @@ export type Tour = {
   numberPerPerson: number;
   slots: number;
   highlights?: string[];
+  link: string;
 };
 
 export type TourPreview = Pick<Tour, 'id' | 'name' | 'images'>;
