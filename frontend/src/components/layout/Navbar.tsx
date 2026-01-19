@@ -4,7 +4,9 @@ import { Link } from 'react-router';
 import { getImageUrl } from '@/utils/images';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 
+gsap.registerPlugin(ScrollTrigger);
 const Navbar = () => {
   useGSAP(() => {
     const navTween = gsap.timeline({
@@ -16,8 +18,6 @@ const Navbar = () => {
         scrub: true,
       },
     });
-
-   
   });
   return (
     <nav>
