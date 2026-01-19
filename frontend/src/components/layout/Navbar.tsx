@@ -7,26 +7,7 @@ import gsap from 'gsap';
 
 const Navbar = () => {
   useGSAP(() => {
-    const navTween = gsap.timeline({
-      scrollTrigger: {
-        trigger: 'nav',
-        start: '10% top',
-        end: 'bottom top',
-        toggleActions: 'play reverse play reverse',
-        scrub: true,
-      },
-    });
-
-    navTween.fromTo(
-      'nav',
-      { backgroundColor: 'transparent', backdropFilter: 'blur(0px)' },
-      {
-        background: '#00000080',
-        backdropFilter: 'blur(10px)',
-        duration: 1,
-        ease: 'power1.inOut',
-      }
-    );
+    
   });
   return (
     <nav>
