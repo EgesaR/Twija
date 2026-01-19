@@ -1,11 +1,11 @@
 import { getImageUrl } from '@/utils/images';
 import type { Route } from './+types/home';
-// import Hero from '@/components/sections/Hero';
-// import Services from '@/components/sections/Services';
-// import SmallServices from '@/components/sections/SmallServices';
-// import Tours from '@/components/sections/Tours';
-// import Explore from '@/components/sections/ExploreSection';
-// import Feedback from '@/components/sections/Feedback';
+import Hero from '@/components/sections/Hero';
+import Services from '@/components/sections/Services';
+import SmallServices from '@/components/sections/SmallServices';
+import Tours from '@/components/sections/Tours';
+import Explore from '@/components/sections/ExploreSection';
+import Feedback from '@/components/sections/Feedback';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -21,12 +21,11 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   return (
     <div className='relative min-h-screen bg-black text-white'>
-      Hello worlds
-      {/* <Hero /> */}
-      {/* <SmallServices />
+      <Hero />
+      <SmallServices />
       <Tours />
       <Explore />
-      <Feedback /> */}
+      <Feedback />
     </div>
   );
 }

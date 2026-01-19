@@ -154,3 +154,20 @@ body {
     }
   }
 }
+
+@layer utilities {
+  nav {
+    @apply transition-all duration-700 ease-out;
+  }
+
+  /* Optional - very subtle initial shadow when at top */
+  nav::before {
+    content: '';
+    @apply absolute inset-0 bg-black/10 backdrop-blur-sm opacity-0 transition-opacity duration-700;
+  }
+
+  /* When scrolled */
+  nav.scrolled::before {
+    @apply opacity-100;
+  }
+}
