@@ -6,7 +6,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 //import ScrollTrigger from 'gsap';
 
-//gsap.registerPlugin(ScrollTrigger); 
+gsap.registerPlugin(useGSAP); 
 const Navbar = () => {
   useGSAP(() => {
     const navTween = gsap.timeline({
