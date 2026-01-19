@@ -10,13 +10,13 @@ import gsap from 'gsap';
 const Navbar = () => {
   useGSAP(() => {
     const navTween = gsap.timeline({
-      // scrollTrigger: {
-      //   trigger: 'nav',
-      //   start: '10% top',
-      //   end: 'bottom top',
-      //   toggleActions: 'play reverse play reverse',
-      //   scrub: true,
-      // },
+      scrollTrigger: {
+        trigger: 'nav',
+        start: '10% top',
+        end: 'bottom top',
+        toggleActions: 'play reverse play reverse',
+        scrub: true,
+      },
     });
   });
   return (
