@@ -21,7 +21,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   return (
     <div className='relative min-h-screen bg-black text-white'>
-      Hello world
+      Hello worlds
       {/* <Hero /> */}
       {/* <SmallServices />
       <Tours />
