@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button } from '../ui/button';
 import { useGSAP } from '@gsap/react';
-import { SplitText } from 'gsap/SplitText';
+import SplitText from 'gsap/SplitText';
 import gsap from 'gsap';
 import { getImageUrl } from '@/utils/images';
 
