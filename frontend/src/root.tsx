@@ -10,9 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "@/styles/app.css";
 import "@/styles/components.css"
-import gsap from "gsap";
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import SplitText from 'gsap/SplitText';
+import { GSAPProvider } from "./components/GSAPProvider";
 
 export const links: Route.LinksFunction= () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -27,19 +25,17 @@ export const links: Route.LinksFunction= () => [
   },
 ];
 
-gsap.registerPlugin(ScrollTrigger, SplitText)
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
         <Meta />
         <Links />
       </head>
       <body suppressHydrationWarning>
-        {children}
+        <GSAPProvider>{children}</GSAPProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
