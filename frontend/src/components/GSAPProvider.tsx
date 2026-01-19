@@ -1,13 +1,16 @@
-// app/components/GSAPProvider.tsx
-'use client'; // ← if using any client directive support; otherwise rely on dynamic import
+// app/components/GSAPInitializer.tsx
+'use client'; // if your setup supports it; otherwise the useEffect handles it
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-let registered = false;
+let isRegistered = false;
 
 export function GSAPProvider({ children }: { children: React.ReactNode }) {
+  const initialized = useRef(false);
+
   useEffect(() => {
-    if (registered) return;
+    if (initialized.current || isRegistered) return;
+    initialized.current = true;
 
     (async () => {
       const gsap = (await import('gsap')).default;
@@ -15,7 +18,7 @@ export function GSAPProvider({ children }: { children: React.ReactNode }) {
       const SplitText = (await import('gsap/SplitText')).default;
 
       gsap.registerPlugin(ScrollTrigger, SplitText);
-      registered = true;
+      isRegistered = true;
     })();
   }, []);
 
