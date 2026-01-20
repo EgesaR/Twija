@@ -14,8 +14,8 @@ export function GSAPProvider({ children }: { children: React.ReactNode }) {
 
     (async () => {
       const gsap = (await import('gsap')).default;
-      const ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
-      const SplitText = (await import('gsap/SplitText')).default;
+      const ScrollTrigger = (await import('gsap/dist/ScrollTrigger')).default;
+      const SplitText = (await import('gsap/dist/SplitText')).default;
 
       gsap.registerPlugin(ScrollTrigger, SplitText);
       isRegistered = true;

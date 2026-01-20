@@ -15,7 +15,7 @@ export function useClientGSAP(callback: (gsap: any) => void) {
       if (!gsapInstance) {
         const [gsapMod, stMod] = await Promise.all([
           import('gsap'),
-          import('gsap/ScrollTrigger'),
+          import('gsap/dist/ScrollTrigger'),
         ]);
 
         gsapInstance = gsapMod.default;

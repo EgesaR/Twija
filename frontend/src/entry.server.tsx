@@ -1,11 +1,16 @@
-import { PassThrough } from "node:stream";
+// @ts-ignore - Polyfill self for GSAP/SSR support
+if (typeof self === 'undefined') {
+  (global as any).self = global;
+}
 
-import type { AppLoadContext, EntryContext } from "react-router";
-import { createReadableStreamFromReadable } from "@react-router/node";
-import { ServerRouter } from "react-router";
-import { isbot } from "isbot";
-import type { RenderToPipeableStreamOptions } from "react-dom/server";
-import { renderToPipeableStream } from "react-dom/server";
+import { PassThrough } from 'node:stream';
+
+import type { AppLoadContext, EntryContext } from 'react-router';
+import { createReadableStreamFromReadable } from '@react-router/node';
+import { ServerRouter } from 'react-router';
+import { isbot } from 'isbot';
+import type { RenderToPipeableStreamOptions } from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 
 export const streamTimeout = 5_000;
 
@@ -19,7 +24,7 @@ export default function handleRequest(
   // loadContext: RouterContextProvider
 ) {
   // https://httpwg.org/specs/rfc9110.html#HEAD
-  if (request.method.toUpperCase() === "HEAD") {
+  if (request.method.toUpperCase() === 'HEAD') {
     return new Response(null, {
       status: responseStatusCode,
       headers: responseHeaders,
@@ -28,14 +33,14 @@ export default function handleRequest(
 
   return new Promise((resolve, reject) => {
     let shellRendered = false;
-    let userAgent = request.headers.get("user-agent");
+    let userAgent = request.headers.get('user-agent');
 
     // Ensure requests from bots and SPA Mode renders wait for all content to load before responding
     // https://react.dev/reference/react-dom/server/renderToPipeableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
     let readyOption: keyof RenderToPipeableStreamOptions =
       (userAgent && isbot(userAgent)) || routerContext.isSpaMode
-        ? "onAllReady"
-        : "onShellReady";
+        ? 'onAllReady'
+        : 'onShellReady';
 
     // Abort the rendering stream after the `streamTimeout` so it has time to
     // flush down the rejected boundaries
@@ -59,7 +64,7 @@ export default function handleRequest(
           });
           const stream = createReadableStreamFromReadable(body);
 
-          responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.set('Content-Type', 'text/html');
 
           pipe(body);
 
