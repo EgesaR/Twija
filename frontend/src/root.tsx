@@ -10,7 +10,11 @@ import {
 import type { Route } from "./+types/root";
 import "@/styles/app.css";
 import "@/styles/components.css"
-//import { GSAPProvider } from "./components/GSAPProvider";
+import { useEffect } from "react";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import SplitText from "gsap/dist/SplitText";
+import gsap from "gsap/dist/gsap";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const links: Route.LinksFunction= () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,6 +30,13 @@ export const links: Route.LinksFunction= () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const queryClient = new QueryClient()
+
+  useEffect(() => {
+    // Register plugins once when the app hydration starts
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+  }, []);
+
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
@@ -35,8 +46,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body suppressHydrationWarning>
-        {/* <GSAPProvider>{children}</GSAPProvider> */}
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

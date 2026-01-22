@@ -8,7 +8,8 @@ import type { ServiceIcon, ServiceProps } from '@/types/service';
 import { iconMap } from '@/constants/iconMap';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
+import gsap from 'gsap/dist/gsap';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
 const SmallServices = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -95,6 +96,7 @@ const ServiceSlide = ({ id, icon, title, description }: ServiceProps) => {
 
   useGSAP(
     () => {
+      gsap.registerPlugin(ScrollTrigger);
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -166,7 +168,7 @@ const ServiceSlide = ({ id, icon, title, description }: ServiceProps) => {
           </h2>
         </div>
         <div ref={buttonRef} className='mb-5'>
-          <Button className='opacty-100! bg-white text-black text-lg py-2 h-11 px-4 hover:bg-white/90'>
+          <Button className='opacty-100! bg-green-600 text-white text-lg py-2 h-11 px-4 hover:bg-white/90'>
             Book Now
           </Button>
         </div>

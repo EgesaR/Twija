@@ -1,10 +1,11 @@
-// components/Navbar.tsx
-import React, { useState } from 'react';
+'use client';
+
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router';
 import { navLinks } from '@/constants';
 import { getImageUrl } from '@/utils/images';
 import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap/dist/gsap'; // Core GSAP is usually okay here
+import { gsap } from 'gsap/dist/gsap';
 
 // Shadcn UI Components
 import {
@@ -17,41 +18,53 @@ import {
 import { Menu } from 'lucide-react';
 
 const Navbar = () => {
-  const container = React.useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   useGSAP(
     () => {
-      // 1. WE LOAD THE PLUGIN DYNAMICALLY INSIDE THE HOOK
-      // This ensures the server NEVER sees the ScrollTrigger file.
-      const setupAnimations = async () => {
-        // Use the standard entry point, but only on the client
+      const initGSAP = async () => {
         const { ScrollTrigger } = await import('gsap/dist/ScrollTrigger');
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Your scroll animation
-        gsap.to('nav', {
-          backgroundColor: '#0f0f0fcc',
-          backdropFilter: 'blur(12px)',
-          boxShadow: '0 10px 30px -15px rgba(0, 0, 0, 0.5)',
-          paddingTop: '0.75rem',
-          paddingBottom: '0.75rem',
-          '--logo-scale': 0.85,
+        const navTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: 'body',
             start: 'top top',
-            end: '+=200',
+            end: '+=150',
             scrub: 0.6,
+            invalidateOnRefresh: true,
           },
         });
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scroll Animation - Light Theme & Removed Logo Scaling
+        navTimeline
+          .to('nav', {
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            backdropFilter: 'blur(12px)',
+            boxShadow: '0 4px 20px -5px rgba(0, 0, 0, 0.05)',
+            paddingTop: '0.75rem',
+            paddingBottom: '0.75rem',
+          })
+          .fromTo(
+            'nav a, nav button',
+            {
+              color: '#ffffff',
+              duration: 0.5,
+              ease: 'power1.inOut',
+            },
+            {
+              color: '#000000',
+              duration: 0.5,
+              ease: 'power1.inOut',
+            },
+          );
       };
 
-      setupAnimations();
+      initGSAP();
     },
     { scope: container },
   );
 
-  // Mobile menu stagger (This is already SSR safe because it's in a hook)
   useGSAP(() => {
     if (isOpen) {
       gsap.from('.mobile-link', {
@@ -65,43 +78,40 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <div ref={container}>
+    <div ref={container} className='relative z-100' suppressHydrationWarning>
       <nav
-        className='fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-500'
+        className='fixed top-0 left-0 right-0 z-50 transition-all duration-500 pointer-events-auto text-white'
         style={
           {
             paddingTop: '1.25rem',
             paddingBottom: '1.25rem',
-            '--logo-scale': '1',
+            isolation: 'isolate',
           } as React.CSSProperties
         }
       >
-        <div className='max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between'>
+        <div className='max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between relative z-10'>
+          {/* Logo Area - Scaling logic removed */}
           <Link
             to='/'
-            className='flex items-center gap-3 focus:outline-none'
-            style={{
-              transform: 'scale(var(--logo-scale))',
-              transition: 'transform 0.3s ease',
-            }}
+            className='flex items-center gap-3 focus:outline-none relative z-20 pointer-events-auto'
           >
             <img
               src={getImageUrl('logo_bg.png')}
               alt='Logo'
-              className='w-12 sm:w-16 rounded-xl'
+              className='w-12 sm:w-14 rounded-xl'
             />
-            <span className='font-bold text-lg sm:text-xl text-white'>
+            <span className='font-bold text-lg sm:text-xl'>
               Kigali City Tours
             </span>
           </Link>
 
           {/* Desktop Links */}
-          <ul className='hidden md:flex items-center gap-8'>
+          <ul className='hidden md:flex items-center gap-8 relative z-20'>
             {navLinks.map((link) => (
-              <li key={link.id}>
+              <li key={link.id} className='pointer-events-auto'>
                 <Link
                   to={link.url ?? `#${link.id}`}
-                  className='text-gray-200 hover:text-white text-sm font-medium'
+                  className='text-neutral-50 hover:text-indigo-600 text-sm font-medium transition-colors'
                 >
                   {link.title}
                 </Link>
@@ -110,19 +120,24 @@ const Navbar = () => {
           </ul>
 
           {/* Mobile Sheet */}
-          <div className='md:hidden'>
+          <div className='md:hidden relative z-20'>
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <button className='text-white p-2'>
+                <button
+                  className='text-neutral-50 p-2 hover:bg-neutral-100 rounded-lg transition-colors pointer-events-auto'
+                  aria-label='Toggle Menu'
+                >
                   <Menu />
                 </button>
               </SheetTrigger>
               <SheetContent
                 side='right'
-                className='bg-[#0f0f0f] border-white/10 text-white'
+                className='bg-white border-neutral-100 text-neutral-50 w-75'
               >
                 <SheetHeader>
-                  <SheetTitle className='text-white'>Menu</SheetTitle>
+                  <SheetTitle className='text-neutral-50 text-left border-b pb-4'>
+                    Menu
+                  </SheetTitle>
                 </SheetHeader>
                 <div className='flex flex-col gap-6 mt-10'>
                   {navLinks.map((link) => (
@@ -130,7 +145,7 @@ const Navbar = () => {
                       key={link.id}
                       to={link.url ?? `#${link.id}`}
                       onClick={() => setIsOpen(false)}
-                      className='mobile-link text-xl text-gray-300'
+                      className='mobile-link text-xl text-neutral-50 hover:text-indigo-600 transition-colors font-medium'
                     >
                       {link.title}
                     </Link>

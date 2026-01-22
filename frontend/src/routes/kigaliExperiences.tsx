@@ -173,10 +173,10 @@ const SuggestedTours: React.FC<SuggestedToursProps> = ({ tours }) => (
     <div className='flex flex-col sm:flex-row gap-4'>
       {tours.map((tour) => (
         <div
-          key={tour.name}
+          key={tour.title}
           className='border rounded-lg shadow p-4 flex-1 flex flex-col justify-between'
         >
-          <h3 className='font-semibold text-lg'>{tour.name}</h3>
+          <h3 className='font-semibold text-lg'>{tour.title}</h3>
           <p className='text-gray-500'>{tour.duration}</p>
           <Button asChild className='mt-2'>
             <a href={tour.link}>Book Now →</a>
@@ -257,12 +257,12 @@ const KigaliExperiencesPage: React.FC = () => {
           <SuggestedTours
             tours={[
               {
-                name: 'Kigali Genocide History Tour',
+                title: 'Kigali Genocide History Tour',
                 duration: 'Half Day',
                 link: '/tours/kigali-genocide-history',
               },
               {
-                name: 'Full-Day Kigali Cultural & Memorial Tour',
+                title: 'Full-Day Kigali Cultural & Memorial Tour',
                 duration: '1 Day',
                 link: '/tours/kigali-cultural-memorial',
               },
@@ -275,7 +275,7 @@ const KigaliExperiencesPage: React.FC = () => {
           <SuggestedTours
             tours={[
               {
-                name: 'Kigali Arts & Culture Experience',
+                title: 'Kigali Arts & Culture Experience',
                 duration: 'Half Day',
                 link: '/tours/kigali-arts-culture',
               },
@@ -288,7 +288,7 @@ const KigaliExperiencesPage: React.FC = () => {
           <SuggestedTours
             tours={[
               {
-                name: 'Kigali Nature & Outdoor Adventure',
+                title: 'Kigali Nature & Outdoor Adventure',
                 duration: 'Half Day',
                 link: '/tours/kigali-nature',
               },

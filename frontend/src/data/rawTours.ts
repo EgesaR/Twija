@@ -3,7 +3,7 @@ import type { tourProps } from '@/constants';
 export const rawTours: tourProps[] = [
   {
     id: 'tour-1',
-    name: 'Kigali Easy Walking Tour',
+    title: 'Kigali Easy Walking Tour',
     description: "A gentle stroll exploring Kigali's history and culture",
     startingPoint: 'Kandt Museum',
     duration: '2 Hours',
@@ -23,7 +23,7 @@ export const rawTours: tourProps[] = [
 
   {
     id: 'tour-2',
-    name: 'Luxury Akagera National Park Safari',
+    title: 'Luxury Akagera National Park Safari',
     description:
       'Experience a luxurious full-day safari adventure in Akagera National Park.',
     startingPoint: 'Hotel pickup',
@@ -44,7 +44,7 @@ export const rawTours: tourProps[] = [
 
   {
     id: 'tour-3',
-    name: 'Downtown & Car-Free Zone Walk',
+    title: 'Downtown & Car-Free Zone Walk',
     description:
       "A quick and lively walk through Kigali's bustling downtown and car-free zone.",
     startingPoint: 'Downtown Kigali',
@@ -60,7 +60,7 @@ export const rawTours: tourProps[] = [
 
   {
     id: 'tour-4',
-    name: 'Kigali Long Tour Adventure',
+    title: 'Kigali Long Tour Adventure',
     description:
       "A comprehensive journey through Kigali's key historical, cultural, and modern landmarks.",
     startingPoint: 'Kigali Genocide Memorial',
@@ -81,7 +81,7 @@ export const rawTours: tourProps[] = [
 
   {
     id: 'tour-5',
-    name: 'Kigali Discovered Walk',
+    title: 'Kigali Discovered Walk',
     description:
       'Uncover hidden gems and significant cultural sites on this enlightening walk.',
     startingPoint: 'Kigali Convention Center',
@@ -102,7 +102,7 @@ export const rawTours: tourProps[] = [
 
   {
     id: 'tour-6',
-    name: 'Kigali Motorbike Tour',
+    title: 'Kigali Motorbike Tour',
     description:
       'Experience Kigali like a local! A thrilling motorbike tour to key city attractions.',
     startingPoint: 'Hotel pickup',
@@ -123,7 +123,7 @@ export const rawTours: tourProps[] = [
 
   {
     id: 'tour-7',
-    name: 'Kigali Car Tour',
+    title: 'Kigali Car Tour',
     description:
       "A comfortable full-day car tour exploring Kigali's landmarks and coffee farm.",
     startingPoint: 'Hotel pickup',

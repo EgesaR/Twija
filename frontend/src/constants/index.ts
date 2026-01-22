@@ -87,7 +87,7 @@ const tourLists = [
 
 export type tourProps = {
   id: string;
-  name: string;
+  title: string;
   description: string;
   startingPoint: string;
   duration: string;

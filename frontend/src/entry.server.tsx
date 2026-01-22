@@ -3,6 +3,20 @@ if (typeof self === 'undefined') {
   (global as any).self = global;
 }
 
+// Add this part for Framer Motion / Motion DOM
+if (typeof global.window === 'undefined') {
+  (global as any).window = {
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => {},
+    CustomEvent: class {},
+  };
+  (global as any).document = {
+    addEventListener: () => {},
+    removeEventListener: () => {},
+  };
+}
+
 import { PassThrough } from 'node:stream';
 
 import type { AppLoadContext, EntryContext } from 'react-router';

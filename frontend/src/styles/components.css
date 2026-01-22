@@ -13,8 +13,8 @@
 html,
 body {
   width: 100%;
-  background-color: black;
-  color: white;
+  background-color: #ffffff;
+  color: #0a0a0a;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
@@ -24,11 +24,11 @@ body {
 }
 
 .card {
-  @apply bg-neutral-900 text-white rounded-4xl! border-0;
+  @apply bg-white text-neutral-900 rounded-4xl! border border-neutral-200 shadow-sm;
 }
 
 .badge {
-  @apply py-1 px-4.5 bg-black/30;
+  @apply py-1 px-4.5 bg-neutral-100 text-neutral-900;
 }
 
 .icon-btn {
@@ -40,16 +40,16 @@ body {
 }
 
 .glassmorphism {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.18)
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 @layer components {
   .home {
-    @apply w-full h-screen overflow-hidden text-white font-sans;
+    @apply w-full h-screen overflow-hidden text-neutral-900 font-sans;
   }
   nav {
     @apply fixed z-50 w-full;
@@ -74,7 +74,7 @@ body {
   .hero {
     @apply relative z-10 min-h-dvh w-full;
     .hero-content {
-      @apply absolute inset-0 flex flex-col items-center justify-center bg-linear-to-b from-black/20 via-black/30 to-black/50;
+      @apply absolute inset-0 flex flex-col items-center justify-center bg-linear-to-b from-black/20 via-black/30 to-black/50 text-white;
       h3 {
         @apply text-3xl font-light text-center mt-20;
       }
@@ -99,7 +99,7 @@ body {
   .tours,
   .explore,
   .feedback {
-    @apply min-h-screen py-28 2xl:px-0 px-5 flex flex-col items-center justify-center bg-black;
+    @apply min-h-screen py-28 2xl:px-0 px-5 flex flex-col items-center justify-center bg-white;
 
     .content {
       @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
@@ -133,7 +133,7 @@ body {
   }
 
   .footer {
-    @apply w-full flex flex-col items-center justify-center gap-4 min-h-[70vh] pt-28 pb-10 2xl:px-0 px-5 bg-black;
+    @apply w-full flex flex-col items-center justify-center gap-4 min-h-[70vh] pt-28 pb-10 2xl:px-0 px-5 bg-neutral-50;
 
     .content {
       @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
@@ -163,7 +163,7 @@ body {
   /* Optional - very subtle initial shadow when at top */
   nav::before {
     content: '';
-    @apply absolute inset-0 bg-black/10 backdrop-blur-sm opacity-0 transition-opacity duration-700;
+    @apply absolute inset-0 bg-white/80 backdrop-blur-sm opacity-0 transition-opacity duration-700 border-b border-neutral-200;
   }
 
   /* When scrolled */

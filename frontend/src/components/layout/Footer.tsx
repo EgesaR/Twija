@@ -33,7 +33,7 @@ const Footer = () => {
           <section className='grid grid-cols-3 gap-4'>
             {tourPhotoLists.map((tourPhoto, index) => {
               const imageUrl = getImageUrl(tourPhoto)
-              return (<Card key={index} className='p-3! h-60 shadow-xl bg-neutral-800 border-0 rounded-2xl'>
+              return (<Card key={index} className='p-3! h-60 shadow-xl bg-neutral-100 border-0 rounded-2xl'>
                 <img src={imageUrl} alt={`tourPhoto-${index}`} className='w-full h-full rounded-2xl object-cover bg-center bg-no-repeat bg-cover' />
               </Card>
               )
@@ -41,7 +41,7 @@ const Footer = () => {
           </section>
           <section className='w-full flex items-start justify-between'>
             <div className='flex flex-col gap-2'>
-              <h3 className='text-lg text-neutral-300'>Contact Us On</h3>
+              <h3 className='text-lg text-neutral-800'>Contact Us On</h3>
               <div className='flex items-center gap-2'>
                 <Phone className='size-6' />
                 <label className='text-lg'>{contactInfo.phone}</label>
@@ -56,7 +56,7 @@ const Footer = () => {
               </div>
             </div>
             <div className='flex flex-col gap-2'>
-              <h3 className='text-lg text-neutral-300'>Follow Us On</h3>
+              <h3 className='text-lg text-neutral-800'>Follow Us On</h3>
               <div className='flex gap-3'>
                 {socials.map(
                   ({ name, icon, url }: SocialProps, index: number) => {
@@ -74,7 +74,7 @@ const Footer = () => {
         </Card>
         <Card className='col-span-4 card'></Card>
       </div>
-      <div className='text-neutral-200 text-lg mt-20'>
+      <div className='text-neutral-600 text-lg mt-20'>
         &copy; 2026 Twija Africa Safari. All rights reserved.
       </div>
     </footer>

@@ -2,14 +2,15 @@ export type TourType = 'Open Trip' | 'Private Trip';
 
 export type Tour = {
   id: string;
-  name: string;
+  title: string;
+  category: string;
   description: string;
   startingPoint: string;
-  duration: string;
+  duration: string | null;
   estimated?: boolean;
   adventureSteps?: string[];
   price: number;
-  images: string[];
+  images: string[] | null;
   type: TourType;
   numberPerPerson: number;
   slots: number;
@@ -17,7 +18,7 @@ export type Tour = {
   link: string;
 };
 
-export type TourPreview = Pick<Tour, 'id' | 'name' | 'images'>;
+export type TourPreview = Pick<Tour, 'id' | 'title' | 'images'>;
 
 export type TourFilter = {
   type?: TourType;
