@@ -1,98 +1,146 @@
-import React from 'react';
-import { Card } from '../ui/card';
-import { tourLists } from '@/constants';
-import { getImageUrl } from '@/utils/images';
-import { Badge } from '../ui/badge';
-import { CircleDollarSign, Expand, Users } from 'lucide-react';
-import { PiCurrencyCircleDollarFill, PiUsersFourFill } from 'react-icons/pi';
-import { Button } from '../ui/button';
+import React, { useRef, useState, useMemo } from 'react';
+import { ImmersiveTourCard } from './ImmersiveTourCard';
+import { useTours } from '@/hooks/useTours';
+import {
+  Landmark,
+  Palette,
+  TreePine,
+  Building2,
+  LayoutGrid,
+} from 'lucide-react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
-const Tours = () => {
+gsap.registerPlugin(ScrollTrigger);
+
+const categories = [
+  { id: 'all', label: 'All', icon: LayoutGrid },
+  { id: 'historical', label: 'History', icon: Landmark },
+  { id: 'arts', label: 'Culture', icon: Palette },
+  { id: 'nature', label: 'Nature', icon: TreePine },
+  { id: 'modern', label: 'City', icon: Building2 },
+];
+
+const ToursSection = () => {
+  const [activeCategory, setActiveCategory] = useState('all');
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { data: tours = [], isLoading } = useTours();
+  console.log("Tours: ", tours)
+  const filteredTours = useMemo(() => {
+    if (activeCategory === 'all') return tours;
+    return tours.filter(
+      (tour) => tour.category?.toLowerCase() === activeCategory,
+    );
+  }, [activeCategory, tours]);
+
+  useGSAP(
+    () => {
+      // 1. One-time Entrance for the Header
+      gsap.from('.section-header', {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.section-header',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      // 2. Filter Animation for the Cards
+      // We only run this if we aren't loading and have items to show
+      if (!isLoading && filteredTours.length > 0) {
+        gsap.fromTo(
+          '.tour-card-wrapper', // Ensure the card component is wrapped in this class
+          {
+            y: 20,
+            opacity: 0,
+            scale: 0.98,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            stagger: 0.08,
+            ease: 'sine.out',
+            overwrite: 'auto',
+          },
+        );
+      }
+    },
+    {
+      scope: containerRef,
+      dependencies: [activeCategory, tours, isLoading],
+    },
+  );
+
   return (
-    <div className='tours'>
-      <div className='mb-16 md:px-20 px-5'>
-        <div className='content'>
-          <div className='md:col-span-8'>
-            <h2 className='font-bold max-w-2xl'>Our Popular Walking Tours</h2>
-          </div>
-          <div className='sub-content md:col-span-4'>
-            <p>
-              We have great options for everyone and cozy spots for your squad
-              to enjoy together!
-            </p>
+    <section
+      ref={containerRef}
+      className='py-24 bg-neutral-50 min-h-screen overflow-hidden'
+    >
+      <div className='container mx-auto px-6 md:px-12'>
+        <div className='section-header flex flex-col items-center text-center mb-16 space-y-4'>
+          <span className='text-green-600 font-bold tracking-widest text-xs uppercase bg-green-100 px-4 py-1 rounded-full'>
+            Discover Rwanda
+          </span>
+          <h2 className='text-4xl md:text-6xl font-bold text-slate-900 tracking-tight'>
+            Curated Experiences
+          </h2>
+          <p className='text-slate-500 max-w-2xl text-lg leading-relaxed'>
+            From the vibrant streets of Kigali to the serene hills of the
+            countryside.
+          </p>
+
+          <div className='flex flex-wrap justify-center gap-3 mt-8'>
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300
+                    ${
+                      isActive
+                        ? 'bg-slate-900 text-white shadow-lg scale-105'
+                        : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400 hover:bg-slate-50'
+                    }`}
+                >
+                  <Icon size={16} />
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
         </div>
-      </div>
 
-      <ul className='grid grid-cols-3 gap-8 w-full px-5 md:px-20'>
-        {tourLists.map((tour, index) => (
-          <TourCard key={index} {...tour} />
-        ))}
-      </ul>
-    </div>
+        <div className='min-h-100'>
+          {isLoading ? (
+            <div className='flex justify-center items-center h-64'>
+              <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900' />
+            </div>
+          ) : filteredTours.length > 0 ? (
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
+              {filteredTours.map((tour) => (
+                <div key={tour.id} className='tour-card-wrapper'>
+                  <ImmersiveTourCard tour={tour} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className='text-center py-20 text-slate-400'>
+              <p>No tours found in this category. Try another?</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 };
 
-const TourCard = ({
-  name,
-  details,
-  price,
-  image,
-  type,
-  slots = 0,
-  numberPerPerson,
-}: {
-  name: string;
-  details: string;
-  price: number;
-  image: string;
-  slots?: number;
-  type?: 'Open Trip' | 'Private' | string;
-  numberPerPerson: number;
-}) => {
-  const imageUrl = getImageUrl(image);
-  return (
-    <Card className='col-span-1 card px-3 gap-3 h-110 relative'>
-      <div className='flex justify-between items-center gap-2.5 w-full px-4'>
-        <h1 className='text-xl font-medium'>{name}</h1>
-        <Badge className='flex items-center justify-center border border-white rounded-lg py-1 px-3'>
-          <div className='size-2 bg-yellow-500 rounded-full' />
-          <label className='h-full text-[13.5px] font-semibold flex items-center'>
-            {slots} Slot left
-          </label>
-        </Badge>
-      </div>
-      <div className='w-full h-[70%] relative'>
-        <img
-          src={imageUrl}
-          alt={name}
-          className='w-full h-full bg-center bg-cover bg-no-repeat object-cover rounded-xl'
-        />
-        <div className='absolute top-0 left-0 h-full w-full flex flex-col justify-end'>
-          <div className='w-fit mb-4 ml-3 flex gap-1.5 bg-bg-black/10 p-1 rounded-md backdrop-blur'>
-            <Badge className='badge text-[16px] rounded-md gap-1.5'>
-              <PiCurrencyCircleDollarFill className='size-6!' />
-              <label>{price}</label>
-            </Badge>
-            {type && (
-              <Badge className='badge text-[16px] rounded-md gap-1.5'>
-                <PiUsersFourFill className='size-6!' /> <label>{type}</label>
-              </Badge>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className='w-full flex items-center justify-between pr-6 absolute bottom-[6%]'>
-        <Button size={'icon-lg'} variant={'secondary'} className='icon-btn'>
-          <Expand />
-        </Button>
-        <Button variant={'secondary'} className='btn font-medium! text-[19px]!'>
-          Plan a Trip
-        </Button>
-      </div>
-    </Card>
-  );
-};
-
-export default Tours;
+export default ToursSection;

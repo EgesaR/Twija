@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import os
 # Import your router from the file where you wrote the promote_user code
 from app.api.admin.profiles import router as admin_router
+from app.api.api import router as api_router
 
 app = FastAPI(title="My Supabase Project")
 
@@ -11,6 +12,12 @@ app.include_router(
     admin_router, 
     prefix="/api/admin",
     tags=["Admin Controls"]
+)
+
+app.include_router(
+    api_router, 
+    prefix="/api",
+    tags=["Fetching Basic Data"]
 )
 
 

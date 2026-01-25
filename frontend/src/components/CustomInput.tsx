@@ -1,19 +1,22 @@
 import React from 'react';
 import { FormControl, FormField, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
-import type { Control, FieldPath, Form } from 'react-hook-form';
-import type z from 'zod';
-import { authFormSchema } from '@/lib/utils';
+import type { Control, FieldPath } from 'react-hook-form';
 
-const formSchema = authFormSchema('signup');
-interface CustomInput {
-  control: Control<z.infer<typeof formSchema>>;
-  name: FieldPath<z.infer<typeof formSchema>>;
+interface CustomInputProps {
+  control: Control<any>;
+  name: FieldPath<any>;
   label: string;
   placeholder: string;
+  type?: string; // Optional: let us override type if needed
 }
 
-const CustomInput = ({ control, name, label, placeholder }: CustomInput) => {
+const CustomInput = ({
+  control,
+  name,
+  label,
+  placeholder,
+}: CustomInputProps) => {
   return (
     <FormField
       control={control}

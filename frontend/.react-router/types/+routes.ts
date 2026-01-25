@@ -14,78 +14,20 @@ type Pages = {
   "/": {
     params: {};
   };
-  "/contact-us": {
-    params: {};
-  };
-  "/book-tour": {
-    params: {};
-  };
-  "/booking": {
-    params: {};
-  };
-  "/kigali-experiences": {
-    params: {};
-  };
-  "/tours": {
-    params: {};
-  };
-  "/tours/:tourId": {
-    params: {
-      "tourId": string;
-    };
-  };
-  "/admin/login": {
-    params: {};
-  };
-  "/admin/signup": {
-    params: {};
-  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/contact-us" | "/book-tour" | "/booking" | "/kigali-experiences" | "/tours" | "/tours/:tourId" | "/admin/login" | "/admin/signup";
+    page: "/";
   };
   "./layouts/default.tsx": {
     id: "layouts/default";
-    page: "/" | "/contact-us" | "/book-tour" | "/booking" | "/kigali-experiences" | "/tours" | "/tours/:tourId";
+    page: "/";
   };
   "routes/home.tsx": {
     id: "routes/home";
     page: "/";
-  };
-  "routes/contactUs.tsx": {
-    id: "routes/contactUs";
-    page: "/contact-us";
-  };
-  "routes/bookTour.tsx": {
-    id: "routes/bookTour";
-    page: "/book-tour";
-  };
-  "routes/booking.tsx": {
-    id: "routes/booking";
-    page: "/booking";
-  };
-  "routes/kigaliExperiences.tsx": {
-    id: "routes/kigaliExperiences";
-    page: "/kigali-experiences";
-  };
-  "routes/tours.tsx": {
-    id: "routes/tours";
-    page: "/tours";
-  };
-  "routes/tours.$tourId.tsx": {
-    id: "routes/tours.$tourId";
-    page: "/tours/:tourId";
-  };
-  "routes/admin.login.tsx": {
-    id: "routes/admin.login";
-    page: "/admin/login";
-  };
-  "routes/admin.signup.tsx": {
-    id: "routes/admin.signup";
-    page: "/admin/signup";
   };
 };
 
@@ -93,12 +35,4 @@ type RouteModules = {
   "root": typeof import("./src/root.tsx");
   "layouts/default": typeof import("./src/./layouts/default.tsx");
   "routes/home": typeof import("./src/routes/home.tsx");
-  "routes/contactUs": typeof import("./src/routes/contactUs.tsx");
-  "routes/bookTour": typeof import("./src/routes/bookTour.tsx");
-  "routes/booking": typeof import("./src/routes/booking.tsx");
-  "routes/kigaliExperiences": typeof import("./src/routes/kigaliExperiences.tsx");
-  "routes/tours": typeof import("./src/routes/tours.tsx");
-  "routes/tours.$tourId": typeof import("./src/routes/tours.$tourId.tsx");
-  "routes/admin.login": typeof import("./src/routes/admin.login.tsx");
-  "routes/admin.signup": typeof import("./src/routes/admin.signup.tsx");
 };

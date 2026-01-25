@@ -4,77 +4,123 @@ import { Badge } from '../ui/badge';
 import { PiStarFill, PiUsersThreeFill } from 'react-icons/pi';
 import { Button } from '../ui/button';
 import { serviceLists } from '@/constants';
-import type { ServiceIcon, ServiceProps } from '@/types/service';
+import type { ServiceProps } from '@/types/service';
 import { iconMap } from '@/constants/iconMap';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap/dist/gsap';
+import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SmallServices = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const mainContainer = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
 
   const totalServiceSlides = serviceLists.length;
 
+  // Header Animations
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: mainContainer.current,
+          start: 'top 80%',
+        },
+      });
+
+      tl.from(badgeRef.current, {
+        y: -20,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'back.out',
+      }).from(
+        'h1',
+        {
+          y: 50,
+          opacity: 0,
+          stagger: 0.2,
+          duration: 0.8,
+          ease: 'power3.out',
+        },
+        '-=0.4',
+      );
+    },
+    { scope: mainContainer },
+  );
+
   const goToSlide = (index: number) => {
     const newIndex = (index + totalServiceSlides) % totalServiceSlides;
-
     setCurrentIndex(newIndex);
   };
 
-  const getServiceSlideAt = (indexOffset: number) => {
-    return serviceLists[
-      (currentIndex + indexOffset + totalServiceSlides) % totalServiceSlides
-    ];
-  };
-
-  const currentServiceSlide = getServiceSlideAt(0);
+  const currentServiceSlide = serviceLists[currentIndex];
 
   return (
-    <section className='w-full min-h-screen py-28 2xl:px-0 px-28 flex flex-col items-center gap-16'>
-      <div>
-        <Card className='bg-neutral-900 flex flex-row  gap-4 py-0.5! pl-0.5! pr-3! h-10 text-white border-0 rounded-md'>
-          <Badge className='rounded-md h-full! gap-1.5! flex! bg-neutral-950'>
+    <section
+      ref={mainContainer}
+      className='w-full min-h-screen py-16 md:py-28 px-6 md:px-28 flex flex-col items-center gap-10 md:gap-16 overflow-hidden'
+    >
+      {/* Top Badge Card */}
+      <div ref={badgeRef}>
+        <Card className='bg-neutral-100 flex flex-row gap-4 py-1 px-3 pl-1! h-10 text-black border-0 rounded-md items-center'>
+          <Badge className='rounded-md h-8 gap-1.5 flex bg-neutral-200 text-black border-0'>
             <PiUsersThreeFill className='text-green-600' />
-            <label className='text-base!'>Take a tours</label>
+            <span className='text-xs md:text-sm font-medium'>Take a tour</span>
           </Badge>
-          <div className='flex items-center gap-2 h-full'>
+          <div className='flex items-center gap-2'>
             <PiStarFill className='text-yellow-500' />
-            <label>5K + People Satisfied</label>
+            <span className='text-xs md:text-sm whitespace-nowrap'>
+              5K + People Satisfied
+            </span>
           </div>
         </Card>
       </div>
-      <div className='text-7xl h-40 w-full relative mt-12'>
-        <h1 className='absolute top-0 left-0'>
-          <label className='bg-green-500/70 rounded-xl px-4'>
+
+      {/* Main Responsive Heading */}
+      <div
+        ref={headingRef}
+        className='w-full flex flex-col gap-4 text-center md:text-left'
+      >
+        <h1 className='text-3xl md:text-7xl font-bold leading-tight'>
+          <span className='bg-green-500/70 rounded-xl px-4 inline-block mb-2'>
             Twija Africa Safaris
-          </label>{' '}
+          </span>{' '}
           will
         </h1>
-        <h1 className='absolute bottom-[3%] right-[7.5%]'>
+        <h1 className='text-4xl md:text-7xl font-bold leading-tight md:self-end'>
           Make Your Tour{' '}
-          <label className='bg-sky-500/70 rounded-xl px-4'>Adventurous</label>
+          <span className='bg-sky-500/70 rounded-xl px-4 inline-block mt-2'>
+            Adventurous
+          </span>
         </h1>
       </div>
-      <div className='w-full h-[80vh] flex flex-col justify-between gap-6'>
+
+      <div className='w-full flex flex-col justify-between gap-6'>
         {currentServiceSlide && (
           <ServiceSlide key={currentServiceSlide.id} {...currentServiceSlide} />
         )}
-        <div className='flex items-center justify-end'>
-          <Card className='flex flex-row p-1! gap-1 bg-neutral-800'>
+
+        {/* Navigation */}
+        <div className='flex items-center justify-center md:justify-end mt-8'>
+          <Card className='flex flex-row p-1 gap-1 bg-neutral-100 border-neutral-200'>
             <Button
+              variant='ghost'
               onClick={() => goToSlide(currentIndex - 1)}
-              className={`${currentIndex == 0 ? 'bg-transparent' : 'hover:bg-neutral-950'}`}
+              className='text-black bg-neutral-200 hover:bg-neutral-300 transition-colors'
             >
-              <ArrowLeft />
-              <label>Prev</label>
+              <ArrowLeft className='w-4 h-4 mr-2' />
+              <span>Prev</span>
             </Button>
             <Button
+              variant='ghost'
               onClick={() => goToSlide(currentIndex + 1)}
-              className={`${currentIndex == totalServiceSlides ? 'bg-transparent' : 'hover:bg-neutral-950'}`}
+              className='text-black bg-neutral-200 hover:bg-neutral-300 transition-colors'
             >
-              <ArrowRight />
-              <label>Next</label>
+              <span>Next</span>
+              <ArrowRight className='w-4 h-4 ml-2' />
             </Button>
           </Card>
         </div>
@@ -83,97 +129,57 @@ const SmallServices = () => {
   );
 };
 
-export default SmallServices;
-
 const ServiceSlide = ({ id, icon, title, description }: ServiceProps) => {
   const Icon = icon ? iconMap[icon] : null;
+  const slideRef = useRef<HTMLDivElement>(null);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const iconRef = useRef<HTMLDivElement | null>(null);
-  const titleRef = useRef<HTMLHeadingElement | null>(null);
-  const descRef = useRef<HTMLHeadingElement | null>(null);
-  const buttonRef = useRef<HTMLDivElement | null>(null);
-
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none reset',
-        },
-        defaults: {
-          ease: 'power3.out',
-          duration: 0.8,
-        },
-      });
-
-      tl.from(iconRef.current, {
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.animate-item', {
+        y: 30,
         opacity: 0,
-        y: 40,
-      })
-        .from(
-          titleRef.current,
-          {
-            opacity: 0,
-            y: 60,
-          },
-          '-=0.4'
-        )
-        .from(
-          descRef.current,
-          {
-            opacity: 0,
-            y: 40,
-          },
-          '-=0.4'
-        )
-        .fromTo(
-          buttonRef.current,
-          {
-            opacity: 0,
-            y: 40,
-          },
-          {
-            opacity: 1,
-            y: 20,
-          },
-          '-=0.3'
-        );
+        stagger: 0.1,
+        duration: 0.6,
+        ease: 'power2.out',
+      });
+    }, slideRef);
+    return () => ctx.revert();
+  }, [id]);
 
-      return () => {
-        ScrollTrigger.getAll().forEach((t) => t.kill());
-        tl.kill();
-      };
-    },
-    { dependencies: [id] }
-  );
   return (
-    <div ref={containerRef} className='w-full h-[90%] grid grid-cols-2 mt-8'>
-      <div className='flex flex-col justify-between'>
-        <div className='mt-16'>
-          {Icon && (
-            <div ref={iconRef}>
-              <Icon id='icon' className='text-5xl text-green-400' />
-            </div>
-          )}
+    <div
+      ref={slideRef}
+      className='w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:mt-8 min-h-100'
+    >
+      <div className='flex flex-col justify-center md:justify-between space-y-6'>
+        <div className='animate-item'>
+          {Icon && <Icon className='text-5xl md:text-6xl text-green-500' />}
         </div>
-        <div>
-          <h1 className='text-5xl' ref={titleRef}>
+
+        <div className='space-y-4'>
+          <h2 className='text-4xl md:text-6xl font-bold animate-item'>
             {title}
-          </h1>
-          <h2 className='pr-40 text-xl mt-4' ref={descRef}>
-            {description}
           </h2>
+          <p className='text-lg md:text-xl text-neutral-600 max-w-lg animate-item leading-relaxed'>
+            {description}
+          </p>
         </div>
-        <div ref={buttonRef} className='mb-5'>
-          <Button className='opacty-100! bg-green-600 text-white text-lg py-2 h-11 px-4 hover:bg-white/90'>
+
+        <div className='animate-item'>
+          <Button className='bg-green-600 text-white text-lg py-6 px-8 hover:bg-green-700 transition-all rounded-full'>
             Book Now
           </Button>
         </div>
       </div>
-      <div className='opacity-0'>World</div>
+
+      {/* Right side placeholder - can be replaced with an image */}
+      <div className='hidden md:flex items-center justify-center bg-neutral-50 rounded-3xl border-2 border-dashed border-neutral-200'>
+        <p className='text-neutral-400 font-medium'>
+          Image Preview for {title}
+        </p>
+      </div>
     </div>
   );
 };
+
+export default SmallServices;

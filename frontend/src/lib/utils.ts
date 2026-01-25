@@ -2,24 +2,32 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import z from 'zod';
 
-/**
- * Merges Tailwind class names, resolving any conflicts.
- *
- * @param inputs - An array of class names to merge.
- * @returns A string of merged and optimized class names.
- */
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
-export const authFormSchema = (type: string) =>
-  z.object({
-    // sign up
-    firstName: type !== 'login' ? z.string().optional() : z.string().min(3),
-    lastName: type !== 'login' ? z.string().optional() : z.string().min(3),
-    adminId: type !== 'login' ? z.string().optional() : z.string().min(20),
+// For initial request fo admin
+export const adminRequestSchema = z.object({
+  firstName: z.string().min(3, 'First name is required'),
+  lastName: z.string().min(3, 'Last name is required'),
+  email: z.string().email('Invalid email address'),
+})
 
-    // both
-    email: z.email(),
-    password: z.string().min(8),
-  });
+// For login
+export const loginSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+});
+
+// For Email Invitation Link
+export const finishSetupSchema = z.object({
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string().min(8),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+})
+
+export type adminRequestParams = z.infer<typeof adminRequestSchema>
+export type loginParams = z.infer<typeof loginSchema>
+export type finishSetupParams = z.infer<typeof finishSetupSchema>

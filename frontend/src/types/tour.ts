@@ -16,6 +16,9 @@ export type Tour = {
   slots: number;
   highlights?: string[];
   link: string;
+  location: string;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TourPreview = Pick<Tour, 'id' | 'title' | 'images'>;

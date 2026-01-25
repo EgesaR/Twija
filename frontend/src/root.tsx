@@ -15,6 +15,7 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import SplitText from "gsap/dist/SplitText";
 import gsap from "gsap/dist/gsap";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "./context/AuthContext";
 
 export const links: Route.LinksFunction= () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,7 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body suppressHydrationWarning>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />

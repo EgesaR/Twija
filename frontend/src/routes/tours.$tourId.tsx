@@ -32,7 +32,7 @@ const TourPage = ({ loaderData }: Route.ComponentProps) => {
 
   if (!tour) {
     return (
-      <div className='min-h-[60vh] flex items-center justify-center text-white'>
+      <div className='min-h-[60vh] flex items-center justify-center text-neutral-900'>
         Loading tour...
       </div>
     );
@@ -41,7 +41,7 @@ const TourPage = ({ loaderData }: Route.ComponentProps) => {
   const heroImage = tour.images?.[0] || '/placeholder.jpg';
 
   return (
-    <section className='w-full text-white'>
+    <section className='w-full text-neutral-900'>
       {/* HERO */}
       <div className='relative h-[70vh]'>
         <img

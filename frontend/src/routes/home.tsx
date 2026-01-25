@@ -1,7 +1,5 @@
-import { getImageUrl } from '@/utils/images';
 import type { Route } from './+types/home';
 import Hero from '@/components/sections/Hero';
-import Services from '@/components/sections/Services';
 import SmallServices from '@/components/sections/SmallServices';
 import Tours from '@/components/sections/Tours';
 import Explore from '@/components/sections/ExploreSection';

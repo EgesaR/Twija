@@ -9,6 +9,7 @@ export default defineConfig({
     // This tells Vite: "Don't treat these as external Node modules,
     // bundle them so my code can safely reference them."
     noExternal: ['gsap', '@gsap/react', "framer-motion", "motion-dom", "motion-utils"],
+    external: ["axios"]
   },
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
 });
