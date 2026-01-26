@@ -1,7 +1,7 @@
 import type { Route } from './+types/home';
 import Hero from '@/components/sections/Hero';
 import SmallServices from '@/components/sections/SmallServices';
-import Tours from '@/components/sections/Tours';
+import Tours from '@/components/sections/tours/Tours';
 import Explore from '@/components/sections/ExploreSection';
 import Feedback from '@/components/sections/Feedback';
 

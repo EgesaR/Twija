@@ -11,15 +11,15 @@ import { contactInfo } from '@/data/contact';
 import { socials } from '@/data/socials';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
 
   useGSAP(
-    () => {
+    async () => {
+      const { ScrollTrigger } = await import('gsap/dist/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: footerRef.current,

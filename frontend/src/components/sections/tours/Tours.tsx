@@ -11,43 +11,62 @@ import {
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import { Spinner } from '../../ui/spinner';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// const categories = [
+//   { id: 'all', label: 'All', icon: LayoutGrid },
+//   { id: 'historical', label: 'History', icon: Landmark },
+//   { id: 'arts', label: 'Culture', icon: Palette },
+//   { id: 'nature', label: 'Nature', icon: TreePine },
+//   { id: 'modern', label: 'City', icon: Building2 },
+// ];
+
 const categories = [
   { id: 'all', label: 'All', icon: LayoutGrid },
-  { id: 'historical', label: 'History', icon: Landmark },
-  { id: 'arts', label: 'Culture', icon: Palette },
-  { id: 'nature', label: 'Nature', icon: TreePine },
-  { id: 'modern', label: 'City', icon: Building2 },
-];
+  { id: 'Genocide Memorial & Historical', label: 'History', icon: Landmark },
+  { id: 'Art & Culture', label: 'Culture', icon: Palette },
+  { id: 'Nature & Hiking', label: 'Nature', icon: TreePine },
+  { id: 'Urban Exploration', label: 'City', icon: Building2 },
+] as const;
 
 const ToursSection = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { data: tours = [], isLoading } = useTours();
-  console.log("Tours: ", tours)
+  console.log('Tours: ', tours);
   const filteredTours = useMemo(() => {
     if (activeCategory === 'all') return tours;
     return tours.filter(
-      (tour) => tour.category?.toLowerCase() === activeCategory,
+      (tour) => tour.category === activeCategory,
     );
   }, [activeCategory, tours]);
 
   useGSAP(
     () => {
       // 1. One-time Entrance for the Header
-      gsap.from('.section-header', {
-        y: 40,
+      gsap.fromTo('.section-header', {
+        y: 30,
         opacity: 0,
-        duration: 1,
+        duration: 0.8,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: '.section-header',
-          start: 'top 85%',
+          start: 'top 90%',
           toggleActions: 'play none none none',
         },
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.section-header',
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+        }
       });
 
       // 2. Filter Animation for the Cards
@@ -56,18 +75,16 @@ const ToursSection = () => {
         gsap.fromTo(
           '.tour-card-wrapper', // Ensure the card component is wrapped in this class
           {
-            y: 20,
+            y: 30,
             opacity: 0,
-            scale: 0.98,
           },
           {
             y: 0,
             opacity: 1,
-            scale: 1,
             duration: 0.4,
-            stagger: 0.08,
-            ease: 'sine.out',
-            overwrite: 'auto',
+            stagger: 0.5,
+            ease: 'power2.out',
+            overwrite: true,
           },
         );
       }
@@ -122,7 +139,7 @@ const ToursSection = () => {
         <div className='min-h-100'>
           {isLoading ? (
             <div className='flex justify-center items-center h-64'>
-              <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900' />
+              <Spinner className='size-8' />
             </div>
           ) : filteredTours.length > 0 ? (
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>

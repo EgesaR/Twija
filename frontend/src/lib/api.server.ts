@@ -1,12 +1,13 @@
 import { createSupabaseServerClient } from './supabase.server';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '');
 
 export const apiClient = async <T>(
   endpoint: string,
   options: RequestInit = {},
 ): Promise<T> => {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const cleanedEndpoint = endpoint.replace(/^\//, '');
+  const response = await fetch(`${API_URL}${cleanedEndpoint}/`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',

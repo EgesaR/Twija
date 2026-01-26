@@ -1,144 +1,95 @@
-import type { tourProps } from '@/constants';
-
-export const rawTours: tourProps[] = [
+// data/rawTours.ts
+export const rawTours = [
   {
     id: 'tour-1',
     title: 'Kigali Easy Walking Tour',
+    category: 'Urban Exploration', // Aligned
     description: "A gentle stroll exploring Kigali's history and culture",
     startingPoint: 'Kandt Museum',
     duration: '2 Hours',
-    estimated: true,
-    adventureSteps: [
-      'Kandt Museum',
-      'Downtown Kigali',
-      'Car Free Zone',
-      'Local city vibes',
-    ],
     price: 25,
-    imgUrl: 'kigali2.jpg',
-    type: 'Open Trip',
-    numberPerPerson: 1,
+    images: 'kigali2.jpg',
+    adventureSteps: ['Kandt Museum', 'Downtown', 'Car Free Zone'],
     slots: 2,
+    numberPerPerson: 1,
   },
-
   {
     id: 'tour-2',
-    title: 'Luxury Akagera National Park Safari',
-    description:
-      'Experience a luxurious full-day safari adventure in Akagera National Park.',
+    title: 'Akagera National Park Safari',
+    category: 'Nature & Hiking', // Aligned
+    description: 'Experience a luxurious full-day safari adventure.',
     startingPoint: 'Hotel pickup',
     duration: '1 Day',
-    estimated: true,
-    adventureSteps: [
-      'Luxury game drive',
-      'Wildlife spotting',
-      'Lunch in the park',
-      'Scenic landscapes',
-    ],
-    price: 25,
-    imgUrl: ['b.jpg', 'IMG-20260112-WA0034.jpg'],
-    type: 'Open Trip',
+    price: 250,
+    images: ['b.jpg'],
+    adventureSteps: ['Game drive', 'Wildlife spotting'],
+    slots: 4,
     numberPerPerson: 1,
-    slots: 2,
   },
-
   {
     id: 'tour-3',
     title: 'Downtown & Car-Free Zone Walk',
-    description:
-      "A quick and lively walk through Kigali's bustling downtown and car-free zone.",
+    category: 'Urban Exploration', // Aligned
+    description: "A quick and lively walk through Kigali's bustling center.",
     startingPoint: 'Downtown Kigali',
     duration: '2 Hours 30 Minutes',
-    estimated: true,
-    adventureSteps: ['Downtown Kigali', 'Car Free Zone', 'Urban city life'],
     price: 20,
-    imgUrl: ['hero-bg.jpg', 'kigali4.jpg'],
-    type: 'Open Trip',
+    images: ['kigali4.jpg'],
+    adventureSteps: ['Downtown', 'Car Free Zone'],
+    slots: 5,
     numberPerPerson: 1,
-    slots: 2,
   },
-
   {
     id: 'tour-4',
     title: 'Kigali Long Tour Adventure',
+    category: 'Genocide Memorial & Historical', // Aligned
     description:
-      "A comprehensive journey through Kigali's key historical, cultural, and modern landmarks.",
+      "A comprehensive journey through Kigali's historical landmarks.",
     startingPoint: 'Kigali Genocide Memorial',
     duration: '4 Hours',
-    estimated: true,
-    adventureSteps: [
-      'Genocide Memorial',
-      'Kandt Museum',
-      'Car Free Zone',
-      'Imbuga City Walk',
-    ],
-    price: 30,
-    imgUrl: '4.jpg',
-    type: 'Open Trip',
+    price: 35,
+    images: '4.jpg',
+    adventureSteps: ['Genocide Memorial', 'Kandt Museum'],
+    slots: 10,
     numberPerPerson: 1,
-    slots: 2,
   },
-
   {
     id: 'tour-5',
     title: 'Kigali Discovered Walk',
-    description:
-      'Uncover hidden gems and significant cultural sites on this enlightening walk.',
+    category: 'Art & Culture', // Aligned
+    description: 'Uncover hidden gems and significant cultural sites.',
     startingPoint: 'Kigali Convention Center',
     duration: '4 Hours 30 Minutes',
-    estimated: true,
-    adventureSteps: [
-      'Inema Art Center',
-      'Nyamirambo Women’s Center',
-      'City Market',
-      'Cultural immersion',
-    ],
     price: 40,
-    imgUrl: '3.jpg',
-    type: 'Open Trip',
+    images: '3.jpg',
+    adventureSteps: ['Inema Art Center', 'Nyamirambo Women’s Center'],
+    slots: 6,
     numberPerPerson: 1,
-    slots: 2,
   },
-
   {
     id: 'tour-6',
     title: 'Kigali Motorbike Tour',
-    description:
-      'Experience Kigali like a local! A thrilling motorbike tour to key city attractions.',
+    category: 'Urban Exploration', // Aligned
+    description: 'Experience Kigali like a local on a motorbike.',
     startingPoint: 'Hotel pickup',
     duration: '6 Hours',
-    estimated: true,
-    adventureSteps: [
-      'Motorbike ride',
-      'Local neighborhoods',
-      'Markets & art centers',
-      'Authentic city experience',
-    ],
     price: 65,
-    imgUrl: 'kigali.jpg',
-    type: 'Open Trip',
-    numberPerPerson: 1,
+    images: 'kigali.jpg',
+    adventureSteps: ['Motorbike ride', 'Local markets'],
     slots: 2,
+    numberPerPerson: 1,
   },
-
   {
     id: 'tour-7',
     title: 'Kigali Car Tour',
-    description:
-      "A comfortable full-day car tour exploring Kigali's landmarks and coffee farm.",
+    category: 'Culinary & Food', // Aligned (assuming coffee farm = culinary)
+    description: 'Comfortable car tour including a coffee farm visit.',
     startingPoint: 'Hotel pickup',
     duration: '1 Day',
-    estimated: true,
-    adventureSteps: [
-      'Private vehicle',
-      'Coffee farm tour',
-      'City landmarks',
-      'Relaxed travel',
-    ],
     price: 250,
-    imgUrl: 'kigali1.jpg',
-    type: 'Open Trip',
+    images: 'kigali1.jpg',
+    adventureSteps: ['Coffee farm', 'City landmarks'],
+    slots: 4,
     numberPerPerson: 1,
-    slots: 2,
   },
 ];

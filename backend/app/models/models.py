@@ -1,7 +1,8 @@
 from pydantic import BaseModel, EmailStr, Field
 from uuid import UUID
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any, List
+
 
 class PromotionRequest(BaseModel):
     user_id: UUID
@@ -17,14 +18,19 @@ class AdminSignupRequest(BaseModel):
 class ProfileUpdate(BaseModel):
     full_name: str
 
+
 class TourSchema(BaseModel):
     id: str
-    name: str
+    title: str
     description: Optional[str] = None
+    category: Optional[str] = None
     price: float
-    duration: str  # e.g., "3 hours" or "Full Day"
-    location: str
-    image_url: Optional[str] = None
+    duration: Optional[str] = None  # e.g., "3 hours" or "Full Day"
+    images: Any
+    adventureSteps: Optional[List[str]] = []
+    slots: Optional[int] = 0
+    numberPerPerson: Optional[int] = 1
+    startingPoint: Optional[str] = "Kigali"
     created_at: datetime
 
     # This allows Pydantic to work with Supabase's dictionary output
