@@ -9,7 +9,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Send, Loader2, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Send, Loader2, Mail, Phone, MapPin } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -19,6 +19,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { getImageUrl } from '@/utils/images';
 import { useToast } from '@/hooks/use-toast';
 import { contactSchema, type ContactFormData } from '@/schema/contactSchema';
+import { contactInfo } from '@/data/contact';
+import { FaWhatsapp } from 'react-icons/fa';
 
 type ContactFormProps = {
   register: UseFormRegister<ContactFormData>;
@@ -99,13 +101,17 @@ const ContactUs = () => {
             {/* Dribbble-style Contact Grid */}
             <div className='animate-fade grid grid-cols-1 sm:grid-cols-2 border-t border-l border-slate-200'>
               {[
-                { icon: Mail, label: 'Email', val: 'hello@kigaliwalks.rw' },
-                { icon: Phone, label: 'Phone', val: '+250 788 123 456' },
-                { icon: MapPin, label: 'Location', val: 'KN 4 St, Kigali' },
                 {
-                  icon: ArrowRight,
-                  label: 'Socials',
-                  val: '@KigaliExpeditions',
+                  icon: Mail,
+                  label: contactInfo.email,
+                  val: 'hello@kigaliwalks.rw',
+                },
+                { icon: Phone, label: 'Phone', val: contactInfo.phone },
+                { icon: MapPin, label: 'Location', val: contactInfo.address },
+                {
+                  icon: FaWhatsapp,
+                  label: 'WhatsApp',
+                  val: contactInfo.whatsapp,
                 },
               ].map((item, i) => (
                 <div

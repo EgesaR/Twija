@@ -83,16 +83,10 @@ const BookTour = () => {
   return (
     <div
       ref={containerRef}
-      className='min-h-screen bg-[#FDFDFB] flex flex-col lg:flex-row'
+      className='h-screen bg-[#FDFDFB] flex flex-col lg:flex-row'
     >
       <LeftInfo />
-      <RightForm
-        register={register}
-        control={control}
-        onSubmit={handleSubmit(onSubmit)}
-        isSubmitting={isSubmitting}
-        errors={errors}
-      />
+      <iframe src="https://store.pesapal.com/twijaafricasafari" className="form-side lg:w-[60%] bg-white p-8 pb-0 lg:p-24 lg:pb-0 flex items-center h-120 sm:h-full" />
     </div>
   );
 };
@@ -154,7 +148,7 @@ type RightFormProps = {
 
 const RightForm = ({
   register,
-  control,
+  control,  
   onSubmit,
   isSubmitting,
   errors,
