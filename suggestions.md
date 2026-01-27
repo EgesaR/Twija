@@ -8,3 +8,15 @@ what ot take
 tabs - [overview, ]
 
 tour excludes and includes
+
+file structure
+
+src
+- assets
+- context
+- components
+- data
+- features (authentication, theme, modals)
+- hooks
+- layouts
+- modules

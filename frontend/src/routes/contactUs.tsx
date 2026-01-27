@@ -1,7 +1,11 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useRef, type FormEventHandler } from 'react';
+import {
+  useForm,
+  type SubmitHandler,
+  type UseFormRegister,
+} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -15,6 +19,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { getImageUrl } from '@/utils/images';
 import { useToast } from '@/hooks/use-toast';
 import { contactSchema, type ContactFormData } from '@/schema/contactSchema';
+
+type ContactFormProps = {
+  register: UseFormRegister<ContactFormData>;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  isSubmitting: boolean;
+};
 
 const ContactUs = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,7 +49,9 @@ const ContactUs = () => {
     { scope: containerRef },
   );
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit: SubmitHandler<ContactFormData> = async (
+    data: ContactFormData,
+  ) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       toast({
@@ -61,7 +73,7 @@ const ContactUs = () => {
       {/* Background Element - Soft & Organic */}
       <div className='absolute top-0 right-0 w-1/2 h-full hidden lg:block'>
         <div
-          className='w-full h-full bg-cover bg-center opacity-40 grayscale-[20%]'
+          className='w-full h-full bg-cover bg-center opacity-40 grayscale-20'
           style={{
             backgroundImage: `url(${getImageUrl('kigali7.jpg')})`,
             maskImage: 'linear-gradient(to left, black, transparent)',
@@ -116,75 +128,11 @@ const ContactUs = () => {
           <div className='lg:col-span-7'>
             <Card className='animate-fade border-none bg-transparent shadow-none'>
               <CardContent className='p-0'>
-                <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                    <div className='space-y-2 border-b border-slate-300 focus-within:border-green-700 transition-colors py-2'>
-                      <Label className='text-[10px] uppercase tracking-tighter font-bold text-slate-400'>
-                        01. What's your name?
-                      </Label>
-                      <Input
-                        {...register('name')}
-                        placeholder='John Doe'
-                        className='border-none bg-transparent px-0 h-10 text-xl placeholder:text-slate-300 focus-visible:ring-0'
-                      />
-                    </div>
-                    <div className='space-y-2 border-b border-slate-300 focus-within:border-green-700 transition-colors py-2'>
-                      <Label className='text-[10px] uppercase tracking-tighter font-bold text-slate-400'>
-                        02. Your email address
-                      </Label>
-                      <Input
-                        {...register('email')}
-                        type='email'
-                        placeholder='john@example.com'
-                        className='border-none bg-transparent px-0 h-10 text-xl placeholder:text-slate-300 focus-visible:ring-0'
-                      />
-                    </div>
-                  </div>
-
-                  <div className='space-y-2 border-b border-slate-300 focus-within:border-green-700 transition-colors py-2'>
-                    <Label className='text-[10px] uppercase tracking-tighter font-bold text-slate-400'>
-                      03. What are you looking for?
-                    </Label>
-                    <Input
-                      {...register('subject')}
-                      placeholder='Tour inquiry, partnership...'
-                      className='border-none bg-transparent px-0 h-10 text-xl placeholder:text-slate-300 focus-visible:ring-0'
-                    />
-                  </div>
-
-                  <div className='space-y-2 border-b border-slate-300 focus-within:border-green-700 transition-colors py-2'>
-                    <Label className='text-[10px] uppercase tracking-tighter font-bold text-slate-400'>
-                      04. Your message
-                    </Label>
-                    <Textarea
-                      {...register('message')}
-                      placeholder='Tell us more about your travel plans...'
-                      className='border-none bg-transparent px-0 min-h-[100px] text-xl placeholder:text-slate-300 focus-visible:ring-0 resize-none'
-                    />
-                  </div>
-
-                  <div className='pt-6'>
-                    <Button
-                      disabled={isSubmitting}
-                      type='submit'
-                      className='group relative bg-green-700 hover:bg-green-800 text-white rounded-full px-12 h-16 text-lg transition-all duration-500 overflow-hidden'
-                    >
-                      <span className='relative z-10 flex items-center gap-3'>
-                        {isSubmitting ? (
-                          <Loader2 className='animate-spin' size={20} />
-                        ) : (
-                          'Send Message'
-                        )}
-                        {!isSubmitting && (
-                          <Send
-                            size={18}
-                            className='group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform'
-                          />
-                        )}
-                      </span>
-                    </Button>
-                  </div>
-                </form>
+                <ContactForm
+                  register={register}
+                  onSubmit={handleSubmit(onSubmit)}
+                  isSubmitting={isSubmitting}
+                />
               </CardContent>
             </Card>
           </div>
@@ -193,5 +141,77 @@ const ContactUs = () => {
     </div>
   );
 };
+
+const ContactForm = ({
+  register,
+  onSubmit,
+  isSubmitting,
+}: ContactFormProps) => {
+  return (
+    <form onSubmit={onSubmit} className='flex flex-col space-y-8'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+        <FormField label="01. What's your name?">
+          <Input
+            {...register('name')}
+            placeholder='John Doe'
+            className='shadow-none border-0 focus:ring-0!'
+          />
+        </FormField>
+
+        <FormField label='02. Your email address'>
+          <Input
+            {...register('email')}
+            type='email'
+            placeholder='john@example.com'
+            className='shadow-none border-0 focus:ring-0!'
+          />
+        </FormField>
+      </div>
+
+      <FormField label='03. What are you looking for?'>
+        <Input
+          {...register('subject')}
+          placeholder='Tour inquiry, partnership…'
+          className='shadow-none border-0 focus:ring-0!'
+        />
+      </FormField>
+
+      <FormField label='04. Your message'>
+        <Textarea
+          {...register('message')}
+          placeholder='Tell us more…'
+          className='shadow-none border-0 focus:ring-0!'
+        />
+      </FormField>
+
+      <Button
+        type='submit'
+        disabled={isSubmitting}
+        className='bg-green-700 hover:bg-green-800 rounded-full px-24 h-12'
+      >
+        {isSubmitting ? (
+          <Loader2 className='animate-spin' />
+        ) : (
+          <>
+            Send Message <Send size={18} />
+          </>
+        )}
+      </Button>
+    </form>
+  );
+};
+
+const FormField = ({
+  label, children
+}: { label: string, children: React.ReactNode }) => {
+  return (
+    <div className='space-y-2 border-b border-slate-400 focus-within:border-green-700 py-0.5'>
+      <Label className='text-[10px] uppercase font-bold text-slate-500'>
+        {label}
+      </Label>
+      {children}
+    </div>
+  );
+}
 
 export default ContactUs;

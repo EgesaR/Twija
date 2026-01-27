@@ -20,7 +20,7 @@ const Navbar = () => {
     '/tours',
     '/book-tour',
     '/kigali-experiences',
-    'contact-us',
+    //'contact-us',
   ];
   const hasHero = heroRoutes.includes(pathname);
 
@@ -28,13 +28,13 @@ const Navbar = () => {
     () => {
       if (!hasHero) {
         if (!hasHero) {
-          // gsap.set('nav', {
-          //   backgroundColor: 'rgba(255, 255, 255, 1)',
-          //   backdropFilter: 'blur(12px)',
-          //   boxShadow: '0 4px 20px -5px rgba(0, 0, 0, 0.05)',
-          //   paddingTop: '0.75rem',
-          //   paddingBottom: '0.75rem',
-          // });
+          gsap.set('nav', {
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            backdropFilter: 'blur(12px)',
+            boxShadow: '0 4px 20px -5px rgba(0, 0, 0, 0.05)',
+            paddingTop: '0.75rem',
+            paddingBottom: '0.75rem',
+          });
           gsap.set('nav a, nav button, #title', { color: '#000000' });
           return;
         }

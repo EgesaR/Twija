@@ -178,7 +178,7 @@ const RightForm = ({
               <Input
                 {...register('fullName')}
                 placeholder='Jane Cooper'
-                className='shadow-none border-0 focus:ring-0!'
+                className='border-0 border-b-2 border-slate-200 focus:border-green-700 focus:ring-0 bg-transparent'
               />
               {errors.fullName && (
                 <p className='text-red-500 text-sm'>
@@ -192,7 +192,7 @@ const RightForm = ({
                 {...register('email')}
                 type='email'
                 placeholder='jane@example.com'
-                className='shadow-none border-0 focus:ring-0!'
+                className='border-0 border-b-2 border-slate-200 focus:border-green-700 focus:ring-0 bg-transparent'
               />
               {errors.email && (
                 <p className='text-red-500 text-sm'>{errors.email.message}</p>
@@ -204,7 +204,7 @@ const RightForm = ({
           <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
             <FormField label='Select Your Tour'>
               <Select {...register('tour')}>
-                <SelectTrigger className='h-full! border-0 w-full rounded-none px-0 text-lg focus:ring-0 bg-transparent py-0! mb-0! shadow-none'>
+                <SelectTrigger className='h-12 border-0 border-b-2 border-slate-200 rounded-none px-0 text-lg focus:ring-0 focus:border-green-700 bg-transparent'>
                   <SelectValue placeholder='Choose a tour' />
                 </SelectTrigger>
                 <SelectContent className='rounded-xl border-slate-100 shadow-2xl'>
@@ -229,7 +229,7 @@ const RightForm = ({
                     <PopoverTrigger asChild>
                       <Button
                         variant='outline'
-                        className='w-full h-12 justify-start border-0 shadow-none rounded-none px-0 text-lg font-normal focus:ring-0 bg-transparent hover:bg-transparent hover:cursor-text'
+                        className='w-full h-12 justify-start border-0 border-b-2 border-slate-200 rounded-none px-0 text-lg font-normal focus:border-green-700 focus:ring-0 bg-transparent'
                       >
                         <CalendarIcon className='mr-3 h-5 w-5 text-slate-400' />
                         {field.value ? (
@@ -261,14 +261,14 @@ const RightForm = ({
 
           {/* Participants & Phone */}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-            <FormField label='Participants' className="">
-              <div className='flex items-end gap-4 h-full'>
-                <Users size={20} className='text-slate-400 h-full' />
+            <FormField label='Participants'>
+              <div className='flex items-center gap-4 border-b-2 border-slate-200 h-12'>
+                <Users size={20} className='text-slate-400' />
                 <Input
                   type='number'
                   min={1}
                   {...register('participants', { valueAsNumber: true })}
-                  className='shadow-none border-0 focus:ring-0! h-full'
+                  className='border-0 focus:ring-0 focus:border-green-700 bg-transparent'
                 />
               </div>
               {errors.participants && (
@@ -282,7 +282,7 @@ const RightForm = ({
               <Input
                 {...register('phone')}
                 placeholder='+250 ...'
-                className='shadow-none border-0 focus:ring-0! bg-transparent'
+                className='border-0 border-b-2 border-slate-200 focus:border-green-700 focus:ring-0 bg-transparent'
               />
               {errors.phone && (
                 <p className='text-red-500 text-sm'>{errors.phone.message}</p>
@@ -295,7 +295,7 @@ const RightForm = ({
             <Textarea
               {...register('specialRequests')}
               placeholder='Any dietary requirements or accessibility needs?'
-              className='shadow-none border-0 focus:ring-0! resize-none'
+              className='border-0 border-b-2 border-slate-200 focus:border-green-700 focus:ring-0 bg-transparent resize-none'
             />
           </FormField>
 
@@ -325,14 +325,11 @@ const RightForm = ({
 type FormFieldProps = {
   label: string;
   children: React.ReactNode;
-  className?: string
 };
 
-const FormField = ({ label, children, className }: FormFieldProps) => (
-  <div
-    className={`space-y-2 border-b border-slate-400 focus-within:border-green-700 py-0.5 flex flex-col relative group ${className}`}
-  >
-    <Label className='text-[10px] uppercase tracking-widest font-bold text-slate-500 group-focus-within:text-green-700'>
+const FormField = ({ label, children }: FormFieldProps) => (
+  <div className='input-anim space-y-2 group'>
+    <Label className='text-[10px] uppercase tracking-widest font-bold text-slate-400 group-focus-within:text-green-700'>
       {label}
     </Label>
     {children}
