@@ -22,7 +22,7 @@ export function meta({}: Route.MetaArgs) {
     { name: 'robots', content: 'index, follow' },
     {
       name: 'google-site-verification',
-      content: 'XxdDg6s1b4iXZTCTl6OSqE3GVrx7HR50N74XY5mwOD8', //'nmLBFhaJfUBwUecOE5v0E7i2yCNTSCrheTHBn6RcKUM',
+      content: 'ERwMq3r779g9QA9E8wXcHEuiIylCdZ_OnZ3wR3fUksY', //'nmLBFhaJfUBwUecOE5v0E7i2yCNTSCrheTHBn6RcKUM',
     },
 
     // Canonical
