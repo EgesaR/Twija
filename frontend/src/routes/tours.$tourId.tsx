@@ -71,7 +71,7 @@ const TourPage = () => {
 
         <Button
           size={'icon'}
-          className='absolute top-8 left-8 rounded-full bg-white/20 backdrop-blur-md border border-white/20 hover:bg-white/40 text-white'
+          className='absolute top-20 left-8 rounded-full bg-white/20 backdrop-blur-md border border-white/20 hover:bg-white/40 text-white  hover:cursor-pointer'
           onClick={() => navigate(-1)}
         >
           <ChevronLeft className='size-6' />

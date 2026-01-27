@@ -16,6 +16,7 @@ import SplitText from "gsap/dist/SplitText";
 import gsap from "gsap/dist/gsap";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/AuthContext";
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export const links: Route.LinksFunction= () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -51,6 +52,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <AuthProvider>{children}</AuthProvider>
         </QueryClientProvider>
         <ScrollRestoration />
+        <SpeedInsights />
         <Scripts />
       </body>
     </html>

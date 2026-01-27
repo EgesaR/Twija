@@ -14,20 +14,64 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/contact-us": {
+    params: {};
+  };
+  "/book-tour": {
+    params: {};
+  };
+  "/booking": {
+    params: {};
+  };
+  "/kigali-experiences": {
+    params: {};
+  };
+  "/tours": {
+    params: {};
+  };
+  "/tours/:tourId": {
+    params: {
+      "tourId": string;
+    };
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/";
+    page: "/" | "/contact-us" | "/book-tour" | "/booking" | "/kigali-experiences" | "/tours" | "/tours/:tourId";
   };
   "./layouts/default.tsx": {
     id: "layouts/default";
-    page: "/";
+    page: "/" | "/contact-us" | "/book-tour" | "/booking" | "/kigali-experiences" | "/tours" | "/tours/:tourId";
   };
   "routes/home.tsx": {
     id: "routes/home";
     page: "/";
+  };
+  "routes/contactUs.tsx": {
+    id: "routes/contactUs";
+    page: "/contact-us";
+  };
+  "routes/bookTour.tsx": {
+    id: "routes/bookTour";
+    page: "/book-tour";
+  };
+  "routes/booking.tsx": {
+    id: "routes/booking";
+    page: "/booking";
+  };
+  "routes/kigaliExperiences.tsx": {
+    id: "routes/kigaliExperiences";
+    page: "/kigali-experiences";
+  };
+  "routes/tours.tsx": {
+    id: "routes/tours";
+    page: "/tours";
+  };
+  "routes/tours.$tourId.tsx": {
+    id: "routes/tours.$tourId";
+    page: "/tours/:tourId";
   };
 };
 
@@ -35,4 +79,10 @@ type RouteModules = {
   "root": typeof import("./src/root.tsx");
   "layouts/default": typeof import("./src/./layouts/default.tsx");
   "routes/home": typeof import("./src/routes/home.tsx");
+  "routes/contactUs": typeof import("./src/routes/contactUs.tsx");
+  "routes/bookTour": typeof import("./src/routes/bookTour.tsx");
+  "routes/booking": typeof import("./src/routes/booking.tsx");
+  "routes/kigaliExperiences": typeof import("./src/routes/kigaliExperiences.tsx");
+  "routes/tours": typeof import("./src/routes/tours.tsx");
+  "routes/tours.$tourId": typeof import("./src/routes/tours.$tourId.tsx");
 };

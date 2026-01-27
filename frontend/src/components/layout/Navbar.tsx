@@ -15,7 +15,13 @@ const Navbar = () => {
   const { toggleSidebar } = useSidebar();
   const { pathname } = useLocation();
 
-  const heroRoutes = ['/', '/book-tour', '/kigali-experiences', 'contact-us'];
+  const heroRoutes = [
+    '/',
+    '/tours',
+    '/book-tour',
+    '/kigali-experiences',
+    'contact-us',
+  ];
   const hasHero = heroRoutes.includes(pathname);
 
   useGSAP(

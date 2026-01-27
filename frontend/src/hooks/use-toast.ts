@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { toast as sonnerToast } from 'sonner';
 
 type ToastProps = {
   title?: React.ReactNode;
@@ -11,30 +10,47 @@ type ToastProps = {
   duration?: number;
 };
 
-function toast({ title, description, variant, action, ...props }: ToastProps) {
-  // Map shadcn variants to sonner methods
-  const variantMap = {
-    default: sonnerToast,
-    destructive: sonnerToast.error,
-    success: sonnerToast.success,
-    info: sonnerToast.info,
-    warning: sonnerToast.warning,
-  };
+type SonnerModule = typeof import('sonner');
 
-  const toastFn = variantMap[variant || 'default'];
+let sonnerPromise: Promise<SonnerModule> | null = null;
 
-  return toastFn(title, {
-    description: description,
-    action: action as any, // Sonner expects { label, onClick } usually, but handles nodes
-    ...props,
+function getSonner(): Promise<SonnerModule> | null {
+  if (typeof window === 'undefined') return null;
+  if (!sonnerPromise) {
+    sonnerPromise = import('sonner');
+  }
+  return sonnerPromise;
+}
+
+export async function toast(props: ToastProps) {
+  const sonner = await getSonner();
+  if (!sonner) return;
+
+  const { toast: baseToast } = sonner;
+
+  const map = {
+    default: baseToast,
+    destructive: baseToast.error,
+    success: baseToast.success,
+    info: baseToast.info,
+    warning: baseToast.warning,
+  } as const;
+
+  const fn = map[props.variant ?? 'default'];
+
+  return fn(props.title, {
+    description: props.description,
+    action: props.action as any,
+    duration: props.duration,
   });
 }
 
-function useToast() {
+export function useToast() {
   return {
     toast,
-    dismiss: (id?: string | number) => sonnerToast.dismiss(id),
+    dismiss: async (id?: string | number) => {
+      const sonner = await getSonner();
+      sonner?.toast.dismiss(id);
+    },
   };
 }
-
-export { useToast, toast };
