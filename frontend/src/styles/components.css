@@ -74,7 +74,7 @@ body {
   .hero {
     @apply relative z-10 min-h-dvh w-full;
     .hero-content {
-      @apply absolute inset-0 flex flex-col items-center justify-center bg-linear-to-b from-black/20 via-black/30 to-black/50 text-white;
+      @apply absolute inset-0 flex flex-col items-center justify-center text-white;
       h3 {
         @apply text-lg sm:text-3xl font-light text-center mt-20;
       }

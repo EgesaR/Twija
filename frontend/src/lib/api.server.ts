@@ -1,6 +1,8 @@
 import { createSupabaseServerClient } from './supabase.server';
 
-const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '');
+const API_URL = (
+  import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+).replace(/\/$/, '');
 
 export const apiClient = async <T>(
   endpoint: string,
@@ -74,23 +76,45 @@ const apiServerRequest = async <T>(
 };
 
 export const api = {
-  get: <T>(endpoint: string, options?: RequestInit) =>
-    apiServerRequest(endpoint, options),
-  post: <T>(endpoint: string, body: any, options?: RequestInit) =>
-    apiServerRequest<T>(endpoint, {
-      ...options,
-      method: 'POST',
-      body: JSON.stringify(body),
-    }),
-  patch: <T>(endpoint: string, body: any, options?: RequestInit) =>
-    apiServerRequest<T>(endpoint, {
-      ...options,
-      method: 'PATCH',
-      body: JSON.stringify(body),
-    }),
-  delete: <T>(endpoint: string, options?: RequestInit) =>
-    apiServerRequest<T>(endpoint, {
-      ...options,
-      method: 'DELETE',
-    }),
+  get: <T>(endpoint: string, options?: RequestInit, request?: Request) =>
+    apiServerRequest(endpoint, options, request),
+  post: <T>(
+    endpoint: string,
+    body: any,
+    options?: RequestInit,
+    request?: Request,
+  ) =>
+    apiServerRequest<T>(
+      endpoint,
+      {
+        ...options,
+        method: 'POST',
+        body: JSON.stringify(body),
+      },
+      request,
+    ),
+  patch: <T>(
+    endpoint: string,
+    body: any,
+    options?: RequestInit,
+    request?: Request,
+  ) =>
+    apiServerRequest<T>(
+      endpoint,
+      {
+        ...options,
+        method: 'PATCH',
+        body: JSON.stringify(body),
+      },
+      request,
+    ),
+  delete: <T>(endpoint: string, options?: RequestInit, request?: Request) =>
+    apiServerRequest<T>(
+      endpoint,
+      {
+        ...options,
+        method: 'DELETE',
+      },
+      request,
+    ),
 };

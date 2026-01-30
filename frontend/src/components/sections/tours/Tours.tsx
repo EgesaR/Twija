@@ -8,20 +8,9 @@ import {
   Building2,
   LayoutGrid,
 } from 'lucide-react';
-import gsap from 'gsap';
+import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import { Spinner } from '../../ui/spinner';
-
-gsap.registerPlugin(ScrollTrigger);
-
-// const categories = [
-//   { id: 'all', label: 'All', icon: LayoutGrid },
-//   { id: 'historical', label: 'History', icon: Landmark },
-//   { id: 'arts', label: 'Culture', icon: Palette },
-//   { id: 'nature', label: 'Nature', icon: TreePine },
-//   { id: 'modern', label: 'City', icon: Building2 },
-// ];
 
 const categories = [
   { id: 'all', label: 'All', icon: LayoutGrid },
@@ -37,17 +26,16 @@ const ToursSection = () => {
 
   const { data: tours = [], isLoading } = useTours();
   console.log('Tours: ', tours);
+
   const filteredTours = useMemo(() => {
     if (activeCategory === 'all') return tours;
-    return tours.filter(
-      (tour) => tour.category === activeCategory,
-    );
+    return tours.filter((tour) => tour.category === activeCategory);
   }, [activeCategory, tours]);
 
   useGSAP(
     () => {
-      // 1. One-time Entrance for the Header
-      gsap.fromTo('.section-header', {
+      // Animate section header
+      gsap.from('.section-header', {
         y: 30,
         opacity: 0,
         duration: 0.8,
@@ -56,42 +44,28 @@ const ToursSection = () => {
           trigger: '.section-header',
           start: 'top 90%',
           toggleActions: 'play none none none',
+          markers: false,
         },
-      }, {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.section-header',
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        }
       });
 
-      // 2. Filter Animation for the Cards
-      // We only run this if we aren't loading and have items to show
+      // Animate tour cards on filter change
       if (!isLoading && filteredTours.length > 0) {
-        gsap.fromTo(
-          '.tour-card-wrapper', // Ensure the card component is wrapped in this class
-          {
-            y: 30,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.4,
-            stagger: 0.5,
-            ease: 'power2.out',
-            overwrite: true,
-          },
-        );
+        // Use a timeline for staggered card animation
+        const tl = gsap.timeline();
+        tl.from('.tour-card-wrapper', {
+          y: 30,
+          opacity: 0,
+          duration: 0.4,
+          stagger: 0.1,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
       }
     },
     {
       scope: containerRef,
-      dependencies: [activeCategory, tours, isLoading],
+      dependencies: [activeCategory, filteredTours.length, isLoading],
+      revertOnUpdate: false,
     },
   );
 

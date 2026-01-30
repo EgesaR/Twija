@@ -1,0 +1,1853 @@
+here is more code: import { useMemo } from "react";
+
+import { motion } from "framer-motion";
+
+import {
+
+  TrendingUp,
+
+  DollarSign,
+
+  Calendar,
+
+  Users,
+
+  BarChart3,
+
+  PieChart,
+
+} from "lucide-react";
+
+import {
+
+  ChartContainer,
+
+  ChartTooltip,
+
+  ChartTooltipContent,
+
+} from "@/components/ui/chart";
+
+import {
+
+  BarChart,
+
+  Bar,
+
+  XAxis,
+
+  YAxis,
+
+  ResponsiveContainer,
+
+  PieChart as RechartsPieChart,
+
+  Pie,
+
+  Cell,
+
+  LineChart,
+
+  Line,
+
+} from "recharts";
+
+import { format, subDays, startOfDay, isAfter } from "date-fns";
+
+
+
+interface Booking {
+
+  id: string;
+
+  status: string;
+
+  created_at: string;
+
+  guest_count: number;
+
+  tour?: {
+
+    title: string;
+
+    price: number | null;
+
+  };
+
+}
+
+
+
+interface DashboardAnalyticsProps {
+
+  bookings: Booking[];
+
+}
+
+
+
+const COLORS = ["hsl(var(--primary))", "hsl(var(--accent))", "hsl(var(--secondary))", "hsl(var(--muted))"];
+
+
+
+const DashboardAnalytics = ({ bookings }: DashboardAnalyticsProps) => {
+
+  const analytics = useMemo(() => {
+
+    // Revenue calculation
+
+    const confirmedBookings = bookings.filter((b) => b.status === "confirmed");
+
+    const totalRevenue = confirmedBookings.reduce((sum, b) => {
+
+      const price = b.tour?.price || 0;
+
+      return sum + price * b.guest_count;
+
+    }, 0);
+
+
+
+    const pendingRevenue = bookings
+
+      .filter((b) => b.status === "pending")
+
+      .reduce((sum, b) => {
+
+        const price = b.tour?.price || 0;
+
+        return sum + price * b.guest_count;
+
+      }, 0);
+
+
+
+    // Total guests
+
+    const totalGuests = confirmedBookings.reduce(
+
+      (sum, b) => sum + b.guest_count,
+
+      0
+
+    );
+
+
+
+    // Popular tours
+
+    const tourCounts: Record<string, { count: number; title: string }> = {};
+
+    bookings.forEach((b) => {
+
+      const title = b.tour?.title || "Unknown";
+
+      if (!tourCounts[title]) {
+
+        tourCounts[title] = { count: 0, title };
+
+      }
+
+      tourCounts[title].count += 1;
+
+    });
+
+    const popularTours = Object.values(tourCounts)
+
+      .sort((a, b) => b.count - a.count)
+
+      .slice(0, 5);
+
+
+
+    // Bookings by status for pie chart
+
+    const statusCounts = {
+
+      pending: bookings.filter((b) => b.status === "pending").length,
+
+      confirmed: bookings.filter((b) => b.status === "confirmed").length,
+
+      cancelled: bookings.filter((b) => b.status === "cancelled").length,
+
+    };
+
+
+
+    const statusData = [
+
+      { name: "Pending", value: statusCounts.pending, color: "hsl(45, 93%, 47%)" },
+
+      { name: "Confirmed", value: statusCounts.confirmed, color: "hsl(142, 76%, 36%)" },
+
+      { name: "Cancelled", value: statusCounts.cancelled, color: "hsl(0, 84%, 60%)" },
+
+    ].filter((d) => d.value > 0);
+
+
+
+    // Bookings over last 7 days
+
+    const last7Days = Array.from({ length: 7 }, (_, i) => {
+
+      const date = startOfDay(subDays(new Date(), 6 - i));
+
+      const count = bookings.filter((b) => {
+
+        const bookingDate = startOfDay(new Date(b.created_at));
+
+        return bookingDate.getTime() === date.getTime();
+
+      }).length;
+
+      return {
+
+        date: format(date, "EEE"),
+
+        bookings: count,
+
+      };
+
+    });
+
+
+
+    // Conversion rate
+
+    const conversionRate =
+
+      bookings.length > 0
+
+        ? Math.round((confirmedBookings.length / bookings.length) * 100)
+
+        : 0;
+
+
+
+    return {
+
+      totalRevenue,
+
+      pendingRevenue,
+
+      totalGuests,
+
+      popularTours,
+
+      statusData,
+
+      last7Days,
+
+      conversionRate,
+
+    };
+
+  }, [bookings]);
+
+
+
+  const chartConfig = {
+
+    bookings: {
+
+      label: "Bookings",
+
+      color: "hsl(var(--accent))",
+
+    },
+
+  };
+
+
+
+  return (
+
+    <div className="space-y-6">
+
+      <h2 className="text-xl font-semibold text-primary">Analytics Overview</h2>
+
+
+
+      {/* Key Metrics */}
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+        <motion.div
+
+          initial={{ opacity: 0, y: 20 }}
+
+          animate={{ opacity: 1, y: 0 }}
+
+          className="glass-card p-4"
+
+        >
+
+          <div className="flex items-center gap-3">
+
+            <div className="p-2 bg-secondary/20 rounded-lg">
+
+              <DollarSign className="w-5 h-5 text-secondary" />
+
+            </div>
+
+            <div>
+
+              <p className="text-lg font-bold text-primary">
+
+                ${analytics.totalRevenue.toLocaleString()}
+
+              </p>
+
+              <p className="text-xs text-muted-foreground">Confirmed Revenue</p>
+
+            </div>
+
+          </div>
+
+        </motion.div>
+
+
+
+        <motion.div
+
+          initial={{ opacity: 0, y: 20 }}
+
+          animate={{ opacity: 1, y: 0 }}
+
+          transition={{ delay: 0.1 }}
+
+          className="glass-card p-4"
+
+        >
+
+          <div className="flex items-center gap-3">
+
+            <div className="p-2 bg-accent/20 rounded-lg">
+
+              <TrendingUp className="w-5 h-5 text-accent" />
+
+            </div>
+
+            <div>
+
+              <p className="text-lg font-bold text-primary">
+
+                ${analytics.pendingRevenue.toLocaleString()}
+
+              </p>
+
+              <p className="text-xs text-muted-foreground">Pending Revenue</p>
+
+            </div>
+
+          </div>
+
+        </motion.div>
+
+
+
+        <motion.div
+
+          initial={{ opacity: 0, y: 20 }}
+
+          animate={{ opacity: 1, y: 0 }}
+
+          transition={{ delay: 0.2 }}
+
+          className="glass-card p-4"
+
+        >
+
+          <div className="flex items-center gap-3">
+
+            <div className="p-2 bg-primary/20 rounded-lg">
+
+              <Users className="w-5 h-5 text-primary" />
+
+            </div>
+
+            <div>
+
+              <p className="text-lg font-bold text-primary">
+
+                {analytics.totalGuests}
+
+              </p>
+
+              <p className="text-xs text-muted-foreground">Confirmed Guests</p>
+
+            </div>
+
+          </div>
+
+        </motion.div>
+
+
+
+        <motion.div
+
+          initial={{ opacity: 0, y: 20 }}
+
+          animate={{ opacity: 1, y: 0 }}
+
+          transition={{ delay: 0.3 }}
+
+          className="glass-card p-4"
+
+        >
+
+          <div className="flex items-center gap-3">
+
+            <div className="p-2 bg-secondary/20 rounded-lg">
+
+              <BarChart3 className="w-5 h-5 text-secondary" />
+
+            </div>
+
+            <div>
+
+              <p className="text-lg font-bold text-primary">
+
+                {analytics.conversionRate}%
+
+              </p>
+
+              <p className="text-xs text-muted-foreground">Conversion Rate</p>
+
+            </div>
+
+          </div>
+
+        </motion.div>
+
+      </div>
+
+
+
+      <div className="grid md:grid-cols-2 gap-6">
+
+        {/* Bookings Trend */}
+
+        <motion.div
+
+          initial={{ opacity: 0, y: 20 }}
+
+          animate={{ opacity: 1, y: 0 }}
+
+          transition={{ delay: 0.4 }}
+
+          className="glass-card p-6"
+
+        >
+
+          <h3 className="text-sm font-medium text-primary mb-4 flex items-center gap-2">
+
+            <Calendar className="w-4 h-4" />
+
+            Last 7 Days
+
+          </h3>
+
+          <div className="h-48">
+
+            <ChartContainer config={chartConfig}>
+
+              <BarChart data={analytics.last7Days}>
+
+                <XAxis
+
+                  dataKey="date"
+
+                  tickLine={false}
+
+                  axisLine={false}
+
+                  fontSize={12}
+
+                />
+
+                <YAxis
+
+                  tickLine={false}
+
+                  axisLine={false}
+
+                  fontSize={12}
+
+                  allowDecimals={false}
+
+                />
+
+                <ChartTooltip content={<ChartTooltipContent />} />
+
+                <Bar
+
+                  dataKey="bookings"
+
+                  fill="hsl(var(--accent))"
+
+                  radius={[4, 4, 0, 0]}
+
+                />
+
+              </BarChart>
+
+            </ChartContainer>
+
+          </div>
+
+        </motion.div>
+
+
+
+        {/* Status Distribution */}
+
+        <motion.div
+
+          initial={{ opacity: 0, y: 20 }}
+
+          animate={{ opacity: 1, y: 0 }}
+
+          transition={{ delay: 0.5 }}
+
+          className="glass-card p-6"
+
+        >
+
+          <h3 className="text-sm font-medium text-primary mb-4 flex items-center gap-2">
+
+            <PieChart className="w-4 h-4" />
+
+            Booking Status
+
+          </h3>
+
+          {analytics.statusData.length > 0 ? (
+
+            <div className="h-48 flex items-center justify-center">
+
+              <ResponsiveContainer width="100%" height="100%">
+
+                <RechartsPieChart>
+
+                  <Pie
+
+                    data={analytics.statusData}
+
+                    cx="50%"
+
+                    cy="50%"
+
+                    innerRadius={40}
+
+                    outerRadius={70}
+
+                    paddingAngle={2}
+
+                    dataKey="value"
+
+                  >
+
+                    {analytics.statusData.map((entry, index) => (
+
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+
+                    ))}
+
+                  </Pie>
+
+                  <ChartTooltip
+
+                    content={({ active, payload }) => {
+
+                      if (active && payload && payload.length) {
+
+                        return (
+
+                          <div className="bg-background border rounded-lg px-3 py-2 shadow-lg">
+
+                            <p className="text-sm font-medium">
+
+                              {payload[0].name}: {payload[0].value}
+
+                            </p>
+
+                          </div>
+
+                        );
+
+                      }
+
+                      return null;
+
+                    }}
+
+                  />
+
+                </RechartsPieChart>
+
+              </ResponsiveContainer>
+
+            </div>
+
+          ) : (
+
+            <div className="h-48 flex items-center justify-center text-muted-foreground">
+
+              No booking data
+
+            </div>
+
+          )}
+
+          <div className="flex justify-center gap-4 mt-2">
+
+            {analytics.statusData.map((item) => (
+
+              <div key={item.name} className="flex items-center gap-1.5">
+
+                <div
+
+                  className="w-2.5 h-2.5 rounded-full"
+
+                  style={{ backgroundColor: item.color }}
+
+                />
+
+                <span className="text-xs text-muted-foreground">{item.name}</span>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        </motion.div>
+
+      </div>
+
+
+
+      {/* Popular Tours */}
+
+      <motion.div
+
+        initial={{ opacity: 0, y: 20 }}
+
+        animate={{ opacity: 1, y: 0 }}
+
+        transition={{ delay: 0.6 }}
+
+        className="glass-card p-6"
+
+      >
+
+        <h3 className="text-sm font-medium text-primary mb-4">Popular Tours</h3>
+
+        {analytics.popularTours.length > 0 ? (
+
+          <div className="space-y-3">
+
+            {analytics.popularTours.map((tour, index) => (
+
+              <div
+
+                key={tour.title}
+
+                className="flex items-center justify-between"
+
+              >
+
+                <div className="flex items-center gap-3">
+
+                  <span className="text-xs font-medium text-muted-foreground w-4">
+
+                    {index + 1}
+
+                  </span>
+
+                  <span className="text-sm text-primary">{tour.title}</span>
+
+                </div>
+
+                <span className="text-sm font-medium text-accent">
+
+                  {tour.count} booking{tour.count !== 1 ? "s" : ""}
+
+                </span>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        ) : (
+
+          <div className="text-center py-8 text-muted-foreground">
+
+            No booking data yet
+
+          </div>
+
+        )}
+
+      </motion.div>
+
+    </div>
+
+  );
+
+};
+
+
+
+export default DashboardAnalytics;
+
+,import { useState } from "react";
+
+import { motion } from "framer-motion";
+
+import { Plus, Edit2, Trash2, Save, X } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+import { Input } from "@/components/ui/input";
+
+import { Textarea } from "@/components/ui/textarea";
+
+import { Label } from "@/components/ui/label";
+
+import {
+
+  Select,
+
+  SelectContent,
+
+  SelectItem,
+
+  SelectTrigger,
+
+  SelectValue,
+
+} from "@/components/ui/select";
+
+import {
+
+  Dialog,
+
+  DialogContent,
+
+  DialogHeader,
+
+  DialogTitle,
+
+  DialogTrigger,
+
+} from "@/components/ui/dialog";
+
+import {
+
+  AlertDialog,
+
+  AlertDialogAction,
+
+  AlertDialogCancel,
+
+  AlertDialogContent,
+
+  AlertDialogDescription,
+
+  AlertDialogFooter,
+
+  AlertDialogHeader,
+
+  AlertDialogTitle,
+
+  AlertDialogTrigger,
+
+} from "@/components/ui/alert-dialog";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { supabase } from "@/integrations/supabase/client";
+
+import { useToast } from "@/hooks/use-toast";
+
+import { getTourImage } from "@/lib/tourImages";
+
+import ImageUpload from "./ImageUpload";
+
+
+
+interface Tour {
+
+  id: string;
+
+  title: string;
+
+  description: string;
+
+  category: string;
+
+  duration: string | null;
+
+  price: number | null;
+
+  image_url: string | null;
+
+}
+
+
+
+interface TourManagementProps {
+
+  tours: Tour[];
+
+  onRefresh: () => void;
+
+}
+
+
+
+const CATEGORIES = ["historical", "arts", "nature", "modern"];
+
+
+
+const TourManagement = ({ tours, onRefresh }: TourManagementProps) => {
+
+  const { toast } = useToast();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [editingTour, setEditingTour] = useState<Tour | null>(null);
+
+  const [formData, setFormData] = useState({
+
+    title: "",
+
+    description: "",
+
+    category: "historical",
+
+    duration: "",
+
+    price: "",
+
+    image_url: "",
+
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+
+
+  const resetForm = () => {
+
+    setFormData({
+
+      title: "",
+
+      description: "",
+
+      category: "historical",
+
+      duration: "",
+
+      price: "",
+
+      image_url: "",
+
+    });
+
+    setEditingTour(null);
+
+  };
+
+
+
+  const openCreateDialog = () => {
+
+    resetForm();
+
+    setIsDialogOpen(true);
+
+  };
+
+
+
+  const openEditDialog = (tour: Tour) => {
+
+    setEditingTour(tour);
+
+    setFormData({
+
+      title: tour.title,
+
+      description: tour.description,
+
+      category: tour.category,
+
+      duration: tour.duration || "",
+
+      price: tour.price?.toString() || "",
+
+      image_url: tour.image_url || "",
+
+    });
+
+    setIsDialogOpen(true);
+
+  };
+
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+
+    e.preventDefault();
+
+    setIsSubmitting(true);
+
+
+
+    const tourData = {
+
+      title: formData.title,
+
+      description: formData.description,
+
+      category: formData.category,
+
+      duration: formData.duration || null,
+
+      price: formData.price ? parseFloat(formData.price) : null,
+
+      image_url: formData.image_url || null,
+
+    };
+
+
+
+    try {
+
+      if (editingTour) {
+
+        const { error } = await supabase
+
+          .from("tours")
+
+          .update(tourData)
+
+          .eq("id", editingTour.id);
+
+
+
+        if (error) throw error;
+
+
+
+        toast({
+
+          title: "Tour Updated",
+
+          description: `"${formData.title}" has been updated.`,
+
+        });
+
+      } else {
+
+        const { error } = await supabase.from("tours").insert(tourData);
+
+
+
+        if (error) throw error;
+
+
+
+        toast({
+
+          title: "Tour Created",
+
+          description: `"${formData.title}" has been added.`,
+
+        });
+
+      }
+
+
+
+      setIsDialogOpen(false);
+
+      resetForm();
+
+      onRefresh();
+
+    } catch (error: any) {
+
+      toast({
+
+        title: "Error",
+
+        description: error.message || "Failed to save tour",
+
+        variant: "destructive",
+
+      });
+
+    } finally {
+
+      setIsSubmitting(false);
+
+    }
+
+  };
+
+
+
+  const handleDelete = async (tour: Tour) => {
+
+    try {
+
+      const { error } = await supabase.from("tours").delete().eq("id", tour.id);
+
+
+
+      if (error) throw error;
+
+
+
+      toast({
+
+        title: "Tour Deleted",
+
+        description: `"${tour.title}" has been removed.`,
+
+      });
+
+      onRefresh();
+
+    } catch (error: any) {
+
+      toast({
+
+        title: "Error",
+
+        description: error.message || "Failed to delete tour",
+
+        variant: "destructive",
+
+      });
+
+    }
+
+  };
+
+
+
+  return (
+
+    <div className="space-y-6">
+
+      <div className="flex items-center justify-between">
+
+        <h2 className="text-xl font-semibold text-primary">Tour Management</h2>
+
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+
+          <DialogTrigger asChild>
+
+            <Button variant="gold" onClick={openCreateDialog} className="rounded-full">
+
+              <Plus className="w-4 h-4 mr-2" />
+
+              Add Tour
+
+            </Button>
+
+          </DialogTrigger>
+
+          <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+
+            <DialogHeader>
+
+              <DialogTitle>
+
+                {editingTour ? "Edit Tour" : "Create New Tour"}
+
+              </DialogTitle>
+
+            </DialogHeader>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+
+              <div className="space-y-2">
+
+                <Label htmlFor="title">Title</Label>
+
+                <Input
+
+                  id="title"
+
+                  value={formData.title}
+
+                  onChange={(e) =>
+
+                    setFormData({ ...formData, title: e.target.value })
+
+                  }
+
+                  placeholder="Tour title"
+
+                  required
+
+                />
+
+              </div>
+
+
+
+              <div className="space-y-2">
+
+                <Label htmlFor="description">Description</Label>
+
+                <Textarea
+
+                  id="description"
+
+                  value={formData.description}
+
+                  onChange={(e) =>
+
+                    setFormData({ ...formData, description: e.target.value })
+
+                  }
+
+                  placeholder="Tour description"
+
+                  rows={3}
+
+                  required
+
+                />
+
+              </div>
+
+
+
+              <div className="grid grid-cols-2 gap-4">
+
+                <div className="space-y-2">
+
+                  <Label htmlFor="category">Category</Label>
+
+                  <Select
+
+                    value={formData.category}
+
+                    onValueChange={(value) =>
+
+                      setFormData({ ...formData, category: value })
+
+                    }
+
+                  >
+
+                    <SelectTrigger>
+
+                      <SelectValue />
+
+                    </SelectTrigger>
+
+                    <SelectContent>
+
+                      {CATEGORIES.map((cat) => (
+
+                        <SelectItem key={cat} value={cat}>
+
+                          {cat.charAt(0).toUpperCase() + cat.slice(1)}
+
+                        </SelectItem>
+
+                      ))}
+
+                    </SelectContent>
+
+                  </Select>
+
+                </div>
+
+
+
+                <div className="space-y-2">
+
+                  <Label htmlFor="duration">Duration</Label>
+
+                  <Input
+
+                    id="duration"
+
+                    value={formData.duration}
+
+                    onChange={(e) =>
+
+                      setFormData({ ...formData, duration: e.target.value })
+
+                    }
+
+                    placeholder="e.g., 3 hours"
+
+                  />
+
+                </div>
+
+              </div>
+
+
+
+              <div className="space-y-2">
+
+                <Label htmlFor="price">Price ($)</Label>
+
+                <Input
+
+                  id="price"
+
+                  type="number"
+
+                  step="0.01"
+
+                  value={formData.price}
+
+                  onChange={(e) =>
+
+                    setFormData({ ...formData, price: e.target.value })
+
+                  }
+
+                  placeholder="0.00"
+
+                />
+
+              </div>
+
+
+
+              <div className="space-y-2">
+
+                <Label>Tour Image</Label>
+
+                <Tabs defaultValue="upload" className="w-full">
+
+                  <TabsList className="w-full">
+
+                    <TabsTrigger value="upload" className="flex-1">Upload</TabsTrigger>
+
+                    <TabsTrigger value="url" className="flex-1">URL</TabsTrigger>
+
+                  </TabsList>
+
+                  <TabsContent value="upload" className="mt-3">
+
+                    <ImageUpload
+
+                      currentImageUrl={formData.image_url}
+
+                      onImageUploaded={(url) => setFormData({ ...formData, image_url: url })}
+
+                      onImageRemoved={() => setFormData({ ...formData, image_url: "" })}
+
+                    />
+
+                  </TabsContent>
+
+                  <TabsContent value="url" className="mt-3">
+
+                    <Input
+
+                      id="image_url"
+
+                      value={formData.image_url}
+
+                      onChange={(e) =>
+
+                        setFormData({ ...formData, image_url: e.target.value })
+
+                      }
+
+                      placeholder="https://..."
+
+                    />
+
+                  </TabsContent>
+
+                </Tabs>
+
+              </div>
+
+
+
+              <div className="flex gap-3 pt-4">
+
+                <Button
+
+                  type="button"
+
+                  variant="outline"
+
+                  className="flex-1"
+
+                  onClick={() => {
+
+                    setIsDialogOpen(false);
+
+                    resetForm();
+
+                  }}
+
+                >
+
+                  Cancel
+
+                </Button>
+
+                <Button
+
+                  type="submit"
+
+                  variant="gold"
+
+                  className="flex-1"
+
+                  disabled={isSubmitting}
+
+                >
+
+                  {isSubmitting ? (
+
+                    "Saving..."
+
+                  ) : (
+
+                    <>
+
+                      <Save className="w-4 h-4 mr-2" />
+
+                      {editingTour ? "Update" : "Create"}
+
+                    </>
+
+                  )}
+
+                </Button>
+
+              </div>
+
+            </form>
+
+          </DialogContent>
+
+        </Dialog>
+
+      </div>
+
+
+
+      <div className="grid gap-4">
+
+        {tours.map((tour) => (
+
+          <motion.div
+
+            key={tour.id}
+
+            initial={{ opacity: 0, y: 10 }}
+
+            animate={{ opacity: 1, y: 0 }}
+
+            className="glass-card p-4"
+
+          >
+
+            <div className="flex gap-4">
+
+              <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
+
+                <img
+
+                  src={getTourImage(tour.title, tour.image_url)}
+
+                  alt={tour.title}
+
+                  className="w-full h-full object-cover"
+
+                />
+
+              </div>
+
+              <div className="flex-1 min-w-0">
+
+                <div className="flex items-start justify-between gap-2">
+
+                  <div>
+
+                    <h3 className="font-semibold text-primary truncate">
+
+                      {tour.title}
+
+                    </h3>
+
+                    <p className="text-sm text-muted-foreground capitalize">
+
+                      {tour.category} • {tour.duration || "Duration TBD"}
+
+                    </p>
+
+                    {tour.price && (
+
+                      <p className="text-accent font-medium">${tour.price}</p>
+
+                    )}
+
+                  </div>
+
+                  <div className="flex gap-2 flex-shrink-0">
+
+                    <Button
+
+                      size="sm"
+
+                      variant="outline"
+
+                      onClick={() => openEditDialog(tour)}
+
+                    >
+
+                      <Edit2 className="w-4 h-4" />
+
+                    </Button>
+
+                    <AlertDialog>
+
+                      <AlertDialogTrigger asChild>
+
+                        <Button
+
+                          size="sm"
+
+                          variant="outline"
+
+                          className="text-destructive hover:bg-destructive/10"
+
+                        >
+
+                          <Trash2 className="w-4 h-4" />
+
+                        </Button>
+
+                      </AlertDialogTrigger>
+
+                      <AlertDialogContent>
+
+                        <AlertDialogHeader>
+
+                          <AlertDialogTitle>Delete Tour</AlertDialogTitle>
+
+                          <AlertDialogDescription>
+
+                            Are you sure you want to delete "{tour.title}"? This
+
+                            action cannot be undone.
+
+                          </AlertDialogDescription>
+
+                        </AlertDialogHeader>
+
+                        <AlertDialogFooter>
+
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+                          <AlertDialogAction
+
+                            onClick={() => handleDelete(tour)}
+
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+
+                          >
+
+                            Delete
+
+                          </AlertDialogAction>
+
+                        </AlertDialogFooter>
+
+                      </AlertDialogContent>
+
+                    </AlertDialog>
+
+                  </div>
+
+                </div>
+
+                <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+
+                  {tour.description}
+
+                </p>
+
+              </div>
+
+            </div>
+
+          </motion.div>
+
+        ))}
+
+        {tours.length === 0 && (
+
+          <div className="text-center py-12 text-muted-foreground">
+
+            No tours yet. Add your first tour to get started.
+
+          </div>
+
+        )}
+
+      </div>
+
+    </div>
+
+  );
+
+};
+
+
+
+export default TourManagement;
+
+,and import { useState, useRef } from "react";
+
+import { Upload, X, Loader2 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+import { supabase } from "@/integrations/supabase/client";
+
+import { useToast } from "@/hooks/use-toast";
+
+
+
+interface ImageUploadProps {
+
+  currentImageUrl?: string;
+
+  onImageUploaded: (url: string) => void;
+
+  onImageRemoved: () => void;
+
+}
+
+
+
+const ImageUpload = ({ currentImageUrl, onImageUploaded, onImageRemoved }: ImageUploadProps) => {
+
+  const { toast } = useToast();
+
+  const [isUploading, setIsUploading] = useState(false);
+
+  const [previewUrl, setPreviewUrl] = useState<string | null>(currentImageUrl || null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+
+
+    // Validate file type
+
+    if (!file.type.startsWith("image/")) {
+
+      toast({
+
+        title: "Invalid file type",
+
+        description: "Please select an image file",
+
+        variant: "destructive",
+
+      });
+
+      return;
+
+    }
+
+
+
+    // Validate file size (max 5MB)
+
+    if (file.size > 5 * 1024 * 1024) {
+
+      toast({
+
+        title: "File too large",
+
+        description: "Please select an image under 5MB",
+
+        variant: "destructive",
+
+      });
+
+      return;
+
+    }
+
+
+
+    setIsUploading(true);
+
+
+
+    try {
+
+      // Generate unique filename
+
+      const fileExt = file.name.split(".").pop();
+
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+
+
+      // Upload to Supabase Storage
+
+      const { data, error } = await supabase.storage
+
+        .from("tour-images")
+
+        .upload(fileName, file, {
+
+          cacheControl: "3600",
+
+          upsert: false,
+
+        });
+
+
+
+      if (error) throw error;
+
+
+
+      // Get public URL
+
+      const { data: urlData } = supabase.storage
+
+        .from("tour-images")
+
+        .getPublicUrl(data.path);
+
+
+
+      setPreviewUrl(urlData.publicUrl);
+
+      onImageUploaded(urlData.publicUrl);
+
+
+
+      toast({
+
+        title: "Image uploaded",
+
+        description: "Tour image has been uploaded successfully",
+
+      });
+
+    } catch (error: any) {
+
+      console.error("Upload error:", error);
+
+      toast({
+
+        title: "Upload failed",
+
+        description: error.message || "Failed to upload image",
+
+        variant: "destructive",
+
+      });
+
+    } finally {
+
+      setIsUploading(false);
+
+    }
+
+  };
+
+
+
+  const handleRemove = () => {
+
+    setPreviewUrl(null);
+
+    onImageRemoved();
+
+    if (fileInputRef.current) {
+
+      fileInputRef.current.value = "";
+
+    }
+
+  };
+
+
+
+  return (
+
+    <div className="space-y-3">
+
+      <input
+
+        type="file"
+
+        ref={fileInputRef}
+
+        onChange={handleFileSelect}
+
+        accept="image/*"
+
+        className="hidden"
+
+      />
+
+
+
+      {previewUrl ? (
+
+        <div className="relative w-full h-40 rounded-xl overflow-hidden border border-border">
+
+          <img
+
+            src={previewUrl}
+
+            alt="Tour preview"
+
+            className="w-full h-full object-cover"
+
+          />
+
+          <Button
+
+            type="button"
+
+            size="icon"
+
+            variant="destructive"
+
+            className="absolute top-2 right-2 h-8 w-8"
+
+            onClick={handleRemove}
+
+          >
+
+            <X className="h-4 w-4" />
+
+          </Button>
+
+        </div>
+
+      ) : (
+
+        <button
+
+          type="button"
+
+          onClick={() => fileInputRef.current?.click()}
+
+          disabled={isUploading}
+
+          className="w-full h-40 border-2 border-dashed border-muted-foreground/25 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-primary/50 hover:bg-primary/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+
+        >
+
+          {isUploading ? (
+
+            <>
+
+              <Loader2 className="h-8 w-8 text-muted-foreground animate-spin" />
+
+              <span className="text-sm text-muted-foreground">Uploading...</span>
+
+            </>
+
+          ) : (
+
+            <>
+
+              <Upload className="h-8 w-8 text-muted-foreground" />
+
+              <span className="text-sm text-muted-foreground">
+
+                Click to upload image
+
+              </span>
+
+              <span className="text-xs text-muted-foreground/60">
+
+                Max 5MB, JPG/PNG/WebP
+
+              </span>
+
+            </>
+
+          )}
+
+        </button>
+
+      )}
+
+
+
+      {!previewUrl && (
+
+        <Button
+
+          type="button"
+
+          variant="outline"
+
+          size="sm"
+
+          className="w-full"
+
+          onClick={() => fileInputRef.current?.click()}
+
+          disabled={isUploading}
+
+        >
+
+          <Upload className="h-4 w-4 mr-2" />
+
+          Choose Image
+
+        </Button>
+
+      )}
+
+    </div>
+
+  );
+
+};
+
+
+
+export default ImageUpload;
+
+can u also fix this: 'use server';
+
+

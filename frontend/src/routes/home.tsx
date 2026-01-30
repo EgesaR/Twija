@@ -1,6 +1,6 @@
 import type { Route } from './+types/home';
 import Hero from '@/components/sections/Hero';
-import SmallServices from '@/components/sections/SmallServices';
+import Services from '@/components/sections/Services';
 import Tours from '@/components/sections/tours/Tours';
 import Explore from '@/components/sections/ExploreSection';
 import Feedback from '@/components/sections/Feedback';
@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <div className='relative min-h-screen bg-white text-black'>
       <Hero />
-      <SmallServices />
+      <Services />
       <Tours />
       <Explore />
       <Feedback />

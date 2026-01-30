@@ -9,34 +9,47 @@ import { getImageUrl } from '@/utils/images';
 import { tourPhotoLists } from '@/data/gallery';
 import { contactInfo } from '@/data/contact';
 import { socials } from '@/data/socials';
-import gsap from 'gsap';
+import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
-
 
 const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
 
   useGSAP(
-    async () => {
-      const { ScrollTrigger } = await import('gsap/dist/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
+    () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: footerRef.current,
           start: 'top 85%',
           toggleActions: 'play none none none',
+          markers: false,
         },
       });
 
-      tl.from('.footer-title', { y: 30, opacity: 0, duration: 0.8 })
+      tl.from('.footer-title', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+      })
         .from(
           '.footer-card-main',
-          { x: -50, opacity: 0, duration: 0.8 },
+          {
+            x: -50,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+          },
           '-=0.4',
         )
         .from(
           '.footer-card-side',
-          { x: 50, opacity: 0, duration: 0.8 },
+          {
+            x: 50,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+          },
           '-=0.8',
         )
         .from(
@@ -51,7 +64,7 @@ const Footer = () => {
           '-=0.5',
         );
     },
-    { scope: footerRef },
+    { scope: footerRef, revertOnUpdate: false },
   );
 
   return (
@@ -120,8 +133,7 @@ const Footer = () => {
                 </a>
                 <a
                   href={`mailto:${contactInfo.email}`}
-                  className='flex items-center gap-3 text-slate-700 hover:text-green-600 transition-colors group break-all
-                  '
+                  className='flex items-center gap-3 text-slate-700 hover:text-green-600 transition-colors group break-all'
                 >
                   <div className='p-2 bg-white rounded-lg shadow-sm group-hover:bg-green-50'>
                     <Mail size={18} />

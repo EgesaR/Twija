@@ -39,7 +39,7 @@ const ExpandableTourCard = ({ index, tour, active, onSelect }: Props) => {
 
       {/* Overlay: Darker when collapsed to make vertical text pop */}
       <div
-        className={`absolute inset-0 bg-black transition-opacity ${isActive ? 'opacity-40' : 'opacity-60'}`}
+        className={`absolute inset-0 bg-black transition-opacity ${isActive ? 'opacity-10' : 'opacity-60'}`}
       />
 
       {!isActive ? (

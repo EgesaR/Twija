@@ -1,20 +1,13 @@
-from pydantic import Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pathlib import Path
+from supabase import create_client, Client
+from app.core.config import settings
 
 
-class Settings(BaseSettings):
-    supabase_url: str = Field(validation_alias="SUPABASE_URL")
-    supabase_anon_key: str = Field(validation_alias="SUPABASE_ANON_KEY")
-    supabase_service_role_key: str = Field(validation_alias="SUPABASE_SERVICE_ROLE_KEY")
+def get_supabase_client() -> Client:
+    return create_client(settings.supabase_url, settings.supabase_anon_key)
 
-    model_config = SettingsConfigDict(
-        env_file=str(
-            Path("backend/.env") if Path("backend/.env").exists() else Path(".env")
-        ),
-        case_sensitive=False,
-        extra="ignore"
+
+def get_admin_client() -> Client:
+    return create_client(
+        settings.supabase_url,
+        settings.supabase_service_role_key
     )
-
-
-settings = Settings()  # type: ignore[call-arg]

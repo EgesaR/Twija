@@ -20,3 +20,7 @@ src
 - hooks
 - layouts
 - modules
+
+SEO 
+- images - alt
+- a / links - titlew

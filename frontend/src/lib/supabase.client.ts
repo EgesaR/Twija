@@ -1,7 +1,8 @@
 // lib/supabase.client.ts
+import { supabaseStorageKey } from '@/constants';
 import { createBrowserClient } from '@supabase/ssr';
 
-export const createClient = () => {
+export function createClient() {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
   const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -12,8 +13,12 @@ export const createClient = () => {
     throw new Error('Supabase configuration is incomplete.');
   }
 
-  return createBrowserClient(supabaseUrl, supabaseAnonKey);
-};
-
-// For compatibility with your existing code, you can export a singleton if needed
-export const supabase = createClient();
+  return createBrowserClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      storageKey: supabaseStorageKey,
+      // autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+    },
+  });
+}
