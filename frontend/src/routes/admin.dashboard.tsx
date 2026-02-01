@@ -1,37 +1,16 @@
 import type { Route } from './+types/admin.dashboard';
-import React from 'react';
+import React, { useEffect } from 'react';
 import TourManagement from '@/components/admin/TourManagement';
-import { createSupabaseServerClient } from '@/lib/supabase.server';
-import { redirect, useRevalidator } from 'react-router';
+import { useRevalidator } from 'react-router';
 import { Package, MapPin, ShieldCheck } from 'lucide-react';
 import type { Tour } from '@/types/tour'; // Import your new interface
+import { useSearchParams } from 'react-router';
+import { toast } from '@/hooks/use-toast';
+import { requireAdmin } from '@/lib/auth.guards.server';
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const { supabase } = createSupabaseServerClient(request);
+  const { user, supabase } = await requireAdmin(request);
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    console.log("DEBUG: No session found, sending to login")
-    throw redirect('/auth/login?error-no_session');
-  }
-
-  const { data: isAdmin, error: roleError } = await supabase
-    .rpc('has_role', {
-      _role: 'admin',
-      _user_id: session.user.id,
-    })
-  
-  if (roleError || !isAdmin) {
-    console.log("DEBUG: User is logged in but NOT an admin. Found: ", isAdmin)
-    throw redirect('/auth/login?error=not_admin')
-
-  }
-
-  // Note: Ensure your Supabase table columns match the interface nested structure
-  // or use a view/transform if the DB is flat.
   const { data: tours, error } = await supabase
     .from('tours')
     .select('*')
@@ -41,12 +20,28 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
   return {
     tours: (tours as unknown as Tour[]) || [],
+    user,
   };
 };
 
 export default function AdminDashboard({ loaderData }: Route.ComponentProps) {
-  const { tours } = loaderData;
+  const { tours, user } = loaderData;
+  const [searchParams, setSearchParams] = useSearchParams();
   const revalidator = useRevalidator();
+
+  useEffect(() => {
+    if (searchParams.get('login') === 'success') {
+      toast({
+        title: `Welcome back, ${user.email}`,
+        description: 'You have successfully authenticated as Admin.',
+        variant: 'success',
+      });
+
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('login');
+      setSearchParams(newParams, { replace: true });
+    }
+  }, []);
 
   // Updated Stats based on new interface
   const totalTours = tours.length;
@@ -63,7 +58,6 @@ export default function AdminDashboard({ loaderData }: Route.ComponentProps) {
             Managing standardized Kigali tour experiences.
           </p>
         </div>
-        
       </header>
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-8'>

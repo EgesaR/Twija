@@ -5,12 +5,12 @@ import {
   serializeCookieHeader,
 } from '@supabase/ssr';
 
-export const createSupabaseServerClient = (request: Request) => {
+export function createSupabaseServerClient(request: Request) {
   const headers = new Headers();
 
-  const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
   const supabaseAnonKey =
-    process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+    import.meta.env.VITE_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
     // This console error will show up in your terminal, not the browser
@@ -50,4 +50,4 @@ export const createSupabaseServerClient = (request: Request) => {
   });
 
   return { supabase, headers };
-};
+}

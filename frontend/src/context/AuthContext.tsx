@@ -5,8 +5,8 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { User, Session, AuthChangeEvent } from '@supabase/supabase-js';
-import { createClient } from '@/lib/supabase.client';
+import type { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
+import createClient from '@/lib/supabase/supabase.client';
 
 type UserRole = 'admin' | 'editor' | 'user' | null;
 
@@ -20,92 +20,105 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // 1. Client initialized to null to prevent SSR "is not a function" errors
-  const [supabase, setSupabase] = useState<ReturnType<
-    typeof createClient
-  > | null>(null);
+  const [supabase, setSupabase] = useState<any>(null);
   const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState<UserRole>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // 2. Initialize Supabase only once on mount (browser only)
+  // 1. Initialize Supabase Client (Browser Only)
   useEffect(() => {
-    setSupabase(createClient());
+    const client = createClient();
+    setSupabase(client);
   }, []);
 
-  const checkRole = async (
-    userId: string,
-    client: ReturnType<typeof createClient>,
-  ) => {
+  // 2. Optimized Role Fetcher
+  const fetchRole = async (userId: string, client: any) => {
     try {
-      const { data: isAdmin, error } = await client.rpc('has_role', {
-        _role: 'admin',
-        _user_id: userId,
-      });
+      const { data, error } = await client
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .single();
 
       if (error) throw error;
-      setRole(isAdmin ? 'admin' : null);
-    } catch (error) {
-      console.error('Role check failed:', error);
-      setRole(null);
+      return (data?.role as UserRole) || null;
+    } catch (err) {
+      console.error('Role check failed:', err);
+      return null;
     }
   };
 
   useEffect(() => {
-    // 3. Guard: Do nothing until supabase client is ready
-    if (!supabase) return;
+    if (!supabase || typeof window === 'undefined') return;
 
-    const initAuth = async () => {
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        const currentUser = session?.user ?? null;
-        setUser(currentUser);
+    let isCurrent = true;
 
-        if (currentUser) {
-          await checkRole(currentUser.id, supabase);
-        }
-      } catch (error) {
-        console.error('Auth init failed:', error);
-      } finally {
-        setLoading(false);
+    // 3. Unified handler for Session and Auth Changes
+    const handleStateChange = async (session: Session | null) => {
+      const currentUser = session?.user ?? null;
+
+      if (!isCurrent) return;
+      setUser(currentUser);
+
+      if (currentUser) {
+        const userRole = await fetchRole(currentUser.id, supabase);
+        if (isCurrent) setRole(userRole);
+      } else {
+        setRole(null);
       }
+
+      if (isCurrent) setLoading(false);
     };
 
-    initAuth();
+    // Initial check
+    supabase.auth
+      .getSession()
+      .then((result: { data: { session: Session | null }; error: any }) => {
+        const session = result.data.session;
+        if (isCurrent) handleStateChange(session);
+      });
 
+    // Listener for all subsequent changes
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (_event: AuthChangeEvent, session: Session | null) => {
-        const currentUser = session?.user ?? null;
-        setUser(currentUser);
+      async (event: AuthChangeEvent, session: Session | null) => {
+        console.log('Auth Event:', event);
 
-        if (currentUser) {
-          await checkRole(currentUser.id, supabase);
-        } else {
-          setRole(null);
+        if (event === 'SIGNED_OUT') {
+          if (isCurrent) {
+            setUser(null);
+            setRole(null);
+            setLoading(false);
+          }
+        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          handleStateChange(session);
         }
       },
     );
 
     return () => {
+      isCurrent = false;
       authListener.subscription.unsubscribe();
     };
   }, [supabase]);
 
-  const signOut = async () => {
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
-  };
-
-  // 4. SSR Safe Return: Return a consistent shell during server-side rendering
+  // SSR Guard: Keep children rendered but skip logic on server
   if (typeof window === 'undefined') {
     return <>{children}</>;
   }
 
+  const handleSignOut = async () => {
+    if (supabase) await supabase.auth.signOut();
+  };
+
   return (
-    <AuthContext.Provider value={{ user, role, loading, signOut }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        role,
+        loading,
+        signOut: handleSignOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -113,8 +126,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
   return context;
 };

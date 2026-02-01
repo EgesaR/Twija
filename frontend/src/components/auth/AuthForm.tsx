@@ -47,6 +47,12 @@ export default function AuthForm({ type }: AuthFormProps) {
   };
 
   useEffect(() => {
+    if (isLoading) {
+      toast({
+        title: 'Authenticating...',
+        description: 'Please wait while we verify your credentials.',
+      });
+    }
     if (actionData?.error) {
       toast({
         variant: 'destructive',
@@ -72,7 +78,7 @@ export default function AuthForm({ type }: AuthFormProps) {
 
   return (
     <div className='flex min-h-screen items-center justify-center bg-[#F1F5F2] p-6'>
-      <div className='w-full max-w-[480px] rounded-[2.5rem] bg-white p-10 shadow-[0_20px_50px_rgba(20,50,20,0.06)] border border-emerald-100/50'>
+      <div className='w-full max-w-120 rounded-[2.5rem] bg-white p-10 shadow-[0_20px_50px_rgba(20,50,20,0.06)] border border-emerald-100/50'>
         {/* Header */}
         <div className='mb-10 text-center'>
           {/* config.icon is now safe because of the fallback above */}

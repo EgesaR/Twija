@@ -8,6 +8,11 @@ import {
 import { loginSchema } from '@/schema/authSchema';
 import { logIn } from '@/lib/actions/user.action.server';
 import AuthForm from '@/components/auth/AuthForm';
+import type { Route } from './+types/auth.login';
+import { create } from 'domain';
+import { createSupabaseServerClient } from '@/lib/supabase/supabase.server';
+import { useEffect } from 'react';
+import { toast } from '@/hooks/use-toast';
 
 // 1. Professional SEO & Browser Tab Title
 export const meta: MetaFunction = () => {
@@ -43,7 +48,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
 
     // 4. Success Redirect
-    return redirect('/admin/dashboard', {
+    return redirect('/admin/dashboard?login=success', {
       headers: result.headers,
     });
   } catch (error) {
@@ -55,7 +60,28 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-export default function LoginRoute() {
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { supabase } = createSupabaseServerClient(request);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (session) {
+    const { data: roleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', session.user.id)
+      .single();
+
+    // Only auto-redirect if they are actually authorized
+    if (roleData?.role === 'admin') {
+      throw redirect('/admin/dashboard');
+    }
+  }
+  return {};
+};
+
+const LoginRoute = () => {
   const [searchParams] = useSearchParams();
   const errorParam = searchParams.get('error');
   const error: 'not_admin' | 'no_session' | null =
@@ -63,21 +89,26 @@ export default function LoginRoute() {
       ? errorParam
       : null;
 
+  useEffect(() => {
+    if (errorParam === 'not_admin')
+      toast({
+        title: 'Access Denied',
+        description: 'You are not authorized as an Admin.',
+        variant: 'destructive',
+      });
+    else if (errorParam === 'no_session')
+      toast({
+        title: 'Please log in',
+        description: 'You must be logged in to access the dashboard.',
+        variant: 'info',
+      });
+  }, [errorParam]);
+
   return (
-    <main className='h-screen w-full relative'>
-      <div className='w-full absolute top-0 py-4 flex items-center justify-end px-4'>
-        {error === 'not_admin' && (
-          <div className='mb-4 p-3 bg-red-100 text-red-700 rounded-md border border-red-200'>
-            Access Denied: You are not authorized as an Admin.
-          </div>
-        )}
-        {error === 'no_session' && (
-          <div className='mb-4 p-3 bg-blue-100 text-blue-700 rounded-md border border-blue-200'>
-            Please log in to access the dashboard.
-          </div>
-        )}
-      </div>
+    <main className='h-screen w-full'>
       <AuthForm type='login' />
     </main>
   );
-}
+};
+
+export default LoginRoute;

@@ -1,7 +1,7 @@
 'use server';
 
-import { api } from '../api.server';
-import { createSupabaseServerClient } from '@/lib/supabase.server';
+import { api } from '../api/api.server';
+import { createSupabaseServerClient } from '@/lib/supabase/supabase.server';
 import type { AdminRequestParams, LoginParams } from '@/schema/authSchema';
 
 export const logIn = async (credentials: LoginParams, request: Request) => {
@@ -36,13 +36,13 @@ export const signUp = async (
   request: Request,
 ) => {
   const { headers } = createSupabaseServerClient(request);
-
+  const { email, firstName, lastName} = userData
   try {
-    const fullName = `${userData.firstName} ${userData.lastName}`.trim();
+    const fullName = `${firstName} ${lastName}`.trim();
 
     // Axios call to FastAPI
     const result = await api.post('/admin/request-admin', {
-      email: userData.email,
+      email: email,
       full_name: fullName,
     });
 
